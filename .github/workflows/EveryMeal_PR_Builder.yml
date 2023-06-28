@@ -43,7 +43,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_COLOR: '#ff0000'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTI }}
           SLACK_TITLE: 'ALL EveryMeal Android Makers checks have passed ✅'
           MSG_MINIMAL: true
           SLACK_USERNAME: EveryMeal Android
@@ -54,7 +54,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_COLOR: '#ff0000'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTI }}
           SLACK_TITLE: 'EveryMeal checks have failed ⚠️🚫'
           MSG_MINIMAL: true
           SLACK_USERNAME: EveryMeal Android
