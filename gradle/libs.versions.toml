@@ -29,5 +29,6 @@ material3 = { group = "androidx.compose.material3", name = "material3" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
+
 [bundles]
 
