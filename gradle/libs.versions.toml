@@ -47,8 +47,8 @@ hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref =
 
 # Retrofit
 okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp" }
-okhttp = { module = "com.squareup.okhttp3:okhttp" }
-okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp"}
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 
