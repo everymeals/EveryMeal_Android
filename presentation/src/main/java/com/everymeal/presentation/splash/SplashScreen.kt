@@ -30,23 +30,26 @@ import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 fun SplashScreen(
     viewModel: ExampleViewModel = hiltViewModel(),
 ) {
-    // Example Code
-    viewModel.getWeekFood("MCC식당")
+    LaunchedEffect(Unit) {
+        viewModel.getWeekFood("MCC식당")
+    }
     val weekFoodState by viewModel.weekGetFoodArea.collectAsState()
 
-    when(weekFoodState) {
+    when (weekFoodState) {
         is ExampleFoodState.UnInitialized -> {
 
         }
+
         is ExampleFoodState.Loading -> {
 
         }
+
         is ExampleFoodState.SuccessWeekFoodGetData -> {
-            LaunchedEffect(weekFoodState) {
-                val data = (weekFoodState as ExampleFoodState.SuccessWeekFoodGetData).getWeekFoodData
+                val data =
+                    (weekFoodState as ExampleFoodState.SuccessWeekFoodGetData).getWeekFoodData
                 Log.d("clean architecture test url success", "$data")
-            }
         }
+
         is ExampleFoodState.Error -> {
 
         }
