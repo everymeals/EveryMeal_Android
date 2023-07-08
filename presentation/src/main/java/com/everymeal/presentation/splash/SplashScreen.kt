@@ -1,4 +1,4 @@
-package com.everymeal.presentation
+package com.everymeal.presentation.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,10 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.presentation.ExampleViewModel
+import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    viewModel: ExampleViewModel = hiltViewModel(),
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -15,12 +15,12 @@ class FoodDataSourceImpl @Inject constructor(
             if (response.isSuccessful) {
                 response.body()?.let { data ->
                     return Result.Success(data.toWeekFoodEntity())
-                } ?: Result.Error(IllegalArgumentException("주간 급식 정보를 찾을 수 없습니다."))
+                } ?: Result.Error(404)
             } else {
-                Result.Error(IllegalArgumentException("네트워크 에러가 발생하였습니다."))
+                Result.Error(response.code())
             }
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.Error(response.code())
         }
     }
 }
