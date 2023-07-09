@@ -80,6 +80,7 @@ replay_pid*
 # Java class files
 
 # Generated files
+.DS_Store
 bin/
 gen/
 out/

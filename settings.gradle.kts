@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "EveryMeal_Android"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":presentation")
