@@ -3,6 +3,7 @@ plugins {
     id("com.android.library")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("kotlinx-serialization")
     alias(libs.plugins.kotlinAndroid)
 }
 
@@ -31,10 +32,13 @@ dependencies {
 
     //Retrofit
     implementation(libs.retrofit)
-    implementation(libs.gson)
     implementation(libs.okhttp.logging.interceptor)
 
     // Hilt
     implementation(libs.hilt)
     kapt(libs.hilt.testing.compiler)
+
+    // Serialization
+    implementation(libs.serialization)
+    implementation(libs.kotlin.serilization)
 }

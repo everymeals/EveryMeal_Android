@@ -1,7 +1,9 @@
 package com.everymeal.data.model
 
 import com.everymeal.domain.model.ResponseWeekFoodEntity
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeekFoodResponse(
     val success : Boolean,
     val message : String,
@@ -10,6 +12,7 @@ data class WeekFoodResponse(
     val httpCode : Int,
     val data : List<WeekFoodResult>,
 ) {
+    @Serializable
     data class WeekFoodResult(
         val mealId: Int,
         val toDay: String,

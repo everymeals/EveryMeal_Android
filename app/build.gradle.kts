@@ -77,8 +77,11 @@ dependencies {
     implementation(libs.hilt)
     kapt(libs.hilt.testing.compiler)
 
-    //Retrofit
+    // Retrofit
     implementation(libs.retrofit)
-    implementation(libs.gson)
     implementation(libs.okhttp.logging.interceptor)
+
+    // Serialization
+    implementation(libs.serialization)
+    implementation(libs.kotlin.serilization)
 }
