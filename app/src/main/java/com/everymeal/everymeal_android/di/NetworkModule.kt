@@ -19,7 +19,7 @@ object NetworkModule {
     private val contentType = "application/json".toMediaType()
     private val json = Json { ignoreUnknownKeys = true }
 
-    private const val BASE_URL = "http://13.209.50.30"
+    private const val BASE_URL = "TEST_URL"
 
     @Provides
     @Singleton
