@@ -1,6 +1,9 @@
 package com.everymeal.presentation.splash
 
 import android.util.Log
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +61,16 @@ fun SplashScreen(
 
         }
     }
+    var started by remember { mutableStateOf(false) }
+
+    val alpha: Float by animateFloatAsState(
+        targetValue = if (started) 1f else 0f,
+        animationSpec = tween(durationMillis = 1000, easing = FastOutLinearInEasing)
+    )
+
+    LaunchedEffect(Unit) {
+        started = true
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -63,13 +80,14 @@ fun SplashScreen(
         Image(
             painter = painterResource(id = R.drawable.every_meal_logo_image),
             contentDescription = stringResource(R.string.app_name),
-            modifier = Modifier.size(80.dp)
+            modifier = Modifier.size(80.dp).alpha(alpha)
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(
             text = "everymeal",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.alpha(alpha)
         )
     }
 }
