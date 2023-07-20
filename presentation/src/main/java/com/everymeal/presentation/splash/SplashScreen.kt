@@ -1,29 +1,24 @@
 package com.everymeal.presentation.splash
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.ExampleFoodState
 import com.everymeal.presentation.ExampleViewModel
-import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 
 @Composable
@@ -45,9 +40,9 @@ fun SplashScreen(
         }
 
         is ExampleFoodState.SuccessWeekFoodGetData -> {
-                val data =
-                    (weekFoodState as ExampleFoodState.SuccessWeekFoodGetData).getWeekFoodData
-                Log.d("clean architecture test url success", "$data")
+            val data =
+                (weekFoodState as ExampleFoodState.SuccessWeekFoodGetData).getWeekFoodData
+            Log.d("clean architecture test url success", "$data")
         }
 
         is ExampleFoodState.Error -> {
@@ -55,21 +50,16 @@ fun SplashScreen(
         }
     }
 
+    val composition by rememberLottieComposition(LottieCompositionSpec.Asset("everymeal_splash.json"))
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.every_meal_logo_image),
-            contentDescription = stringResource(R.string.app_name),
-            modifier = Modifier.size(80.dp)
-        )
-        Spacer(modifier = Modifier.size(8.dp))
-        Text(
-            text = "everymeal",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+        LottieAnimation(
+            composition = composition,
+            modifier = Modifier.size(250.dp)
         )
     }
 }
