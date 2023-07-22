@@ -1,5 +1,8 @@
 package com.everymeal.presentation.signup
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,15 +18,22 @@ import dagger.hilt.android.AndroidEntryPoint
 class UnivSelectActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setUnivSelectScreen()
+    }
+
+    private fun setUnivSelectScreen() {
         setContent {
             EveryMeal_AndroidTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    UnivSelectScreen()
-                }
+                UnivSelectScreen()
             }
+        }
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, UnivSelectActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }

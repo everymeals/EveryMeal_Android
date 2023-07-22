@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SplashScreen(
-    activity: SplashActivity,
+    onFinishSplash: () -> Unit,
     viewModel: ExampleViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -73,21 +73,17 @@ fun SplashScreen(
         )
 
         if (progress == 1f) {
-            moveToUnivSelect(activity)
+            onFinishSplash()
         }
     }
-}
-
-private fun moveToUnivSelect(activity: SplashActivity) {
-    val intent = Intent(activity, UnivSelectActivity::class.java)
-    activity.startActivity(intent)
-    activity.finish()
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SplashPreview() {
     EveryMeal_AndroidTheme {
-        SplashScreen(SplashActivity())
+        SplashScreen(
+            onFinishSplash = { }
+        )
     }
 }
