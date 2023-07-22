@@ -24,7 +24,7 @@
 
         </activity>
         <activity
-            android:name="com.everymeal.presentation.splash.SplashActivity"
+            android:name="com.everymeal.presentation.ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.EveryMeal_Android">
             <intent-filter>
@@ -32,6 +32,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.everymeal.presentation.signup.UnivSelectActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EveryMeal_Android">
+
         </activity>
     </application>
 

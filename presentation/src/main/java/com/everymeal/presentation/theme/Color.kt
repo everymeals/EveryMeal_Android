@@ -1,4 +1,4 @@
-package com.everymeal.presentation.ui.theme
+package com.everymeal.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

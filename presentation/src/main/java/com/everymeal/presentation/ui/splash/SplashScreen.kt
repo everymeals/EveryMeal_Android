@@ -1,5 +1,7 @@
-package com.everymeal.presentation.splash
+package com.everymeal.presentation.ui.splash
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,13 +19,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.ExampleFoodState
 import com.everymeal.presentation.ExampleViewModel
-import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
+import com.everymeal.presentation.signup.UnivSelectActivity
+import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SplashScreen(
+    activity: SplashActivity,
     viewModel: ExampleViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -51,6 +60,7 @@ fun SplashScreen(
     }
 
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("everymeal_splash.json"))
+    val progress by animateLottieCompositionAsState(composition)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -61,13 +71,23 @@ fun SplashScreen(
             composition = composition,
             modifier = Modifier.size(250.dp)
         )
+
+        if (progress == 1f) {
+            moveToUnivSelect(activity)
+        }
     }
+}
+
+private fun moveToUnivSelect(activity: SplashActivity) {
+    val intent = Intent(activity, UnivSelectActivity::class.java)
+    activity.startActivity(intent)
+    activity.finish()
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SplashPreview() {
     EveryMeal_AndroidTheme {
-        SplashScreen()
+        SplashScreen(SplashActivity())
     }
 }

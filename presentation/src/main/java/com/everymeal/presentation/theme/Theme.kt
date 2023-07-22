@@ -1,4 +1,4 @@
-package com.everymeal.presentation.ui.theme
+package com.everymeal.presentation.theme
 
 import android.app.Activity
 import android.os.Build
