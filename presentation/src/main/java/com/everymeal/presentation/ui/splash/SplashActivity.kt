@@ -4,11 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import com.everymeal.presentation.signup.UnivSelectActivity
+import com.everymeal.presentation.ui.signup.UnivSelectActivity
 import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 

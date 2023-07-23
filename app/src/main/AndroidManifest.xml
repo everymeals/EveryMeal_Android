@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.everymeal.presentation.signup.UnivSelectActivity"
+            android:name="com.everymeal.presentation.ui.signup.UnivSelectActivity"
             android:exported="true"
             android:theme="@style/Theme.EveryMeal_Android">
 
