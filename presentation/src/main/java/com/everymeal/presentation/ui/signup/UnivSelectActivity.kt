@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import com.everymeal.presentation.MainActivity
 import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,9 +25,8 @@ class UnivSelectActivity : ComponentActivity() {
         setContent {
             EveryMeal_AndroidTheme {
                 UnivSelectScreen{
-                    /*
-                    선택하기 버튼 클릭
-                     */
+                    MainActivity.startActivity(this)
+                    finish()
                 }
             }
         }

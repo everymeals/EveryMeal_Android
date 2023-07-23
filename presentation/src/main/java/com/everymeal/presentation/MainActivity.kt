@@ -1,5 +1,7 @@
 package com.everymeal.presentation
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
+import com.everymeal.presentation.ui.signup.UnivSelectActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +30,13 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android")
                 }
             }
+        }
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }
