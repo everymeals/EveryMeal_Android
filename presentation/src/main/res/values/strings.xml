@@ -2,4 +2,5 @@
     <string name="app_name">My Application</string>
 
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
+    <string name="select">선택하기</string>
 </resources>
