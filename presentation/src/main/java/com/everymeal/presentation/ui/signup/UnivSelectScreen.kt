@@ -56,7 +56,7 @@ fun UnivSelectScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
         ) {
-            Spacer(modifier = Modifier.padding(70.dp))
+            Spacer(modifier = Modifier.padding(58.dp))
             Text(
                 text = stringResource(R.string.univ_select_title),
                 style = TextStyle(
