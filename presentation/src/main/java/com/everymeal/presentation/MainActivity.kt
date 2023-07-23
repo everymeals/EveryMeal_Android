@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
-import com.everymeal.presentation.ui.signup.UnivSelectActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -2,8 +2,8 @@ package com.everymeal.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.everymeal.domain.usecase.GetWeekFoodUseCase
 import com.everymeal.domain.model.Result
+import com.everymeal.domain.usecase.GetWeekFoodUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
