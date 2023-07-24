@@ -12,5 +12,8 @@ val Pink40 = Color(0xFF7D5260)
 
 val Gray100 = Color(0xFFF9FAFB)
 val Gray200 = Color(0xFFE5E8EB)
+val Gray300 = Color(0xFFF2F4F6)
+val Gray500 = Color(0xFFB0B8C1)
+var Gray800 = Color(0xFF4E5968)
 
 val Main100 = Color(0xFFFF4848)

@@ -5,21 +5,26 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +34,9 @@ import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.theme.Gray100
+import com.everymeal.presentation.theme.Gray300
+import com.everymeal.presentation.theme.Gray500
+import com.everymeal.presentation.theme.Gray800
 
 data class Item(
     val Image: Int,
@@ -73,6 +81,38 @@ fun UnivSelectScreen(
                     UnivSelectItem(item = items[index])
                 }
             }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Gray300, RoundedCornerShape(100.dp))
+                    .padding(horizontal = 24.dp, vertical = 14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_chat),
+                    contentDescription = stringResource(id = R.string.icon_chat_description),
+                    tint = Gray500
+                )
+                Spacer(modifier = Modifier.padding(14.dp))
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.univ_select_not_univ),
+                        fontSize = 15.sp,
+                        color = Gray800
+                    )
+                    Text(
+                        text = stringResource(id = R.string.univ_select_apply),
+                        fontSize = 14.sp,
+                        color = Gray500
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
+                    contentDescription = stringResource(id = R.string.icon_arrow_right),
+                    tint = Gray500
+                )
+            }
             EveryMealMainButton(
                 text = stringResource(R.string.select),
                 enabled = false,
@@ -82,7 +122,6 @@ fun UnivSelectScreen(
         }
     }
 }
-
 
 @Composable
 fun UnivSelectItem(item: Item) {

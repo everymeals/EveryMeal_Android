@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
+    <!--  공통  -->
     <string name="select">선택하기</string>
+
+    <!-- 로그인, 온보딩, 대학선택화면 -->
+    <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
+    <string name="univ_select_not_univ">여기에 없어요</string>
+    <string name="univ_select_apply">학교 신청하러 가기</string>
+
+    <!-- 아이콘, 이미지 설명 -->
+    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
+    <string name="icon_arrow_right">들어가기</string>
+
 </resources>
