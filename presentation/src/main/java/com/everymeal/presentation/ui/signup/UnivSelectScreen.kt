@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.presentation.ExampleViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
@@ -55,7 +55,7 @@ data class Item(
 @Composable
 fun UnivSelectScreen(
     viewModel: UnivSelectViewModel = hiltViewModel(),
-    onSelectClick : () -> Unit
+    onUnivSelectClick : () -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
@@ -134,9 +134,19 @@ fun UnivSelectScreen(
             }
             EveryMealMainButton(
                 text = stringResource(R.string.select),
-                enabled = false,
+                enabled = viewState.selectedUniv.isNotEmpty(),
             ) {
-                onSelectClick()
+                viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked)
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when(effect) {
+                UnivSelectContract.UnivSelectEffect.MoveToMain -> {
+                    onUnivSelectClick()
+                }
             }
         }
     }
@@ -176,7 +186,9 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
 @Composable
 fun UnivSelectScreenPreview() {
     EveryMeal_AndroidTheme {
-        UnivSelectScreen{ }
+        UnivSelectScreen {
+
+        }
     }
 }
 

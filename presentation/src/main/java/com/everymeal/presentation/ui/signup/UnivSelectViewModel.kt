@@ -16,6 +16,9 @@ class UnivSelectViewModel @Inject constructor(
 
     override fun handleEvents(event: UnivSelectEvent) {
         when(event) {
+            is UnivSelectEvent.SelectButtonClicked -> {
+                sendEffect({ UnivSelectEffect.MoveToMain })
+            }
             is UnivSelectEvent.SelectedUniv -> {
                 updateState { copy(
                     selectedUniv = event.selectedUniv
