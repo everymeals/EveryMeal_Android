@@ -21,7 +21,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.ExampleFoodState
 import com.everymeal.presentation.ExampleViewModel
-import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
+import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable

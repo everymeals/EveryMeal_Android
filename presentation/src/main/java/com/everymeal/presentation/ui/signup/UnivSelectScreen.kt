@@ -32,11 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
-import com.everymeal.presentation.theme.EveryMeal_AndroidTheme
-import com.everymeal.presentation.theme.Gray100
-import com.everymeal.presentation.theme.Gray300
-import com.everymeal.presentation.theme.Gray500
-import com.everymeal.presentation.theme.Gray800
+import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
+import com.everymeal.presentation.ui.theme.Gray100
+import com.everymeal.presentation.ui.theme.Gray300
+import com.everymeal.presentation.ui.theme.Gray500
+import com.everymeal.presentation.ui.theme.Gray800
 
 data class Item(
     val Image: Int,

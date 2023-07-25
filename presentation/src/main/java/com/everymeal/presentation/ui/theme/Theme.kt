@@ -1,4 +1,4 @@
-package com.everymeal.presentation.theme
+package com.everymeal.presentation.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme

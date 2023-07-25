@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
-import com.everymeal.presentation.theme.Gray200
-import com.everymeal.presentation.theme.Main100
+import com.everymeal.presentation.ui.theme.Gray200
+import com.everymeal.presentation.ui.theme.Main100
 
 @Composable
 fun EveryMealMainButton(
