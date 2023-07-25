@@ -45,6 +45,7 @@ import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray800
+import com.everymeal.presentation.ui.theme.Paddings
 
 data class Item(
     val Image: Int,
@@ -73,7 +74,7 @@ fun UnivSelectScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = Paddings.extra)
         ) {
             Spacer(modifier = Modifier.padding(58.dp))
             Text(
@@ -103,7 +104,7 @@ fun UnivSelectScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Gray300, RoundedCornerShape(100.dp))
-                    .padding(horizontal = 24.dp, vertical = 14.dp),
+                    .padding(horizontal = Paddings.extra, vertical = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -150,8 +151,8 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onSelectClick(item) }
-            .padding(8.dp)
-            .clip(RoundedCornerShape(8.dp))
+            .padding(Paddings.medium)
+            .clip(RoundedCornerShape(Paddings.medium))
             .background(if (isSelected) Gray500 else Gray100)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
