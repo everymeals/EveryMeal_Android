@@ -2,6 +2,7 @@ package com.everymeal.presentation.ui.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.presentation.ExampleViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
@@ -45,8 +50,11 @@ data class Item(
 
 @Composable
 fun UnivSelectScreen(
+    viewModel: UnivSelectViewModel = hiltViewModel(),
     onSelectClick : () -> Unit
 ) {
+    val viewState by viewModel.viewState.collectAsState()
+
     val items = listOf(
         Item(Image = R.drawable.image_myongji, name = "명지대"),
         Item(Image = R.drawable.image_sungsin, name = "성신여대"),
@@ -78,7 +86,14 @@ fun UnivSelectScreen(
                 modifier = Modifier.weight(1f),
             ) {
                 items(items.size) { index ->
-                    UnivSelectItem(item = items[index])
+                    val item = items[index]
+                    val isSelected = viewState.selectedUniv == item.name
+                    UnivSelectItem(
+                        item = item,
+                        isSelected = isSelected,
+                    ) {
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(item.name))
+                    }
                 }
             }
             Row(
@@ -124,12 +139,13 @@ fun UnivSelectScreen(
 }
 
 @Composable
-fun UnivSelectItem(item: Item) {
+fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Unit) {
     Column(
         modifier = Modifier
+            .clickable { onSelectClick(item) }
             .padding(8.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(Gray100)
+            .background(if (isSelected) Color.Blue else Gray100)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -161,8 +177,12 @@ fun UnivSelectScreenPreview() {
 fun UnivSelectScreenItemPreview() {
     EveryMeal_AndroidTheme {
         UnivSelectItem(item = Item(
-            Image = R.drawable.image_myongji,
-            name = "명지대학교"
-        ))
+                Image = R.drawable.image_myongji,
+                name = "명지대학교"
+            ),
+            false
+        ) {
+
+        }
     }
 }

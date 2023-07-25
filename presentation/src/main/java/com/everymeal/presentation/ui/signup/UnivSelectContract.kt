@@ -20,6 +20,5 @@ class UnivSelectContract {
 
     sealed class UnivSelectEffect : ViewSideEffect {
         object MoveToMain: UnivSelectEffect()
-        object UnivSelect: UnivSelectEffect()
     }
 }

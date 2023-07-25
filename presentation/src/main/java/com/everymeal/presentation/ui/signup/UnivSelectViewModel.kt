@@ -20,7 +20,6 @@ class UnivSelectViewModel @Inject constructor(
                 updateState { copy(
                     selectedUniv = event.selectedUniv
                 ) }
-                sendEffect({ UnivSelectEffect.UnivSelect })
             }
         }
     }
