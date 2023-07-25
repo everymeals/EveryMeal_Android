@@ -1,5 +1,6 @@
-package com.everymeal.presentation.splash
+package com.everymeal.presentation.ui.splash
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,13 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.ExampleFoodState
 import com.everymeal.presentation.ExampleViewModel
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SplashScreen(
+    onFinishSplash: () -> Unit,
     viewModel: ExampleViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -51,6 +55,7 @@ fun SplashScreen(
     }
 
     val composition by rememberLottieComposition(LottieCompositionSpec.Asset("everymeal_splash.json"))
+    val progress by animateLottieCompositionAsState(composition)
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -61,6 +66,10 @@ fun SplashScreen(
             composition = composition,
             modifier = Modifier.size(250.dp)
         )
+
+        if (progress == 1f) {
+            onFinishSplash()
+        }
     }
 }
 
@@ -68,6 +77,8 @@ fun SplashScreen(
 @Composable
 fun SplashPreview() {
     EveryMeal_AndroidTheme {
-        SplashScreen()
+        SplashScreen(
+            onFinishSplash = { }
+        )
     }
 }
