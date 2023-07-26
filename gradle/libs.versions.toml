@@ -19,6 +19,8 @@ kotlin-serilization = "1.0.0"
 
 lottie = "6.0.0"
 
+compose-navigation = "2.4.2"
+
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -61,6 +63,10 @@ kotlin-serilization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-ser
 
 #Lottie
 compose-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+#Compose-Navigation
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
