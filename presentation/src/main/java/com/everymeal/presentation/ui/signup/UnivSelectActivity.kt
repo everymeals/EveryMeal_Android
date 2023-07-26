@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.everymeal.presentation.MainActivity
+import com.everymeal.presentation.ui.main.MainActivity
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
