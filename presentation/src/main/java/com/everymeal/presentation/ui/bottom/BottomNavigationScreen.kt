@@ -2,7 +2,6 @@ package com.everymeal.presentation.ui.bottom
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,6 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -22,19 +22,6 @@ import androidx.navigation.NavHostController
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Main100
 import com.everymeal.presentation.ui.theme.Paddings
-
-fun navigateBottomNavigationScreen(
-    navController: NavHostController,
-    navigationItem: BottomNavigation,
-) {
-    navController.navigate(navigationItem.route) {
-        popUpTo(navController.graph.findStartDestination().id) {
-            saveState = true
-        }
-        launchSingleTop = true
-        restoreState = true
-    }
-}
 
 @Composable
 fun EveryMealBottomNavigation(
@@ -50,10 +37,8 @@ fun EveryMealBottomNavigation(
     ) {
         BottomNavigation.values().forEach { bottomItem ->
             NavigationBarItem(
-                modifier = Modifier.padding(8.dp),
                 icon = {
                     Icon(
-                        modifier = Modifier.padding(4.dp),
                         imageVector = ImageVector.vectorResource(bottomItem.icon),
                         contentDescription = bottomItem.route,
                         tint = if (currentDestination?.route == bottomItem.route) {
@@ -81,4 +66,26 @@ fun EveryMealBottomNavigation(
             )
         }
     }
+}
+
+fun navigateBottomNavigationScreen(
+    navController: NavHostController,
+    navigationItem: BottomNavigation,
+) {
+    navController.navigate(navigationItem.route) {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+@Preview
+@Composable
+fun PreviewEveryMealBottomNavigation() {
+    EveryMealBottomNavigation(
+        currentDestination = null,
+        navigateToScreen = {}
+    )
 }
