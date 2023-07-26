@@ -1,4 +1,4 @@
-package com.everymeal.presentation.ui.main
+package com.everymeal.presentation.ui.bottom
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

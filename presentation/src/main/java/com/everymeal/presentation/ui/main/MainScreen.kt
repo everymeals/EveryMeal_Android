@@ -1,76 +1,60 @@
 package com.everymeal.presentation.ui.main
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.everymeal.presentation.ui.theme.Gray500
-import com.everymeal.presentation.ui.theme.Main100
-import com.everymeal.presentation.ui.theme.Paddings
+import com.everymeal.presentation.ui.bottom.BottomNavigation
+import com.everymeal.presentation.ui.bottom.EveryMealBottomNavigation
+import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
+import com.everymeal.presentation.ui.home.HomeScreen
+import com.everymeal.presentation.ui.mypage.MyPageScreen
+import com.everymeal.presentation.ui.univfood.UnivFoodScreen
+import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
-}
-
-@Composable
-fun EveryMealBottomNavigation(
-    currentDestination: NavDestination?,
-    navigateToScreen: (BottomNavigation) -> Unit,
-) {
-    NavigationBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        tonalElevation = Paddings.large
-    ) {
-        BottomNavigation.values().forEach { bottomItem ->
-            NavigationBarItem(
-                modifier = Modifier.padding(8.dp),
-                icon = {
-                    Icon(
-                        modifier = Modifier.padding(8.dp),
-                        imageVector = ImageVector.vectorResource(bottomItem.icon),
-                        contentDescription = bottomItem.route,
-                        tint = if (currentDestination?.route == bottomItem.route) {
-                            Main100
-                        } else {
-                            Gray500
-                        }
+    Scaffold(
+        bottomBar = {
+            EveryMealBottomNavigation(
+                currentDestination = currentDestination,
+                navigateToScreen = { navigationItem ->
+                    navigateBottomNavigationScreen(
+                        navController = navController,
+                        navigationItem = navigationItem,
                     )
-                },
-                label = {
-                    Text(
-                        text = stringResource(bottomItem.title),
-                        color = if (currentDestination?.route == bottomItem.route) {
-                            Main100
-                        } else {
-                            Gray500
-                        },
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                        )
-                    )
-                },
-                selected = currentDestination?.route == bottomItem.route,
-                onClick = { navigateToScreen(bottomItem) }
+                }
             )
+        }
+    ) { padding ->
+        NavHost(
+            modifier = Modifier.padding(padding),
+            navController = navController,
+            startDestination = BottomNavigation.HOME.route,
+        ) {
+            composable(route = BottomNavigation.HOME.route) {
+                HomeScreen()
+            }
+            composable(route = BottomNavigation.UNIV_FOOD.route) {
+                UnivFoodScreen()
+            }
+            composable(route = BottomNavigation.WHAT_FOOD.route) {
+                WhatFoodScreen()
+            }
+            composable(route = BottomNavigation.MY_PAGE.route) {
+                MyPageScreen()
+            }
         }
     }
 }
