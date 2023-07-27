@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Main100
+import com.everymeal.presentation.ui.theme.Main800
 
 @Composable
 fun EveryMealMainButton(
@@ -30,7 +31,10 @@ fun EveryMealMainButton(
             .fillMaxWidth()
             .padding(vertical = 16.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = if(enabled) Main100 else Gray200),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if(enabled) Main100 else Gray200,
+            contentColor = Main800
+        ),
         enabled = enabled,
         onClick = onClick,
     ) {

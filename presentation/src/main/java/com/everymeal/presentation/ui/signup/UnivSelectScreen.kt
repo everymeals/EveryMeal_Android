@@ -1,7 +1,10 @@
 package com.everymeal.presentation.ui.signup
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +20,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
@@ -37,6 +45,7 @@ import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray800
+import com.everymeal.presentation.ui.theme.Paddings
 
 data class Item(
     val Image: Int,
@@ -45,8 +54,11 @@ data class Item(
 
 @Composable
 fun UnivSelectScreen(
-    onSelectClick : () -> Unit
+    viewModel: UnivSelectViewModel = hiltViewModel(),
+    onUnivSelectClick : () -> Unit,
 ) {
+    val viewState by viewModel.viewState.collectAsState()
+
     val items = listOf(
         Item(Image = R.drawable.image_myongji, name = "명지대"),
         Item(Image = R.drawable.image_sungsin, name = "성신여대"),
@@ -62,7 +74,7 @@ fun UnivSelectScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = Paddings.extra)
         ) {
             Spacer(modifier = Modifier.padding(58.dp))
             Text(
@@ -78,14 +90,21 @@ fun UnivSelectScreen(
                 modifier = Modifier.weight(1f),
             ) {
                 items(items.size) { index ->
-                    UnivSelectItem(item = items[index])
+                    val item = items[index]
+                    val isSelected = viewState.selectedUniv == item.name
+                    UnivSelectItem(
+                        item = item,
+                        isSelected = isSelected,
+                    ) {
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(item.name))
+                    }
                 }
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Gray300, RoundedCornerShape(100.dp))
-                    .padding(horizontal = 24.dp, vertical = 14.dp),
+                    .padding(horizontal = Paddings.extra, vertical = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -115,21 +134,36 @@ fun UnivSelectScreen(
             }
             EveryMealMainButton(
                 text = stringResource(R.string.select),
-                enabled = false,
+                enabled = viewState.selectedUniv.isNotEmpty(),
             ) {
-                onSelectClick()
+                viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked)
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when(effect) {
+                UnivSelectContract.UnivSelectEffect.MoveToMain -> {
+                    onUnivSelectClick()
+                }
             }
         }
     }
 }
 
+@SuppressLint("RememberReturnType")
 @Composable
-fun UnivSelectItem(item: Item) {
+fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Unit) {
     Column(
         modifier = Modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(Gray100)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onSelectClick(item) }
+            .padding(Paddings.medium)
+            .clip(RoundedCornerShape(Paddings.medium))
+            .background(if (isSelected) Gray500 else Gray100)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -152,7 +186,9 @@ fun UnivSelectItem(item: Item) {
 @Composable
 fun UnivSelectScreenPreview() {
     EveryMeal_AndroidTheme {
-        UnivSelectScreen{ }
+        UnivSelectScreen {
+
+        }
     }
 }
 
@@ -161,8 +197,12 @@ fun UnivSelectScreenPreview() {
 fun UnivSelectScreenItemPreview() {
     EveryMeal_AndroidTheme {
         UnivSelectItem(item = Item(
-            Image = R.drawable.image_myongji,
-            name = "명지대학교"
-        ))
+                Image = R.drawable.image_myongji,
+                name = "명지대학교"
+            ),
+            false
+        ) {
+
+        }
     }
 }
