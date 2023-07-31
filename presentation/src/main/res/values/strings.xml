@@ -13,4 +13,10 @@
     <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
     <string name="icon_arrow_right">들어가기</string>
 
+    <!--  바텀 네비게이션 텍스트  -->
+    <string name="bottom_nav_home">맛집</string>
+    <string name="bottom_nav_univ_food">학식</string>
+    <string name="bottom_nav_what_food">뭐먹지</string>
+    <string name="bottom_nav_my_tab">마이</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.everymeal.presentation
+package com.everymeal.presentation.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -19,15 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setMainScreen()
+    }
+
+    private fun setMainScreen() {
         setContent {
             EveryMeal_AndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                MainScreen()
             }
         }
     }
@@ -37,21 +36,5 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EveryMeal_AndroidTheme {
-        Greeting("Android")
     }
 }
