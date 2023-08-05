@@ -18,6 +18,10 @@
     <!--  홈 화면 텍스트  -->
     <string name="home_top_category_title">%s 원픽 맛집은 어디?</string>
     <string name="home_top_category_sub_title">맛집 리뷰를 남겨보세요</string>
+    <string name="home_top_category_recommend">추천</string>
+    <string name="home_top_category_rice">밥집</string>
+    <string name="home_top_category_cafe">카페</string>
+    <string name="home_top_category_drink">술집</string>
 
     <!-- 아이콘, 이미지 설명 -->
     <!--  로그인, 온보딩, 대학선택화면  -->
@@ -29,5 +33,6 @@
     <string name="home_love_logo">맛집 리스트 화면 버튼</string>
     <string name="home_search_logo">검색 화면 버튼</string>
     <string name="home_top_category_main_image">원픽 맛집 이미지</string>
+    <string name="home_top_category_list">카테고리 4개 리스트 메뉴 아이템</string>
 
 </resources>
