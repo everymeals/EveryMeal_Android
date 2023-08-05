@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,11 +39,17 @@ fun HomeScreen(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .background(color = Color.White),
     ) {
         HomeTopAppBar()
-        HomeCategoryList()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+        ) {
+            HomeCategoryList()
+        }
     }
 }
 
@@ -87,7 +94,38 @@ fun HomeTopAppBar() {
 
 @Composable
 fun HomeCategoryList() {
-
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Gray300, RoundedCornerShape(12.dp))
+            .padding(horizontal = Paddings.extra, vertical = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.ic_homemenu_recommend),
+            contentDescription = stringResource(R.string.home_top_category_main_image),
+            tint = Gray500
+        )
+        Spacer(modifier = Modifier.padding(10.dp))
+        Column {
+            Text(
+                text = stringResource(id = R.string.home_top_category_title, "슈니"),
+                fontSize = 15.sp,
+                color = Gray800
+            )
+            Text(
+                text = stringResource(R.string.home_top_category_sub_title),
+                fontSize = 14.sp,
+                color = Gray500
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.icon_arrow_right),
+            contentDescription = stringResource(R.string.icon_arrow_right),
+            tint = Gray500
+        )
+    }
 }
 
 @Preview
