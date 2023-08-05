@@ -9,14 +9,20 @@
     <string name="univ_select_not_univ">여기에 없어요</string>
     <string name="univ_select_apply">학교 신청하러 가기</string>
 
-    <!-- 아이콘, 이미지 설명 -->
-    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
-    <string name="icon_arrow_right">들어가기</string>
-
     <!--  바텀 네비게이션 텍스트  -->
     <string name="bottom_nav_home">맛집</string>
     <string name="bottom_nav_univ_food">학식</string>
     <string name="bottom_nav_what_food">뭐먹지</string>
     <string name="bottom_nav_my_tab">마이</string>
+
+    <!-- 아이콘, 이미지 설명 -->
+    <!--  로그인, 온보딩, 대학선택화면  -->
+    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
+    <string name="icon_arrow_right">들어가기</string>
+
+    <!--  홈화면  -->
+    <string name="home_everymeal_logo_text">에브리밀 로고</string>
+    <string name="home_love_logo">맛집 리스트 화면 버튼</string>
+    <string name="home_search_logo">검색 화면 버튼</string>
 
 </resources>
