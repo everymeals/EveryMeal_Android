@@ -63,8 +63,8 @@ fun UnivSelectScreen(
     val items = listOf(
         Item(univName = "명지대", campusName = "자연캠퍼스"),
         Item(univName = "명지대", campusName = "인문캠퍼스"),
-        Item(univName = "성신여대", campusName = "자연캠퍼스"),
-        Item(univName = "성신여대", campusName = "자연캠퍼스"),
+        Item(univName = "성신여대", campusName = "수정캠퍼스"),
+        Item(univName = "성신여대", campusName = "운정캠퍼스"),
         Item(univName = "서울여대"),
     )
 
@@ -78,7 +78,13 @@ fun UnivSelectScreen(
                 .fillMaxSize()
                 .padding(horizontal = Paddings.extra)
         ) {
-            Spacer(modifier = Modifier.padding(58.dp))
+            Spacer(modifier = Modifier.padding(40.dp))
+            Image(
+                painter = painterResource(id = R.drawable.icon_school),
+                contentDescription = stringResource(R.string.icon_univ),
+                modifier = Modifier.size(64.dp)
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
             Text(
                 text = stringResource(R.string.univ_select_title),
                 style = TextStyle(
@@ -176,6 +182,7 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
         Text(
             text = item.univName,
             fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
             color = Gray800
         )
         item.campusName?.let {
