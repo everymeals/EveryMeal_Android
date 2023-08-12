@@ -44,12 +44,13 @@ import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
+import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Paddings
 
 data class Item(
-    val Image: Int,
-    val name: String,
+    val univName: String,
+    val campusName: String? = null
 )
 
 @Composable
@@ -60,10 +61,11 @@ fun UnivSelectScreen(
     val viewState by viewModel.viewState.collectAsState()
 
     val items = listOf(
-        Item(Image = R.drawable.image_myongji, name = "명지대"),
-        Item(Image = R.drawable.image_sungsin, name = "성신여대"),
-        Item(Image = R.drawable.image_seoulwoman, name = "서울여대"),
-        Item(Image = R.drawable.image_konkuk, name = "건국대"),
+        Item(univName = "명지대", campusName = "자연캠퍼스"),
+        Item(univName = "명지대", campusName = "인문캠퍼스"),
+        Item(univName = "성신여대", campusName = "자연캠퍼스"),
+        Item(univName = "성신여대", campusName = "자연캠퍼스"),
+        Item(univName = "서울여대"),
     )
 
     Box(
@@ -86,17 +88,19 @@ fun UnivSelectScreen(
             )
             Spacer(modifier = Modifier.padding(10.dp))
             LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
+                columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f),
             ) {
                 items(items.size) { index ->
                     val item = items[index]
-                    val isSelected = viewState.selectedUniv == item.name
+                    val isSelected = viewState.selectedUniv == "${item.univName}+${item.campusName}"
                     UnivSelectItem(
                         item = item,
                         isSelected = isSelected,
                     ) {
-                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(item.name))
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(
+                            "${item.univName}+${item.campusName}")
+                        )
                     }
                 }
             }
@@ -161,7 +165,7 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onSelectClick(item) }
-            .padding(Paddings.medium)
+            .padding(bottom = Paddings.medium, end = Paddings.medium)
             .clip(RoundedCornerShape(Paddings.medium))
             .background(if (isSelected) Gray500 else Gray100)
             .fillMaxSize(),
@@ -169,16 +173,19 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.padding(bottom = 10.dp))
-        Image(
-            painter = painterResource(item.Image),
-            contentDescription = item.name,
-            Modifier.size(36.dp)
-        )
         Text(
-            text = item.name,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(10.dp)
+            text = item.univName,
+            fontSize = 13.sp,
+            color = Gray800
         )
+        item.campusName?.let {
+            Text(
+                text = item.campusName,
+                fontSize = 13.sp,
+                color = Gray600,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
     }
 }
 
@@ -197,8 +204,8 @@ fun UnivSelectScreenPreview() {
 fun UnivSelectScreenItemPreview() {
     EveryMeal_AndroidTheme {
         UnivSelectItem(item = Item(
-                Image = R.drawable.image_myongji,
-                name = "명지대학교"
+                univName = "명지대",
+                campusName = "용인캠퍼스"
             ),
             false
         ) {
