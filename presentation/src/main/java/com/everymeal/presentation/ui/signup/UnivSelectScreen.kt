@@ -50,7 +50,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 data class Item(
     val univName: String,
-    val campusName: String? = null
+    val campusName: String?
 )
 
 @Composable
@@ -65,7 +65,7 @@ fun UnivSelectScreen(
         Item(univName = "명지대", campusName = "인문캠퍼스"),
         Item(univName = "성신여대", campusName = "수정캠퍼스"),
         Item(univName = "성신여대", campusName = "운정캠퍼스"),
-        Item(univName = "서울여대"),
+        Item(univName = "서울여대", campusName = null),
     )
 
     Box(
@@ -178,20 +178,32 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.padding(bottom = 10.dp))
+        if(item.campusName == null) {
+            Spacer(modifier = Modifier.padding(16.dp))
+        } else {
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
+
         Text(
             text = item.univName,
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold,
             color = Gray800
         )
-        item.campusName?.let {
+
+        if(!item.campusName.isNullOrEmpty()) {
+            Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 text = item.campusName,
                 fontSize = 13.sp,
                 color = Gray600,
-                modifier = Modifier.padding(10.dp)
             )
+        }
+
+        if(item.campusName == null) {
+            Spacer(modifier = Modifier.padding(16.dp))
+        } else {
+            Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }
