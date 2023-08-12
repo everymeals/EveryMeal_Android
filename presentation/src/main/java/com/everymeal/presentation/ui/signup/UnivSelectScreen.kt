@@ -66,6 +66,7 @@ fun UnivSelectScreen(
         Item(univName = "성신여대", campusName = "수정캠퍼스"),
         Item(univName = "성신여대", campusName = "운정캠퍼스"),
         Item(univName = "서울여대"),
+        Item(univName = "연세대학교", campusName = "서울캠퍼스"),
     )
 
     Box(
@@ -103,6 +104,7 @@ fun UnivSelectScreen(
                     UnivSelectItem(
                         item = item,
                         isSelected = isSelected,
+                        index = index
                     ) {
                         viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(
                             "${item.univName}+${item.campusName}")
@@ -164,21 +166,21 @@ fun UnivSelectScreen(
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Unit) {
+fun UnivSelectItem(item: Item, isSelected: Boolean, index: Int, onSelectClick: (Item) -> Unit) {
     Column(
         modifier = Modifier
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onSelectClick(item) }
-            .padding(bottom = Paddings.medium, end = Paddings.medium)
+            .padding(bottom = Paddings.medium, end = if(index%2==0) Paddings.medium else 0.dp)
             .clip(RoundedCornerShape(Paddings.medium))
             .background(if (isSelected) Gray500 else Gray100)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val spacerSize = if (item.campusName == null) 16.dp else 10.dp
+        val spacerSize = if (item.campusName == null) 17.dp else 10.dp
         Spacer(modifier = Modifier.padding(spacerSize))
         Text(
             text = item.univName,
@@ -216,7 +218,8 @@ fun UnivSelectScreenItemPreview() {
                 univName = "명지대",
                 campusName = "용인캠퍼스"
             ),
-            false
+            false,
+            index = 0
         ) {
 
         }
