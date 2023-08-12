@@ -178,33 +178,23 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, onSelectClick: (Item) -> Uni
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if(item.campusName == null) {
-            Spacer(modifier = Modifier.padding(16.dp))
-        } else {
-            Spacer(modifier = Modifier.padding(10.dp))
-        }
-
+        val spacerSize = if (item.campusName == null) 16.dp else 10.dp
+        Spacer(modifier = Modifier.padding(spacerSize))
         Text(
             text = item.univName,
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold,
             color = Gray800
         )
-
-        if(!item.campusName.isNullOrEmpty()) {
+        item.campusName?.let { campusName ->
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = item.campusName,
+                text = campusName,
                 fontSize = 13.sp,
                 color = Gray600,
             )
         }
-
-        if(item.campusName == null) {
-            Spacer(modifier = Modifier.padding(16.dp))
-        } else {
-            Spacer(modifier = Modifier.padding(10.dp))
-        }
+        Spacer(modifier = Modifier.padding(spacerSize))
     }
 }
 
