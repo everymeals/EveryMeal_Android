@@ -50,7 +50,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 data class Item(
     val univName: String,
-    val campusName: String?
+    val campusName: String? = null
 )
 
 @Composable
@@ -65,7 +65,7 @@ fun UnivSelectScreen(
         Item(univName = "명지대", campusName = "인문캠퍼스"),
         Item(univName = "성신여대", campusName = "수정캠퍼스"),
         Item(univName = "성신여대", campusName = "운정캠퍼스"),
-        Item(univName = "서울여대", campusName = null),
+        Item(univName = "서울여대"),
     )
 
     Box(
