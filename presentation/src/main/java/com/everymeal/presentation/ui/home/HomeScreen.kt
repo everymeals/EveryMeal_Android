@@ -68,7 +68,7 @@ fun HomeScreen(
         ),
         Restaurant(
             name = "왕가주방",
-            category = "한식",
+            category = "중식",
             image = listOf(
                 R.drawable.image_myongji,
                 R.drawable.image_myongji,
