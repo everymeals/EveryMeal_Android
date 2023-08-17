@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealRestaurantItem
-import com.everymeal.presentation.ui.signup.Item
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -68,7 +67,7 @@ fun HomeScreen(
             loveCount = 100,
         ),
         Restaurant(
-            name = "슈니",
+            name = "왕가주방",
             category = "한식",
             image = listOf(
                 R.drawable.image_myongji,
@@ -110,9 +109,11 @@ fun HomeScreen(
                     color = Color.Black,
                     fontWeight = Bold,
                 )
+                Spacer(modifier = Modifier.padding(8.dp))
             }
-            items(items.size) {
-                EveryMealRestaurantItem()
+            items(items.size) { index ->
+                val item = items[index]
+                EveryMealRestaurantItem(item)
             }
         }
     }
