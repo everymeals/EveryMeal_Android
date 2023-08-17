@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealRestaurantItem
+import com.everymeal.presentation.ui.signup.Item
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -41,11 +42,45 @@ import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Paddings
 
-
+data class Restaurant(
+    val name: String,
+    val category: String,
+    val image: List<Int>,
+    val rating: Float,
+    val reviewCount: Int,
+    val loveCount: Int,
+)
 @Composable
 fun HomeScreen(
 
 ) {
+    val items = listOf(
+        Restaurant(
+            name = "슈니",
+            category = "한식",
+            image = listOf(
+                R.drawable.image_myongji,
+                R.drawable.image_myongji,
+                R.drawable.image_myongji,
+            ),
+            rating = 4.5f,
+            reviewCount = 100,
+            loveCount = 100,
+        ),
+        Restaurant(
+            name = "슈니",
+            category = "한식",
+            image = listOf(
+                R.drawable.image_myongji,
+                R.drawable.image_myongji,
+                R.drawable.image_myongji,
+            ),
+            rating = 4.5f,
+            reviewCount = 100,
+            loveCount = 100,
+        ),
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -75,6 +110,9 @@ fun HomeScreen(
                     color = Color.Black,
                     fontWeight = Bold,
                 )
+            }
+            items(items.size) {
+                EveryMealRestaurantItem()
             }
         }
     }
