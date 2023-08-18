@@ -42,7 +42,7 @@ fun SaveScreen() {
         val elements by remember {
             mutableStateOf(
                 listOf(
-                    ChipState("전체", mutableStateOf(false)),
+                    ChipState("전체", mutableStateOf(true)),
                     ChipState("밥집", mutableStateOf(false)),
                     ChipState("카페", mutableStateOf(false)),
                     ChipState("술", mutableStateOf(false))
@@ -54,8 +54,10 @@ fun SaveScreen() {
             Chips(
                 modifier = Modifier.padding(start = 20.dp),
                 elements = elements,
-                onChipClicked = { content, isSelected, idx ->
-                    elements[idx].isSelected.value = !elements[idx].isSelected.value
+                onChipClicked = { _, _, chipIndex ->
+                    elements.forEachIndexed { index, chipState ->
+                        chipState.isSelected.value = index == chipIndex
+                    }
                 }
             )
         }
