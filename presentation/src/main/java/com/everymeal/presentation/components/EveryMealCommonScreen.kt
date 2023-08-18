@@ -112,13 +112,50 @@ fun EveryMealRestaurantItem(
             when {
                 restaurant.image.size <= 3 -> {
                     restaurant.image.forEach { image ->
-                        ImageComponent(imageRes = image)
+                        Image(
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .padding(4.dp),
+                            painter = painterResource(id = image),
+                            contentDescription = null
+                        )
                     }
                 }
                 restaurant.image.size > 3 -> {
-                    ImageComponent(imageRes = restaurant.image[0])
-                    ImageComponent(imageRes = restaurant.image[1])
-                    DimImageComponent(imageRes = restaurant.image[2], count = restaurant.image.size - 2)
+                    Image(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .padding(4.dp),
+                        painter = painterResource(restaurant.image[0]),
+                        contentDescription = null
+                    )
+                    Image(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .padding(4.dp),
+                        painter = painterResource(restaurant.image[1]),
+                        contentDescription = null
+                    )
+                    Box(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .padding(4.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = restaurant.image[2]),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(Color.Gray.copy(alpha = 0.6f))
+                        )
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.matchParentSize()
+                        ) {
+                            Text(text = "+${restaurant.image.size - 2}", color = Color.White, fontSize = 14.sp)
+                        }
+                    }
                 }
             }
         }
@@ -126,7 +163,7 @@ fun EveryMealRestaurantItem(
 }
 
 @Composable
-fun ImageComponent(imageRes: Int) {
+fun ImageComponent(imageRes: Int, weight: Float) {
     Image(
         modifier = Modifier
             .aspectRatio(1f)
