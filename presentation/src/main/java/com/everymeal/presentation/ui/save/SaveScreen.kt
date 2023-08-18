@@ -2,118 +2,58 @@ package com.everymeal.presentation.ui.save
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
-import com.everymeal.presentation.ui.theme.Grey2
-import com.everymeal.presentation.ui.theme.Grey7
-import com.everymeal.presentation.ui.theme.Main100
-import com.everymeal.presentation.ui.theme.RED_LIGHT
-import com.everymeal.presentation.ui.theme.Typography
+import com.everymeal.presentation.ui.save.chip.Chips
+import com.everymeal.presentation.ui.theme.Gray800
 
 @Composable
-fun SaveScreen() {
+fun SaveScreen(
+    viewModel: SaveScreenViewModel = hiltViewModel(),
+) {
     Scaffold(
         topBar = {
             SaveTopBar()
         }
     ) { innerPadding ->
-
-        val elements by remember {
-            mutableStateOf(
-                listOf(
-                    ChipState("전체", mutableStateOf(true)),
-                    ChipState("밥집", mutableStateOf(false)),
-                    ChipState("카페", mutableStateOf(false)),
-                    ChipState("술", mutableStateOf(false))
-                )
-            )
-        }
-
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
             Chips(
                 modifier = Modifier.padding(start = 20.dp),
-                elements = elements,
+                elements = viewModel.elements,
                 onChipClicked = { _, _, chipIndex ->
-                    elements.forEachIndexed { index, chipState ->
-                        chipState.isSelected.value = index == chipIndex
-                    }
+                    viewModel.updateChipState(chipIndex)
                 }
             )
-        }
-    }
-}
-
-data class ChipState(
-    var text: String,
-    val isSelected: MutableState<Boolean>
-)
-
-@Composable
-private fun Chip(
-    text: String,
-    selected: Boolean,
-    modifier: Modifier = Modifier,
-    onChipClicked: (String, Boolean) -> Unit,
-) {
-    Surface(
-        color = when {
-            selected -> RED_LIGHT
-            else -> Grey2
-        },
-        shape = RoundedCornerShape(100.dp),
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            color = when {
-                selected -> Main100
-                else -> Grey7
-            },
-            style = Typography.bodySmall,
-            modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 6.dp)
-                .clickable { onChipClicked(text, selected) }
-        )
-    }
-}
-
-@Composable
-fun Chips(
-    modifier: Modifier = Modifier,
-    elements: List<ChipState>,
-    onChipClicked: (String, Boolean, Int) -> Unit,
-) {
-    LazyRow(modifier = modifier) {
-        items(elements.size) { idx ->
-            Chip(
-                text = elements[idx].text,
-                selected = elements[idx].isSelected.value,
-                onChipClicked = { content, isSelected ->
-                    onChipClicked(content, isSelected, idx)
-                }
+            EmptyView(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(
+                        alignment = Alignment.CenterHorizontally,
+                    )
             )
-            Spacer(modifier = Modifier.padding(8.dp))
         }
     }
 }
@@ -144,6 +84,33 @@ fun SaveTopBar(
             )
         }
     )
+}
+
+@Composable
+fun EmptyView(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.icon_save_empty),
+            contentDescription = "empty icon",
+        )
+        Spacer(modifier = Modifier.padding(top = 8.dp))
+        Text(
+            text = "저장한 가게가 없어요",
+            style = TextStyle(
+                fontSize = 15.sp,
+                lineHeight = 21.sp,
+                fontWeight = FontWeight(500),
+                color = Gray800,
+                textAlign = TextAlign.Center,
+            )
+        )
+    }
 }
 
 @Composable
