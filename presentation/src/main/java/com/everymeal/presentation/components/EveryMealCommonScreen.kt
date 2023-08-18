@@ -110,7 +110,7 @@ fun EveryMealRestaurantItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             when {
-                restaurant.image.size <= 3 -> {
+                restaurant.image.size == 3 -> {
                     restaurant.image.forEach { image ->
                         Image(
                             modifier = Modifier
@@ -121,6 +121,30 @@ fun EveryMealRestaurantItem(
                             contentDescription = null
                         )
                     }
+                }
+                restaurant.image.size == 2 -> {
+                    restaurant.image.forEach { image ->
+                        Image(
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .padding(4.dp),
+                            painter = painterResource(id = image),
+                            contentDescription = null
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f)) // 여기서 남은 공간을 차지
+                }
+                restaurant.image.size == 1 -> {
+                    Image(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .padding(4.dp),
+                        painter = painterResource(id = restaurant.image[0]),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.weight(2f)) // 2개의 공간을 비워둡니다
                 }
                 restaurant.image.size > 3 -> {
                     Image(
