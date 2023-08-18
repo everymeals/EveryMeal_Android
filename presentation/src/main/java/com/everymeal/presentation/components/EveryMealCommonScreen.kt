@@ -28,7 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.home.Restaurant
+import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray600
@@ -116,6 +118,7 @@ fun EveryMealRestaurantItem(
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
+                                .clip(RoundedCornerShape(8.dp))
                                 .padding(4.dp),
                             painter = painterResource(id = image),
                             contentDescription = null
@@ -128,29 +131,32 @@ fun EveryMealRestaurantItem(
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
+                                .clip(RoundedCornerShape(8.dp))
                                 .padding(4.dp),
                             painter = painterResource(id = image),
                             contentDescription = null
                         )
                     }
-                    Spacer(modifier = Modifier.weight(1f)) // 여기서 남은 공간을 차지
+                    Spacer(modifier = Modifier.weight(1f))
                 }
                 restaurant.image.size == 1 -> {
                     Image(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
                             .padding(4.dp),
                         painter = painterResource(id = restaurant.image[0]),
                         contentDescription = null
                     )
-                    Spacer(modifier = Modifier.weight(2f)) // 2개의 공간을 비워둡니다
+                    Spacer(modifier = Modifier.weight(2f))
                 }
                 restaurant.image.size > 3 -> {
                     Image(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
                             .padding(4.dp),
                         painter = painterResource(restaurant.image[0]),
                         contentDescription = null
@@ -159,23 +165,30 @@ fun EveryMealRestaurantItem(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp))
                             .padding(4.dp),
                         painter = painterResource(restaurant.image[1]),
                         contentDescription = null
                     )
                     Box(
                         modifier = Modifier
+                            .weight(1f)
                             .aspectRatio(1f)
                             .padding(4.dp)
                     ) {
                         Image(
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .clip(RoundedCornerShape(8.dp))
+                                .fillMaxSize(),
                             painter = painterResource(id = restaurant.image[2]),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.Gray.copy(alpha = 0.6f))
+                            contentDescription = null
                         )
                         Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.matchParentSize()
+                            modifier = Modifier
+                                .matchParentSize()
+                                .background(Color.Black.copy(alpha = 0.5f)),
+                            contentAlignment = Alignment.Center
                         ) {
                             Text(text = "+${restaurant.image.size - 2}", color = Color.White, fontSize = 14.sp)
                         }
@@ -187,7 +200,7 @@ fun EveryMealRestaurantItem(
 }
 
 @Composable
-fun ImageComponent(imageRes: Int, weight: Float) {
+fun ImageComponent(imageRes: Int) {
     Image(
         modifier = Modifier
             .aspectRatio(1f)
@@ -236,5 +249,13 @@ fun EveryMealRestaurantItemPreview() {
         )
     ) {
 
+    }
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    EveryMeal_AndroidTheme {
+        HomeScreen()
     }
 }

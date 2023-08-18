@@ -72,6 +72,7 @@ fun HomeScreen(
                 R.drawable.image_myongji,
                 R.drawable.image_myongji,
                 R.drawable.image_myongji,
+                R.drawable.image_myongji,
             ),
             rating = 4.5,
             reviewCount = 100,
