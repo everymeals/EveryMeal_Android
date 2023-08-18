@@ -113,7 +113,9 @@ fun HomeScreen(
             }
             items(items.size) { index ->
                 val item = items[index]
-                EveryMealRestaurantItem(item)
+                EveryMealRestaurantItem(item) {
+
+                }
             }
         }
     }

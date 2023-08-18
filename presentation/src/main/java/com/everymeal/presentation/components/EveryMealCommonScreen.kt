@@ -2,20 +2,25 @@ package com.everymeal.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,12 +30,14 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.Restaurant
 import com.everymeal.presentation.ui.theme.Gray300
+import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray700
 
 @Composable
 fun EveryMealRestaurantItem(
-    restaurant: Restaurant
+    restaurant: Restaurant,
+    onLoveClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -39,6 +46,7 @@ fun EveryMealRestaurantItem(
             .background(color = Color.White)
     ) {
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -57,9 +65,17 @@ fun EveryMealRestaurantItem(
                 color = Gray600,
                 fontSize = 12.sp
             )
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                modifier = Modifier
+                    .padding(start = 4.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
+                contentDescription = stringResource(R.string.icon_star),
+            )
         }
         Spacer(modifier = Modifier.padding(4.dp))
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
@@ -73,6 +89,70 @@ fun EveryMealRestaurantItem(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
             )
+            Text(
+                modifier = Modifier.padding(start = 2.dp),
+                text = "(${restaurant.reviewCount})",
+                color = Gray700,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "${restaurant.loveCount}",
+                color = Gray500,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+            )
+        }
+        Spacer(modifier = Modifier.padding(4.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            when {
+                restaurant.image.size <= 3 -> {
+                    restaurant.image.forEach { image ->
+                        ImageComponent(imageRes = image)
+                    }
+                }
+                restaurant.image.size > 3 -> {
+                    ImageComponent(imageRes = restaurant.image[0])
+                    ImageComponent(imageRes = restaurant.image[1])
+                    DimImageComponent(imageRes = restaurant.image[2], count = restaurant.image.size - 2)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ImageComponent(imageRes: Int) {
+    Image(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .padding(4.dp),
+        painter = painterResource(id = imageRes),
+        contentDescription = null
+    )
+}
+
+@Composable
+fun DimImageComponent(imageRes: Int, count: Int) {
+    Box(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .padding(4.dp)
+    ) {
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(Color.Gray.copy(alpha = 0.6f))
+        )
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.matchParentSize()
+        ) {
+            Text(text = "+$count", color = Color.White, fontSize = 14.sp)
         }
     }
 }
@@ -91,7 +171,9 @@ fun EveryMealRestaurantItemPreview() {
             ),
             rating = 4.5,
             reviewCount = 100,
-            loveCount = 100,
+            loveCount = 50,
         )
-    )
+    ) {
+
+    }
 }
