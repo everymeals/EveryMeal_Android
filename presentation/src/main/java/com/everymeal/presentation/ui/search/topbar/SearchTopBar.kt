@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -27,19 +26,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
-import com.everymeal.presentation.ui.search.history.SearchHistoryList
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
 
 @Composable
 fun TopBar(
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    setShowHistory: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 14.dp)
+            .padding(top = 14.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
@@ -51,28 +50,23 @@ fun TopBar(
                     onBackClick()
                 }
         )
-        SearchBar(
-            initialSearchHistory = listOf("테스트", "테스트2", "테스트3"),
-        )
+        SearchBar(setShowHistory = setShowHistory)
     }
 }
 
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    initialSearchHistory: List<String> = listOf()
+    setShowHistory: (Boolean) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
 
-    val searchHistory = remember { mutableStateOf(initialSearchHistory) }
-    val showHistory = remember { mutableStateOf(true) }
-
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         TextField(
             value = searchQuery,
             onValueChange = {
                 searchQuery = it
-                showHistory.value = it.isEmpty()
+                setShowHistory(it.isEmpty())
             },
             leadingIcon = {
                 Image(
@@ -102,16 +96,5 @@ fun SearchBar(
                 .fillMaxWidth()
                 .heightIn(min = 56.dp)
         )
-        if (showHistory.value) {
-            SearchHistoryList(
-                historyItems = searchHistory,
-                isVisible = true,
-                onHistoryItemClicked = { item ->
-                    searchQuery = item
-                    showHistory.value = false
-                },
-                modifier = Modifier.padding(top = 56.dp)
-            )
-        }
     }
 }

@@ -23,5 +23,6 @@
     <!--  검색  -->
     <string name="placeholder_search">검색</string>
     <string name="empty_search">검색 결과가 없어요</string>
+    <string name="recent_searches">최근 검색어</string>
 
 </resources>
