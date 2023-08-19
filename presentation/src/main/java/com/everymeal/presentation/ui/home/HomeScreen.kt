@@ -117,6 +117,7 @@ fun HomeScreen(
                 EveryMealRestaurantItem(item) {
 
                 }
+                Spacer(modifier = Modifier.padding(8.dp))
             }
             item {
                 EveryMealLineButton(
