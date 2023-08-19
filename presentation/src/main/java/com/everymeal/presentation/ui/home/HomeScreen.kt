@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
@@ -116,6 +117,14 @@ fun HomeScreen(
                 EveryMealRestaurantItem(item) {
 
                 }
+            }
+            item {
+                EveryMealLineButton(
+                    text = stringResource(R.string.home_restaurant_button_text),
+                    onClick = {
+
+                    },
+                )
             }
         }
     }

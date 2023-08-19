@@ -179,7 +179,6 @@ fun EveryMealRestaurantItem(
                         Image(
                             modifier = Modifier
                                 .aspectRatio(1f)
-                                .clip(RoundedCornerShape(8.dp))
                                 .fillMaxSize(),
                             painter = painterResource(id = restaurant.image[2]),
                             contentDescription = null
@@ -187,6 +186,7 @@ fun EveryMealRestaurantItem(
                         Box(
                             modifier = Modifier
                                 .matchParentSize()
+                                .clip(RoundedCornerShape(8.dp))
                                 .background(Color.Black.copy(alpha = 0.5f)),
                             contentAlignment = Alignment.Center
                         ) {
@@ -195,38 +195,6 @@ fun EveryMealRestaurantItem(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ImageComponent(imageRes: Int) {
-    Image(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .padding(4.dp),
-        painter = painterResource(id = imageRes),
-        contentDescription = null
-    )
-}
-
-@Composable
-fun DimImageComponent(imageRes: Int, count: Int) {
-    Box(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .padding(4.dp)
-    ) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(Color.Gray.copy(alpha = 0.6f))
-        )
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.matchParentSize()
-        ) {
-            Text(text = "+$count", color = Color.White, fontSize = 14.sp)
         }
     }
 }
