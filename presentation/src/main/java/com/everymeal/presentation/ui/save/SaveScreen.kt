@@ -3,6 +3,7 @@ package com.everymeal.presentation.ui.save
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,26 +36,16 @@ fun SaveScreen(
             SaveTopBar()
         }
     ) { innerPadding ->
-        Column(
+        Chips(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            Chips(
-                modifier = Modifier.padding(start = 20.dp),
-                elements = viewModel.elements,
-                onChipClicked = { _, _, chipIndex ->
-                    viewModel.updateChipState(chipIndex)
-                }
-            )
-            EmptyView(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .align(
-                        alignment = Alignment.CenterHorizontally,
-                    )
-            )
-        }
+                .padding(start = 20.dp)
+                .padding(innerPadding),
+            elements = viewModel.elements,
+            onChipClicked = { _, _, chipIndex ->
+                viewModel.updateChipState(chipIndex)
+            }
+        )
+        EmptyView(modifier = Modifier.fillMaxSize())
     }
 }
 
@@ -90,26 +81,31 @@ fun SaveTopBar(
 fun EmptyView(
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Box(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.icon_save_empty),
-            contentDescription = "empty icon",
-        )
-        Spacer(modifier = Modifier.padding(top = 8.dp))
-        Text(
-            text = "저장한 가게가 없어요",
-            style = TextStyle(
-                fontSize = 15.sp,
-                lineHeight = 21.sp,
-                fontWeight = FontWeight(500),
-                color = Gray800,
-                textAlign = TextAlign.Center,
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.icon_save_empty),
+                contentDescription = "empty icon",
             )
-        )
+            Spacer(modifier = Modifier.padding(top = 8.dp))
+            Text(
+                text = "저장한 가게가 없어요",
+                style = TextStyle(
+                    fontSize = 15.sp,
+                    lineHeight = 21.sp,
+                    fontWeight = FontWeight(500),
+                    color = Gray800,
+                    textAlign = TextAlign.Center,
+                )
+            )
+        }
     }
 }
 
