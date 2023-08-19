@@ -22,5 +22,6 @@
 
     <!--  검색  -->
     <string name="placeholder_search">검색</string>
+    <string name="empty_search">검색 결과가 없어요</string>
 
 </resources>
