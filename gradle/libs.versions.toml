@@ -19,7 +19,7 @@ kotlin-serilization = "1.0.0"
 
 lottie = "6.0.0"
 
-compose-navigation = "2.4.2"
+compose-navigation = "2.6.0"
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }

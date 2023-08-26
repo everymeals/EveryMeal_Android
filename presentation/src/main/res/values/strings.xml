@@ -9,6 +9,11 @@
     <string name="univ_select_not_univ">여기에 없어요</string>
     <string name="univ_select_apply">학교 신청하러 가기</string>
 
+    <!-- 아이콘, 이미지 설명 -->
+    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
+    <string name="icon_arrow_right">들어가기</string>
+    <string name="icon_univ">학교 선택하기 아이콘</string>
+
     <!--  바텀 네비게이션 텍스트  -->
     <string name="bottom_nav_home">맛집</string>
     <string name="bottom_nav_univ_food">학식</string>
