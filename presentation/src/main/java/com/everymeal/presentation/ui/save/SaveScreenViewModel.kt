@@ -1,24 +1,25 @@
 package com.everymeal.presentation.ui.save
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import com.everymeal.presentation.ui.save.chip.ChipState
+import com.everymeal.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SaveScreenViewModel @Inject constructor() : ViewModel() {
-    val elements = mutableStateListOf(
-        ChipState("전체", mutableStateOf(true)),
-        ChipState("밥집", mutableStateOf(false)),
-        ChipState("카페", mutableStateOf(false)),
-        ChipState("술", mutableStateOf(false))
-    )
+class SaveScreenViewModel @Inject constructor() :
+    BaseViewModel<SaveState, SaveEffect, SaveEvent>(SaveState()) {
 
-    fun updateChipState(chipIndex: Int) {
-        elements.forEachIndexed { index, chipState ->
-            chipState.isSelected.value = index == chipIndex
+    override fun handleEvents(event: SaveEvent) {
+        when (event) {
+            is SaveEvent.OnChipClicked -> {
+                updateState {
+                    chipElements.mapIndexed { index, chipState ->
+                        chipState.isSelected.value = index == event.chipIndex
+                    }
+                    copy(
+                        chipElements = chipElements
+                    )
+                }
+            }
         }
     }
 }

@@ -13,9 +13,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +34,8 @@ import com.everymeal.presentation.ui.theme.Gray800
 fun SaveScreen(
     viewModel: SaveScreenViewModel = hiltViewModel(),
 ) {
+    val viewState by viewModel.viewState.collectAsState()
+
     Scaffold(
         topBar = {
             SaveTopBar()
@@ -40,9 +45,9 @@ fun SaveScreen(
             modifier = Modifier
                 .padding(start = 20.dp)
                 .padding(innerPadding),
-            elements = viewModel.elements,
+            elements = viewState.chipElements,
             onChipClicked = { _, _, chipIndex ->
-                viewModel.updateChipState(chipIndex)
+                viewModel.setEvent(SaveEvent.OnChipClicked(chipIndex))
             }
         )
         EmptyView(modifier = Modifier.fillMaxSize())
@@ -54,15 +59,16 @@ fun SaveScreen(
 fun SaveTopBar(
     onBackClick: () -> Unit = {}
 ) {
-    TopAppBar(title = {
-        Text(
-            text = "저장",
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(id = R.string.save_title),
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             )
-        )
-    },
+        },
         navigationIcon = {
             Image(
                 modifier = Modifier
@@ -96,7 +102,7 @@ fun EmptyView(
             )
             Spacer(modifier = Modifier.padding(top = 8.dp))
             Text(
-                text = "저장한 가게가 없어요",
+                text = stringResource(id = R.string.save_empty_description),
                 style = TextStyle(
                     fontSize = 15.sp,
                     lineHeight = 21.sp,
