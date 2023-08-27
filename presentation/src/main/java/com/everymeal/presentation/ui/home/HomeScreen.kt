@@ -42,25 +42,6 @@ import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Paddings
 
-data class Review(
-    val name: String,
-    val profileImage: Int,
-    val loveCount: Int,
-    val image: List<Int>,
-    val rating: Int,
-    val reviewDate: String,
-    val content: String,
-    val restaurantName: String
-)
-
-data class Restaurant(
-    val name: String,
-    val category: String,
-    val image: List<Int>,
-    val rating: Double,
-    val reviewCount: Int,
-    val loveCount: Int,
-)
 @Composable
 fun HomeScreen(
 
