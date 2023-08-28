@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,19 +24,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.search.history.SearchHistoryList
 import com.everymeal.presentation.ui.search.topbar.TopBar
 import com.everymeal.presentation.ui.theme.Gray800
 
 @Composable
-fun SearchScreen() {
-    var showHistory by remember { mutableStateOf(true) }
+fun SearchScreen(
+    viewModel: SearchViewModel = hiltViewModel()
+) {
+    val viewState = viewModel.viewState.collectAsState()
     Scaffold(
         topBar = {
             TopBar(
                 onBackClick = { },
-                setShowHistory = { showHistory = it }
+                setShowHistory = { viewModel.setEvent(SearchEvent.SetShowSearchHistory(it)) },
+                searchQuery = viewState.value.searchQuery,
+                changeQuery = { viewModel.setEvent(SearchEvent.SearchQueryChanged(it)) },
             )
         },
         containerColor = Color.White
@@ -46,14 +49,15 @@ fun SearchScreen() {
         SearchDetail(
             modifier = Modifier.padding(innerPadding)
         )
-        if (showHistory) {
+        if (viewState.value.searchIsShowHistory) {
             SearchHistoryList(
-                historyItems = remember {
-                    mutableStateOf(listOf("테스트", "테스트2", "테스트3"))
-                },
+                historyItems = viewState.value.searchHistoryItems,
                 isVisible = true,
                 onHistoryItemClicked = { item ->
-
+                    viewModel.setEvent(SearchEvent.SearchQueryChanged(item))
+                },
+                removeHistoryItem = { removeItem ->
+                    removeHistoryItem(viewState, removeItem, viewModel)
                 },
                 modifier = Modifier
                     .padding(innerPadding)
@@ -102,6 +106,15 @@ fun EmptyView(
     }
 }
 
+private fun removeHistoryItem(
+    viewState: State<SearchState>,
+    removeItem: String,
+    viewModel: SearchViewModel
+) {
+    val historyItems = viewState.value.searchHistoryItems
+    val removedHistoryItems = historyItems.filterNot { it == removeItem }
+    viewModel.setEvent(SearchEvent.UpdateSearchHistory(removedHistoryItems))
+}
 
 @Preview
 @Composable

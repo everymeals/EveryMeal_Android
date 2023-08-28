@@ -26,9 +26,10 @@ import com.everymeal.presentation.ui.theme.Gray500
 
 @Composable
 fun SearchHistoryList(
-    historyItems: MutableState<List<String>>,
+    historyItems: List<String>,
     isVisible: Boolean,
     onHistoryItemClicked: (String) -> Unit,
+    removeHistoryItem: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -48,7 +49,7 @@ fun SearchHistoryList(
             LazyColumn(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(historyItems.value) { item ->
+                items(historyItems) { item ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -65,7 +66,7 @@ fun SearchHistoryList(
                             modifier = Modifier
                                 .size(24.dp)
                                 .clickable {
-                                    historyItems.value = historyItems.value.filterNot { it == item }
+                                    removeHistoryItem(item)
                                 }
                         )
                     }
