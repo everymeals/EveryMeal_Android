@@ -96,7 +96,7 @@ fun EveryMealReviewItemPreview() {
                 1,
             ),
             rating = 3,
-            reviewDate = "20210901",
+            reviewDate = "2023-08-29T09:58:47.604732",
             content = "맛있어요",
             restaurantName = "왕가주방",
         ),
