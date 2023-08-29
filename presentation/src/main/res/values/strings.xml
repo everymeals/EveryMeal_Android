@@ -20,6 +20,12 @@
     <string name="bottom_nav_what_food">뭐먹지</string>
     <string name="bottom_nav_my_tab">마이</string>
 
+    <!--  검색  -->
+    <string name="placeholder_search">검색</string>
+    <string name="empty_search">검색 결과가 없어요</string>
+    <string name="recent_searches">최근 검색어</string>
+
+
     <!-- 저장 화면 -->
     <string name="save_title">저장</string>
     <string name="save_empty_description">저장한 가게가 없어요</string>
