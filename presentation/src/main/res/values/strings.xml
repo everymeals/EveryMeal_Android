@@ -9,16 +9,36 @@
     <string name="univ_select_not_univ">여기에 없어요</string>
     <string name="univ_select_apply">학교 신청하러 가기</string>
 
-    <!-- 아이콘, 이미지 설명 -->
-    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
-    <string name="icon_arrow_right">들어가기</string>
-    <string name="icon_univ">학교 선택하기 아이콘</string>
-
     <!--  바텀 네비게이션 텍스트  -->
     <string name="bottom_nav_home">맛집</string>
     <string name="bottom_nav_univ_food">학식</string>
     <string name="bottom_nav_what_food">뭐먹지</string>
     <string name="bottom_nav_my_tab">마이</string>
+
+    <!--  홈 화면 텍스트  -->
+    <string name="home_top_category_title">%s 원픽 맛집은 어디?</string>
+    <string name="home_top_category_sub_title">맛집 리뷰를 남겨보세요</string>
+    <string name="home_top_category_recommend">추천</string>
+    <string name="home_top_category_rice">밥집</string>
+    <string name="home_top_category_cafe">카페</string>
+    <string name="home_top_category_drink">술집</string>
+
+    <!-- 아이콘, 이미지 설명 -->
+    <!--  로그인, 온보딩, 대학선택화면  -->
+    <string name="icon_chat_description">학교 신청하러가기 채팅아이콘</string>
+    <string name="icon_arrow_right">들어가기</string>
+    <string name="icon_univ">학교 선택하기 아이콘</string>
+
+    <!--  홈화면  -->
+    <string name="home_everymeal_logo_text">에브리밀 로고</string>
+    <string name="home_love_logo">맛집 리스트 화면 버튼</string>
+    <string name="home_search_logo">검색 화면 버튼</string>
+    <string name="home_top_category_main_image">원픽 맛집 이미지</string>
+    <string name="home_top_category_list">카테고리 4개 리스트 메뉴 아이템</string>
+    <string name="home_top_good_restaurant">맛집 모아보기</string>
+    <string name="home_restaurant_button_text">맛집 더 보러 가기</string>
+
+    <string name="icon_star">리뷰 평균 점수</string>
 
     <!--  검색  -->
     <string name="placeholder_search">검색</string>

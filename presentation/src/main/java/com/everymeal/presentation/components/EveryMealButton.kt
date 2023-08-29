@@ -1,5 +1,6 @@
 package com.everymeal.presentation.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,10 +51,49 @@ fun EveryMealMainButton(
     }
 }
 
+@Composable
+fun EveryMealLineButton(
+    text: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    Button(
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+        ),
+        enabled = enabled,
+        onClick = onClick,
+        border = BorderStroke(1.dp, Main100),
+    ) {
+        Text(
+            text = text,
+            style = TextStyle(
+                color = Main100,
+                fontWeight = FontWeight.Medium,
+            ),
+            fontSize = 16.sp,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+    }
+}
+
 @Preview
 @Composable
-fun PreviewDisableButton() {
+fun EveryMealMainButtonPreview() {
     EveryMealMainButton(
+        text = stringResource(R.string.select),
+    ) { }
+}
+
+@Preview
+@Composable
+fun EveryMealLineButtonPreview() {
+    EveryMealLineButton(
         text = stringResource(R.string.select),
     ) { }
 }
