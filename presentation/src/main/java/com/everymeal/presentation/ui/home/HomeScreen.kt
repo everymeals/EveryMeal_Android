@@ -80,12 +80,12 @@ fun HomeScreen(
             profileImage = R.drawable.profile_ex_image,
             loveCount = 100,
             image = listOf(
-                0,
-                1,
+                R.drawable.review_ex_1,
+                R.drawable.review_ex_1,
             ),
             rating = 5,
             reviewDate = "2023-08-29T09:58:47.604732",
-            content = "맛있어요",
+            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
             restaurantName = "왕가주방",
         ),
         Review(
@@ -93,8 +93,8 @@ fun HomeScreen(
             profileImage = R.drawable.profile_ex_image,
             loveCount = 100,
             image = listOf(
-                0,
-                1,
+                R.drawable.review_ex_1,
+                R.drawable.review_ex_1,
             ),
             rating = 5,
             reviewDate = "2023-08-20T09:58:47.604732",
