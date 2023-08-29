@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.Review
+import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
+import com.everymeal.presentation.util.Utils
 
 @Composable
 fun EveryMealReviewItem(
@@ -39,7 +41,7 @@ fun EveryMealReviewItem(
             .background(color = Color.White)
     ) {
         ReviewTitle(review)
-        Spacer(modifier = Modifier.padding(4.dp))
+        Spacer(modifier = Modifier.padding(12.dp))
     }
 }
 
@@ -71,6 +73,7 @@ fun ReviewTitle(review: Review) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 items(review.rating) {
                     Image(
@@ -79,6 +82,14 @@ fun ReviewTitle(review: Review) {
                             .padding(end = 2.dp),
                         painter = painterResource(id = R.drawable.icon_star_mono),
                         contentDescription = stringResource(id = R.string.home_review_profile_review_score_description)
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.padding(end = 4.dp))
+                    Text(
+                        text = Utils.getTimeAgo(review.reviewDate),
+                        fontSize = 12.sp,
+                        color = Gray600,
                     )
                 }
             }
