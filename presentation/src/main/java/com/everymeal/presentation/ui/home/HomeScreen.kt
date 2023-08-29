@@ -87,21 +87,11 @@ fun HomeScreen(
                 HomeMainTopLayout()
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = Gray100)
-                        .height(12.dp)
-                        .padding(horizontal = 0.dp)
-                )
+
+                Divider()
                 Spacer(modifier = Modifier.padding(16.dp))
-                Text(
-                    modifier = Modifier.padding(start = 20.dp),
-                    text = stringResource(R.string.home_top_good_restaurant),
-                    fontSize = 20.sp,
-                    color = Color.Black,
-                    fontWeight = Bold,
-                )
+
+                LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
                 Spacer(modifier = Modifier.padding(8.dp))
             }
             items(items.size) { index ->
@@ -118,6 +108,10 @@ fun HomeScreen(
 
                     },
                 )
+            }
+
+            item {
+
             }
         }
     }
@@ -232,6 +226,28 @@ fun HomeCategoryList() {
 
         }
     }
+}
+
+@Composable
+fun Divider() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Gray100)
+            .height(12.dp)
+            .padding(horizontal = 0.dp)
+    )
+}
+
+@Composable
+fun LazyColumnTitle(title: String) {
+    Text(
+        modifier = Modifier.padding(start = 20.dp),
+        text = title,
+        fontSize = 20.sp,
+        color = Color.Black,
+        fontWeight = Bold,
+    )
 }
 
 @Composable
