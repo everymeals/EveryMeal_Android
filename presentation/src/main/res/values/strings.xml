@@ -39,6 +39,7 @@
     <string name="home_restaurant_button_text">맛집 더 보러 가기</string>
 
     <string name="icon_star">리뷰 평균 점수</string>
+    <string name="home_top_good_review">리뷰 모아보기</string>
 
     <!--  검색  -->
     <string name="placeholder_search">검색</string>

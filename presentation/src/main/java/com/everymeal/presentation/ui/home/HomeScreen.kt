@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealRestaurantItem
+import com.everymeal.presentation.components.EveryMealReviewItem
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -70,6 +71,35 @@ fun HomeScreen(
             rating = 4.5,
             reviewCount = 100,
             loveCount = 100,
+        ),
+    )
+
+    val reviewTestItem = listOf(
+        Review(
+            name = "슈니",
+            profileImage = R.drawable.profile_ex_image,
+            loveCount = 100,
+            image = listOf(
+                0,
+                1,
+            ),
+            rating = 5,
+            reviewDate = "20210901",
+            content = "맛있어요",
+            restaurantName = "왕가주방",
+        ),
+        Review(
+            name = "슈니",
+            profileImage = R.drawable.profile_ex_image,
+            loveCount = 100,
+            image = listOf(
+                0,
+                1,
+            ),
+            rating = 5,
+            reviewDate = "20210901",
+            content = "맛있어요",
+            restaurantName = "왕가주방",
         ),
     )
 
@@ -111,7 +141,18 @@ fun HomeScreen(
             }
 
             item {
+                Divider()
+                Spacer(modifier = Modifier.padding(16.dp))
 
+                LazyColumnTitle(stringResource(R.string.home_top_good_review))
+                Spacer(modifier = Modifier.padding(8.dp))
+            }
+            items(reviewTestItem.size) { index ->
+                val item = reviewTestItem[index]
+                EveryMealReviewItem(item) {
+
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
             }
         }
     }
