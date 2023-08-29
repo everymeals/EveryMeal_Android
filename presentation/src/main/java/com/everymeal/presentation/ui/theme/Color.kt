@@ -18,5 +18,10 @@ val Gray600 = Color(0xFF8B95A1)
 val Gray700 = Color(0xFF6B7684)
 var Gray800 = Color(0xFF4E5968)
 
+val Grey2 = Color(0xFFF2F4F6)
+val Grey7 = Color(0xFF6B7684)
+
+val RED_LIGHT = Color(0xFFFFEDED)
+
 val Main100 = Color(0xFFFF4848)
 val Main800 = Color(0xFFCC3939)
