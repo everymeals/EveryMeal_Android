@@ -42,8 +42,10 @@ fun EveryMealReviewItem(
             .background(color = Color.White)
     ) {
         ReviewTitle(review)
-        Spacer(modifier = Modifier.padding(12.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
         ReviewContent(review)
+        Spacer(modifier = Modifier.padding(4.dp))
+        ReviewGoodCount(review)
     }
 }
 
@@ -126,7 +128,29 @@ fun ReviewContent(review: Review) {
                 .size(64.dp)
                 .align(alignment = Alignment.CenterVertically),
             painter = painterResource(id = review.image[0]),
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.home_review_image)
+        )
+    }
+}
+
+@Composable
+fun ReviewGoodCount(review: Review) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            modifier = Modifier
+                .size(16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_thumb_up_mono),
+            contentDescription = stringResource(id = R.string.home_review_good_count)
+        )
+        Spacer(modifier = Modifier.padding(end = 2.dp))
+        Text(
+            text = review.loveCount.toString(),
+            fontSize = 12.sp,
+            color = Gray600,
         )
     }
 }

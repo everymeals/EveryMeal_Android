@@ -43,6 +43,8 @@
     <string name="home_review_profile_image_description">프로필 사진</string>
     <string name="home_review_profile_review_score_description">리뷰 점수</string>
     <string name="home_review_profile_more_option_description">리뷰 더보기</string>
+    <string name="home_review_image">리뷰 이미지</string>
+    <string name="home_review_good_count">리뷰 점수</string>
 
     <!--  검색  -->
     <string name="placeholder_search">검색</string>
