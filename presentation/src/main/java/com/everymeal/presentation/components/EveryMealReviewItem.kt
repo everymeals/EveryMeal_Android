@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +53,7 @@ fun ReviewTitle(review: Review) {
                 .size(40.dp)
                 .align(alignment = Alignment.CenterVertically),
             painter = painterResource(id = review.profileImage),
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.home_review_profile_image_description)
         )
         Spacer(modifier = Modifier.padding(end = 8.dp))
         Column(
@@ -77,7 +78,7 @@ fun ReviewTitle(review: Review) {
                             .size(12.dp)
                             .padding(end = 2.dp),
                         painter = painterResource(id = R.drawable.icon_star_mono),
-                        contentDescription = null
+                        contentDescription = stringResource(id = R.string.home_review_profile_review_score_description)
                     )
                 }
             }
@@ -87,7 +88,7 @@ fun ReviewTitle(review: Review) {
                 .size(20.dp)
                 .padding(top = 4.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.icon_dots_mono),
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.home_review_profile_more_option_description)
         )
     }
 }
