@@ -144,7 +144,7 @@ fun RestaurantImage(restaurant: Restaurant) {
             }
 
             restaurant.image.size == 2 -> {
-                restaurant.image.forEach { image ->
+                restaurant.image.forEachIndexed { index, image ->
                     Image(
                         modifier = Modifier
                             .weight(1f)
@@ -153,7 +153,9 @@ fun RestaurantImage(restaurant: Restaurant) {
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
-                    Spacer(modifier = Modifier.padding(6.dp))
+                    if(index != 1) {
+                        Spacer(modifier = Modifier.padding(end = 6.dp))
+                    }
                 }
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -167,7 +169,10 @@ fun RestaurantImage(restaurant: Restaurant) {
                     painter = painterResource(id = restaurant.image[0]),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.weight(2f))
+                Spacer(modifier = Modifier
+                    .weight(2f)
+                    .padding(end = 6.dp)
+                )
             }
 
             restaurant.image.size > 3 -> {
@@ -179,6 +184,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                     painter = painterResource(restaurant.image[0]),
                     contentDescription = null
                 )
+                Spacer(modifier = Modifier.padding(end = 6.dp))
                 Image(
                     modifier = Modifier
                         .weight(1f)
@@ -187,6 +193,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                     painter = painterResource(restaurant.image[1]),
                     contentDescription = null
                 )
+                Spacer(modifier = Modifier.padding(end = 6.dp))
                 Box(
                     modifier = Modifier
                         .weight(1f)

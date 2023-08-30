@@ -54,8 +54,6 @@ fun HomeScreen(
             category = "한식",
             image = listOf(
                 R.drawable.food_ex_1,
-                R.drawable.food_ex_1,
-                R.drawable.food_ex_1,
             ),
             rating = 4.5,
             reviewCount = 100,
