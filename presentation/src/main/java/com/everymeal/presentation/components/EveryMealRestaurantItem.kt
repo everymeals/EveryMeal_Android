@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,7 +59,6 @@ fun EveryMealRestaurantItem(
 fun RestaurantTitle(restaurant: Restaurant) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = restaurant.name,
@@ -77,19 +77,29 @@ fun RestaurantTitle(restaurant: Restaurant) {
             fontSize = 12.sp
         )
         Spacer(modifier = Modifier.weight(1f))
-        Image(
-            modifier = Modifier
-                .padding(start = 4.dp),
-            imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
-            contentDescription = stringResource(R.string.icon_star),
-        )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                modifier = Modifier,
+                imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
+                contentDescription = stringResource(R.string.icon_star),
+            )
+            Text(
+                text = "${restaurant.loveCount}",
+                color = Gray500,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+            )
+        }
     }
 }
 
 @Composable
 fun RestaurantInfo(restaurant: Restaurant) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .width(100.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -111,12 +121,6 @@ fun RestaurantInfo(restaurant: Restaurant) {
             fontWeight = FontWeight.Medium,
         )
         Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = "${restaurant.loveCount}",
-            color = Gray500,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
-        )
     }
 }
 
