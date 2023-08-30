@@ -128,7 +128,7 @@ fun RestaurantImage(restaurant: Restaurant) {
     ) {
         when {
             restaurant.image.size == 3 -> {
-                restaurant.image.forEach { image ->
+                restaurant.image.forEachIndexed { index, image ->
                     Image(
                         modifier = Modifier
                             .weight(1f)
@@ -137,6 +137,9 @@ fun RestaurantImage(restaurant: Restaurant) {
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
+                    if(index != 2) {
+                        Spacer(modifier = Modifier.padding(end = 6.dp))
+                    }
                 }
             }
 
@@ -150,6 +153,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
+                    Spacer(modifier = Modifier.padding(6.dp))
                 }
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -211,27 +215,6 @@ fun RestaurantImage(restaurant: Restaurant) {
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun EveryMealRestaurantItemPreview() {
-    EveryMealRestaurantItem(
-        Restaurant(
-            name = "슈니",
-            category = "한식",
-            image = listOf(
-                1,
-                2,
-                3,
-            ),
-            rating = 4.5,
-            reviewCount = 100,
-            loveCount = 50,
-        )
-    ) {
-
     }
 }
 
