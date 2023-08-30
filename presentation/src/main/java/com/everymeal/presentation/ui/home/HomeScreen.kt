@@ -129,12 +129,14 @@ fun HomeScreen(
                 EveryMealRestaurantItem(item) {
 
                 }
-                if (index != reviewTestItem.size - 1) {
+                Spacer(modifier = Modifier.padding(10.dp))
+                if (index != items.size - 1) {
                     Divider(
-                        modifier = Modifier.padding(horizontal = 20.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
                     )
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
             item {
                 EveryMealLineButton(
@@ -157,10 +159,14 @@ fun HomeScreen(
                 EveryMealReviewItem(item) {
 
                 }
+                Spacer(modifier = Modifier.padding(10.dp))
                 if (index != reviewTestItem.size - 1) {
-                    Divider()
+                    Divider(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
+                    )
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         }
     }
