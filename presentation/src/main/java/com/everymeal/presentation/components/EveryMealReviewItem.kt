@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -27,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.Review
-import com.everymeal.presentation.ui.theme.Gray200
+import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray700
 import com.everymeal.presentation.ui.theme.Gray800
@@ -49,6 +51,7 @@ fun EveryMealReviewItem(
         ReviewContent(review)
         Spacer(modifier = Modifier.padding(4.dp))
         ReviewGoodCount(review)
+        Spacer(modifier = Modifier.padding(6.dp))
         ReviewDetailRestaurant(review, onDetailRestaurantClick)
     }
 }
@@ -166,9 +169,10 @@ fun ReviewDetailRestaurant(
 ) {
     Row(
         modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .clickable { onDetailRestaurantClick() }
-            .background(Gray200),
+            .background(Gray300),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
