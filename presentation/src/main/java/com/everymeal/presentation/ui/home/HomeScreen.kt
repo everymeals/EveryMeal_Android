@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -118,7 +119,7 @@ fun HomeScreen(
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
 
-                Divider()
+                HomeDivider()
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
@@ -141,7 +142,7 @@ fun HomeScreen(
             }
 
             item {
-                Divider()
+                HomeDivider()
                 Spacer(modifier = Modifier.padding(16.dp))
 
                 LazyColumnTitle(stringResource(R.string.home_top_good_review))
@@ -151,6 +152,9 @@ fun HomeScreen(
                 val item = reviewTestItem[index]
                 EveryMealReviewItem(item) {
 
+                }
+                if (index != reviewTestItem.size - 1) {
+                    Divider() // Divider는 기본적으로 높이가 1dp의 구분선을 추가합니다.
                 }
                 Spacer(modifier = Modifier.padding(8.dp))
             }
@@ -270,13 +274,12 @@ fun HomeCategoryList() {
 }
 
 @Composable
-fun Divider() {
+fun HomeDivider() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Gray100)
             .height(12.dp)
-            .padding(horizontal = 0.dp)
     )
 }
 
