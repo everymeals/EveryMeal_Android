@@ -168,47 +168,32 @@ fun ReviewDetailRestaurant(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onDetailRestaurantClick() }
-            .background(Gray200)
+            .background(Gray200),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             modifier = Modifier
-                .size(24.dp)
-                .padding(10.dp),
+                .padding(vertical = 12.dp, horizontal = 10.dp)
+                .size(24.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.icon_pin_location_mono),
             contentDescription = stringResource(id = R.string.home_review_detail_restaurant)
         )
-        Spacer(modifier = Modifier.padding(end = 10.dp))
         Text(
             modifier = Modifier
-                .weight(1f)
-                .padding(10.dp),
+                .weight(1f),
             text = review.restaurantName,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
             color = Gray700,
         )
+        Image(
+            modifier = Modifier
+                .padding(end = 12.dp)
+                .size(16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
+            contentDescription = stringResource(id = R.string.home_review_detail_restaurant)
+        )
     }
-}
-
-@Preview
-@Composable
-fun EveryMealReviewItemPreview() {
-    EveryMealReviewItem(
-        review = Review(
-            name = "슈니",
-            profileImage = R.drawable.profile_ex_image,
-            loveCount = 100,
-            image = listOf(
-                0,
-                1,
-            ),
-            rating = 3,
-            reviewDate = "2023-08-29T09:58:47.604732",
-            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
-            restaurantName = "왕가주방",
-        ),
-        onDetailRestaurantClick = { },
-    )
 }
 
 @Preview
