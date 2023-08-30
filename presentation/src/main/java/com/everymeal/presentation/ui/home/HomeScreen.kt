@@ -130,6 +130,11 @@ fun HomeScreen(
                 EveryMealRestaurantItem(item) {
 
                 }
+                if (index != reviewTestItem.size - 1) {
+                    Divider(
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                    )
+                }
                 Spacer(modifier = Modifier.padding(8.dp))
             }
             item {
@@ -154,7 +159,7 @@ fun HomeScreen(
 
                 }
                 if (index != reviewTestItem.size - 1) {
-                    Divider() // Divider는 기본적으로 높이가 1dp의 구분선을 추가합니다.
+                    Divider()
                 }
                 Spacer(modifier = Modifier.padding(8.dp))
             }

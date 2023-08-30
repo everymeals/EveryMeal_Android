@@ -133,8 +133,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .padding(4.dp),
+                            .clip(RoundedCornerShape(8.dp)),
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
@@ -147,8 +146,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .padding(4.dp),
+                            .clip(RoundedCornerShape(8.dp)),
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
@@ -161,8 +159,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(id = restaurant.image[0]),
                     contentDescription = null
                 )
@@ -174,8 +171,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(restaurant.image[0]),
                     contentDescription = null
                 )
@@ -183,8 +179,7 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(restaurant.image[1]),
                     contentDescription = null
                 )
@@ -192,7 +187,6 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .padding(4.dp)
                 ) {
                     Image(
                         modifier = Modifier
