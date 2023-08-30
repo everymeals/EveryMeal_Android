@@ -2,6 +2,7 @@ package com.everymeal.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.Review
+import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Gray600
+import com.everymeal.presentation.ui.theme.Gray700
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.util.Utils
 
@@ -46,6 +49,7 @@ fun EveryMealReviewItem(
         ReviewContent(review)
         Spacer(modifier = Modifier.padding(4.dp))
         ReviewGoodCount(review)
+        ReviewDetailRestaurant(review, onDetailRestaurantClick)
     }
 }
 
@@ -155,10 +159,62 @@ fun ReviewGoodCount(review: Review) {
     }
 }
 
+@Composable
+fun ReviewDetailRestaurant(
+    review: Review,
+    onDetailRestaurantClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onDetailRestaurantClick() }
+            .background(Gray200)
+    ) {
+        Image(
+            modifier = Modifier
+                .size(24.dp)
+                .padding(10.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_pin_location_mono),
+            contentDescription = stringResource(id = R.string.home_review_detail_restaurant)
+        )
+        Spacer(modifier = Modifier.padding(end = 10.dp))
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(10.dp),
+            text = review.restaurantName,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Gray700,
+        )
+    }
+}
+
 @Preview
 @Composable
 fun EveryMealReviewItemPreview() {
     EveryMealReviewItem(
+        review = Review(
+            name = "슈니",
+            profileImage = R.drawable.profile_ex_image,
+            loveCount = 100,
+            image = listOf(
+                0,
+                1,
+            ),
+            rating = 3,
+            reviewDate = "2023-08-29T09:58:47.604732",
+            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
+            restaurantName = "왕가주방",
+        ),
+        onDetailRestaurantClick = { },
+    )
+}
+
+@Preview
+@Composable
+fun ReviewDetailRestaurantPreview() {
+    ReviewDetailRestaurant(
         review = Review(
             name = "슈니",
             profileImage = R.drawable.profile_ex_image,
