@@ -134,6 +134,7 @@ fun HomeScreen(
                     Divider(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
+                        color = Gray300,
                     )
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -165,6 +166,7 @@ fun HomeScreen(
                     Divider(
                         modifier = Modifier
                             .padding(horizontal = 20.dp),
+                        color = Gray300,
                     )
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
