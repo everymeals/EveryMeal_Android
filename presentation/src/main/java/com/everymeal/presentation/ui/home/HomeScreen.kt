@@ -119,7 +119,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 HomeDivider()
-                Spacer(modifier = Modifier.padding(16.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
 
                 LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -148,8 +148,9 @@ fun HomeScreen(
             }
 
             item {
+                Spacer(modifier = Modifier.padding(2.dp))
                 HomeDivider()
-                Spacer(modifier = Modifier.padding(16.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
 
                 LazyColumnTitle(stringResource(R.string.home_top_good_review))
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -167,6 +168,14 @@ fun HomeScreen(
                     )
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
+            }
+            item {
+                EveryMealLineButton(
+                    text = stringResource(R.string.home_restaurant_review_button_text),
+                    onClick = {
+
+                    },
+                )
             }
         }
     }
