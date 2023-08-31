@@ -3,10 +3,9 @@ package com.everymeal.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -36,7 +35,7 @@ fun EveryMealMainBottomSheetDialog(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
             Image(
@@ -58,6 +57,12 @@ fun EveryMealMainBottomSheetDialog(
                 color = Gray600,
                 fontWeight = FontWeight.Medium,
             )
+            Spacer(modifier = Modifier.padding(10.dp))
+            EveryMealMainButton(
+                text = stringResource(R.string.univ_admin_button),
+                onClick = onClick,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }
