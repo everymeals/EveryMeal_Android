@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
@@ -49,7 +51,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 @Composable
 fun HomeScreen(
-
+    homeViewModel : HomeViewModel = hiltViewModel(),
 ) {
     val items = listOf(
         Restaurant(
@@ -78,9 +80,9 @@ fun HomeScreen(
         ),
     )
 
-    var showSheet by remember { mutableStateOf(false) }
+    val homeViewState by homeViewModel.viewState.collectAsState()
 
-    if (showSheet) {
+    if (homeViewState.bottomSheetState) {
         EveryMealMainBottomSheetDialog(
             title = "학교 인증을 완료해야\n맛집을 저장할 수 있어요",
             content = "나의 서비스 이용기록을 저장하기 위해\n인증과정이 필요해요",
@@ -88,7 +90,7 @@ fun HomeScreen(
 
             },
             onDismiss = {
-                showSheet = false
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
             }
         )
     }
@@ -135,7 +137,7 @@ fun HomeScreen(
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_button_text),
                     onClick = {
-                        showSheet = true
+                        homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
                     },
                 )
             }
