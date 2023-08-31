@@ -3,6 +3,7 @@ package com.everymeal.presentation.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,8 +85,8 @@ fun HomeScreen(
 
     if (homeViewState.bottomSheetState) {
         EveryMealMainBottomSheetDialog(
-            title = "학교 인증을 완료해야\n맛집을 저장할 수 있어요",
-            content = "나의 서비스 이용기록을 저장하기 위해\n인증과정이 필요해요",
+            title = stringResource(id = R.string.univ_admin_review_title),
+            content = stringResource(id = R.string.univ_admin_review_content),
             onClick = {
 
             },
@@ -106,7 +107,9 @@ fun HomeScreen(
                 .fillMaxWidth(),
         ) {
             item {
-                HomeMainTopLayout()
+                HomeMainTopLayout {
+                    homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
+                }
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
                 Box(
@@ -137,7 +140,7 @@ fun HomeScreen(
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_button_text),
                     onClick = {
-                        homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
+
                     },
                 )
             }
@@ -185,12 +188,20 @@ fun HomeTopAppBar() {
 }
 
 @Composable
-fun HomeMainTopLayout() {
+fun HomeMainTopLayout(
+    onClick: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
             .background(Gray300, RoundedCornerShape(12.dp))
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onClick()
+            }
             .padding(horizontal = Paddings.extra, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
