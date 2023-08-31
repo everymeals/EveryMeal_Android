@@ -22,6 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
+import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
@@ -72,6 +77,21 @@ fun HomeScreen(
             loveCount = 100,
         ),
     )
+
+    var showSheet by remember { mutableStateOf(false) }
+
+    if (showSheet) {
+        EveryMealMainBottomSheetDialog(
+            title = "학교 인증을 완료해야\n맛집을 저장할 수 있어요",
+            content = "나의 서비스 이용기록을 저장하기 위해\n인증과정이 필요해요",
+            onClick = {
+
+            },
+            onDismiss = {
+                showSheet = false
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -115,7 +135,7 @@ fun HomeScreen(
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_button_text),
                     onClick = {
-
+                        showSheet = true
                     },
                 )
             }
