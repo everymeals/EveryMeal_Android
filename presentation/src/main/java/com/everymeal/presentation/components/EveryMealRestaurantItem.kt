@@ -85,25 +85,33 @@ fun RestaurantTitle(
             fontSize = 12.sp
         )
         Spacer(modifier = Modifier.weight(1f))
-        Column(
-            modifier = Modifier.clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) { onLoveClick() },
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Image(
-                modifier = Modifier,
-                imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
-                contentDescription = stringResource(R.string.icon_star),
-            )
-            Text(
-                text = "${restaurant.loveCount}",
-                color = Gray500,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-            )
-        }
+        RestaurantLoveCount(restaurant, onLoveClick)
+    }
+}
+
+@Composable
+fun RestaurantLoveCount(
+    restaurant: Restaurant,
+    onLoveClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) { onLoveClick() },
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            modifier = Modifier,
+            imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
+            contentDescription = stringResource(R.string.icon_star),
+        )
+        Text(
+            text = "${restaurant.loveCount}",
+            color = Gray500,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+        )
     }
 }
 
