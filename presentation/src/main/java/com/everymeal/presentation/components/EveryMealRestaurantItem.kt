@@ -50,7 +50,7 @@ fun EveryMealRestaurantItem(
             .padding(horizontal = 20.dp)
             .background(color = Color.White)
     ) {
-        RestaurantTitle(restaurant) {
+        RestaurantTitle(Modifier.fillMaxWidth(), restaurant) {
             onLoveClick()
         }
         RestaurantRating(restaurant)
@@ -61,11 +61,12 @@ fun EveryMealRestaurantItem(
 
 @Composable
 fun RestaurantTitle(
+    modifier: Modifier = Modifier,
     restaurant: Restaurant,
     onLoveClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
     ) {
         Text(
             modifier = Modifier.padding(top = 6.dp),
