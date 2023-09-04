@@ -53,7 +53,7 @@ fun EveryMealRestaurantItem(
         RestaurantTitle(restaurant) {
             onLoveClick()
         }
-        RestaurantInfo(restaurant)
+        RestaurantRating(restaurant)
         Spacer(modifier = Modifier.padding(4.dp))
         RestaurantImage(restaurant)
     }
@@ -108,7 +108,7 @@ fun RestaurantTitle(
 }
 
 @Composable
-fun RestaurantInfo(restaurant: Restaurant) {
+fun RestaurantRating(restaurant: Restaurant) {
     Row(
         modifier = Modifier
             .width(100.dp),
