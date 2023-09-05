@@ -35,6 +35,10 @@ class HomeViewModel @Inject constructor(
 ) {
 
     override fun handleEvents(event: HomeEvent) {
-
+        when (event) {
+            is HomeEvent.OnClickDetailList -> {
+                sendEffect({ HomeEffect.NavigateToDetailListScreen(event.detailListScreenType) })
+            }
+        }
     }
 }

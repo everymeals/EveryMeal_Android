@@ -13,7 +13,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.everymeal.presentation.ui.bottom.BottomNavigation
 import com.everymeal.presentation.ui.bottom.EveryMealBottomNavigation
+import com.everymeal.presentation.ui.bottom.EveryMealRoute
 import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
+import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
@@ -42,19 +44,24 @@ fun MainScreen(
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = BottomNavigation.HOME.route,
+            startDestination = EveryMealRoute.HOME.route,
         ) {
-            composable(route = BottomNavigation.HOME.route) {
+            composable(route = EveryMealRoute.HOME.route) {
                 HomeScreen()
             }
-            composable(route = BottomNavigation.UNIV_FOOD.route) {
+            composable(route = EveryMealRoute.UNIV_FOOD.route) {
                 UnivFoodScreen()
             }
-            composable(route = BottomNavigation.WHAT_FOOD.route) {
+            composable(route = EveryMealRoute.WHAT_FOOD.route) {
                 WhatFoodScreen()
             }
-            composable(route = BottomNavigation.MY_PAGE.route) {
+            composable(route = EveryMealRoute.MY_PAGE.route) {
                 MyPageScreen()
+            }
+            composable(route = EveryMealRoute.DETAIL_LIST.route) {
+                DetailListScreen(title = "맛집") {
+                    navController.popBackStack()
+                }
             }
         }
     }

@@ -30,6 +30,7 @@ import com.everymeal.presentation.ui.theme.Typography
 @Composable
 fun DetailListScreen(
     title: String,
+    navigateToPreviousScreen: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -39,7 +40,7 @@ fun DetailListScreen(
         Scaffold(
             topBar = {
                 SaveTopBar(title = title) {
-
+                    navigateToPreviousScreen()
                 }
             }
         ) { innerPadding ->
@@ -105,7 +106,9 @@ fun DetailScreenChip(
 @Preview
 @Composable
 fun PreviewDetailListScreen() {
-    DetailListScreen("맛집")
+    DetailListScreen("맛집") {
+
+    }
 }
 
 @Preview
