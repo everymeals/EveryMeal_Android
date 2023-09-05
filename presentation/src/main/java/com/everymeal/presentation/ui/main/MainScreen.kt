@@ -10,10 +10,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.everymeal.presentation.ui.bottom.BottomNavigation
 import com.everymeal.presentation.ui.bottom.EveryMealBottomNavigation
 import com.everymeal.presentation.ui.bottom.EveryMealRoute
@@ -24,6 +26,7 @@ import com.everymeal.presentation.ui.mypage.MyPageScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 
+const val DETAIL_SCREEN_TYPE = "detailScreenType"
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
@@ -53,9 +56,11 @@ fun MainScreen(
             startDestination = EveryMealRoute.HOME.route,
         ) {
             composable(route = EveryMealRoute.HOME.route) {
-                HomeScreen { detailScreenType ->
-                    navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
-                }
+                HomeScreen(
+                    onDetailScreenClickType = { detailScreenType ->
+                        navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
+                    }
+                )
             }
             composable(route = EveryMealRoute.UNIV_FOOD.route) {
                 UnivFoodScreen()
@@ -66,10 +71,12 @@ fun MainScreen(
             composable(route = EveryMealRoute.MY_PAGE.route) {
                 MyPageScreen()
             }
-            composable(route = EveryMealRoute.DETAIL_LIST.route) {
-                DetailListScreen(title = "맛집") {
-                    navController.popBackStack()
-                }
+            composable(route = EveryMealRoute.DETAIL_LIST.route.plus("/{$DETAIL_SCREEN_TYPE}"),) {
+                val detailScreenType = it.arguments?.getString(DETAIL_SCREEN_TYPE) ?: ""
+                DetailListScreen(
+                    title = detailScreenType,
+                    navigateToPreviousScreen = { navController.popBackStack() }
+                )
             }
         }
     }
