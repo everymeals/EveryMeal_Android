@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -27,18 +30,21 @@ fun MainScreen(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    var bottomBarState by rememberSaveable { mutableStateOf(true) }
 
     Scaffold(
         bottomBar = {
-            EveryMealBottomNavigation(
-                currentDestination = currentDestination,
-                navigateToScreen = { navigationItem ->
-                    navigateBottomNavigationScreen(
-                        navController = navController,
-                        navigationItem = navigationItem,
-                    )
-                }
-            )
+            if (bottomBarState) {
+                EveryMealBottomNavigation(
+                    currentDestination = currentDestination,
+                    navigateToScreen = { navigationItem ->
+                        navigateBottomNavigationScreen(
+                            navController = navController,
+                            navigationItem = navigationItem,
+                        )
+                    }
+                )
+            }
         }
     ) { padding ->
         NavHost(
@@ -66,6 +72,14 @@ fun MainScreen(
                 }
             }
         }
+    }
+
+    bottomBarState = when (currentDestination?.route) {
+        EveryMealRoute.HOME.route -> true
+        EveryMealRoute.UNIV_FOOD.route -> true
+        EveryMealRoute.WHAT_FOOD.route -> true
+        EveryMealRoute.MY_PAGE.route -> true
+        else -> false
     }
 }
 
