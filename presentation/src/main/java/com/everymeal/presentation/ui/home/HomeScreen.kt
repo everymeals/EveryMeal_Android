@@ -24,6 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -132,7 +135,9 @@ fun HomeScreen(
                 .fillMaxWidth(),
         ) {
             item {
-                HomeMainTopLayout()
+                HomeMainTopLayout {
+                    homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
+                }
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
 
@@ -241,12 +246,20 @@ fun HomeTopAppBar() {
 }
 
 @Composable
-fun HomeMainTopLayout() {
+fun HomeMainTopLayout(
+    onClick: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
             .background(Gray300, RoundedCornerShape(12.dp))
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onClick()
+            }
             .padding(horizontal = Paddings.extra, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

@@ -8,7 +8,7 @@ import com.everymeal.presentation.base.ViewState
 class HomeContract {
     data class HomeState(
         val uiState: LoadState = LoadState.SUCCESS,
-        val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND
+        val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
         val bottomSheetState: Boolean = false
     ) : ViewState
 
