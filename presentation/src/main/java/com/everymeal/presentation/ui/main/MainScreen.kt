@@ -53,8 +53,8 @@ fun MainScreen(
             startDestination = EveryMealRoute.HOME.route,
         ) {
             composable(route = EveryMealRoute.HOME.route) {
-                HomeScreen {
-                    navController.navigate(EveryMealRoute.DETAIL_LIST.route)
+                HomeScreen { detailScreenType ->
+                    navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
                 }
             }
             composable(route = EveryMealRoute.UNIV_FOOD.route) {

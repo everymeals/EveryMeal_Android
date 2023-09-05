@@ -28,3 +28,22 @@ enum class DetailListScreenType {
     CAFE,
     DRINK
 }
+
+fun String.DetailListScreenType(): DetailListScreenType {
+    return when (this) {
+        "추천" -> DetailListScreenType.RECOMMEND
+        "밥집" -> DetailListScreenType.RESTAURANT
+        "카페" -> DetailListScreenType.CAFE
+        "술집" -> DetailListScreenType.DRINK
+        else -> DetailListScreenType.RECOMMEND
+    }
+}
+
+fun DetailListScreenType.title(): String {
+    return when (this) {
+        DetailListScreenType.RECOMMEND -> "추천"
+        DetailListScreenType.RESTAURANT -> "밥집"
+        DetailListScreenType.CAFE -> "카페"
+        DetailListScreenType.DRINK -> "술집"
+    }
+}

@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -141,6 +142,7 @@ fun HomeScreen(
                 }
                 HomeCategoryList {
                     onDetailScreenClickType(it)
+                    homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
 
@@ -204,6 +206,16 @@ fun HomeScreen(
 
                     },
                 )
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = homeViewModel.effect) {
+        homeViewModel.effect.collect { effect ->
+            when (effect) {
+                is HomeContract.HomeEffect.NavigateToDetailListScreen -> {
+                    onDetailScreenClickType(effect.detailListScreenType.title())
+                }
             }
         }
     }
@@ -307,25 +319,25 @@ fun HomeCategoryList(
             R.drawable.ic_homemenu_recommend,
             R.string.home_top_category_recommend
         ) {
-            onClick(R.string.home_top_category_recommend.toString())
+            onClick("추천")
         }
         CategoryItem(
             R.drawable.ic_homemenu_bap,
             R.string.home_top_category_rice
         ) {
-            onClick(R.string.home_top_category_rice.toString())
+            onClick("밥집")
         }
         CategoryItem(
             R.drawable.ic_homemenu_cake,
             R.string.home_top_category_cafe
         ) {
-            onClick(R.string.home_top_category_cafe.toString())
+            onClick("카페")
         }
         CategoryItem(
             R.drawable.ic_homemenu_beer,
             R.string.home_top_category_drink
         ) {
-            onClick(R.string.home_top_category_drink.toString())
+            onClick("술집")
         }
     }
 }
