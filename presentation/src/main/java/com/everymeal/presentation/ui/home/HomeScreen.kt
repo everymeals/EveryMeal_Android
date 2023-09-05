@@ -3,6 +3,7 @@ package com.everymeal.presentation.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,8 +39,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
+import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
@@ -46,7 +54,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 @Composable
 fun HomeScreen(
-
+    homeViewModel : HomeViewModel = hiltViewModel(),
 ) {
     val items = listOf(
         Restaurant(
@@ -74,6 +82,21 @@ fun HomeScreen(
         ),
     )
 
+    val homeViewState by homeViewModel.viewState.collectAsState()
+
+    if (homeViewState.bottomSheetState) {
+        EveryMealMainBottomSheetDialog(
+            title = stringResource(id = R.string.univ_admin_review_title),
+            content = stringResource(id = R.string.univ_admin_review_content),
+            onClick = {
+
+            },
+            onDismiss = {
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
+            }
+        )
+    }
+    
     val reviewTestItem = listOf(
         Review(
             name = "슈니",
@@ -114,7 +137,9 @@ fun HomeScreen(
                 .fillMaxWidth(),
         ) {
             item {
-                HomeMainTopLayout()
+                HomeMainTopLayout {
+                    homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
+                }
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
 
@@ -223,12 +248,20 @@ fun HomeTopAppBar() {
 }
 
 @Composable
-fun HomeMainTopLayout() {
+fun HomeMainTopLayout(
+    onClick: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
             .background(Gray300, RoundedCornerShape(12.dp))
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onClick()
+            }
             .padding(horizontal = Paddings.extra, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

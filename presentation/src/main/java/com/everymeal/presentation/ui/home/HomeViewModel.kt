@@ -35,6 +35,14 @@ class HomeViewModel @Inject constructor(
 ) {
 
     override fun handleEvents(event: HomeEvent) {
-
+        when (event) {
+            is HomeEvent.BottomSheetStateChange -> {
+                updateState {
+                    copy(
+                        bottomSheetState = event.bottomSheetState
+                    )
+                }
+            }
+        }
     }
 }
