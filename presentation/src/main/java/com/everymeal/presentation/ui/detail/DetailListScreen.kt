@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,13 +48,23 @@ fun DetailListScreen(
                     .padding(innerPadding)
                     .padding(horizontal = 20.dp),
             ) {
-                DetailScreenChip(
-                    title = "최신순",
-                    isCategory = true,
-                    onChipClicked = {
+                Row {
+                    DetailScreenChip(
+                        title = "최신순",
+                        isCategory = true,
+                        onChipClicked = {
 
-                    }
-                )
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    DetailScreenChip(
+                        title = "필터",
+                        isCategory = true,
+                        onChipClicked = {
+
+                        }
+                    )
+                }
             }
         }
     }
