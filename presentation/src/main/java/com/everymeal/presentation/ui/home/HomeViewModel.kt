@@ -39,6 +39,13 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnClickDetailList -> {
                 sendEffect({ HomeEffect.NavigateToDetailListScreen(event.detailListScreenType) })
             }
+            is HomeEvent.BottomSheetStateChange -> {
+                updateState {
+                    copy(
+                        bottomSheetState = event.bottomSheetState
+                    )
+                }
+            }
         }
     }
 }

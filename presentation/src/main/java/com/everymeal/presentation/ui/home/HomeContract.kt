@@ -9,10 +9,14 @@ class HomeContract {
     data class HomeState(
         val uiState: LoadState = LoadState.SUCCESS,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND
+        val bottomSheetState: Boolean = false
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {
         data class OnClickDetailList(val detailListScreenType: DetailListScreenType) : HomeEvent()
+        data class BottomSheetStateChange(
+            val bottomSheetState: Boolean
+        ) : HomeEvent()
     }
 
     sealed class HomeEffect : ViewSideEffect {
