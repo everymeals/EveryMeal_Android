@@ -39,6 +39,14 @@
     <string name="home_restaurant_button_text">맛집 더 보러 가기</string>
 
     <string name="icon_star">리뷰 평균 점수</string>
+    <string name="home_top_good_review">리뷰 모아보기</string>
+    <string name="home_review_profile_image_description">프로필 사진</string>
+    <string name="home_review_profile_review_score_description">리뷰 점수</string>
+    <string name="home_review_profile_more_option_description">리뷰 더보기</string>
+    <string name="home_review_image">리뷰 이미지</string>
+    <string name="home_review_good_count">리뷰 점수</string>
+    <string name="home_review_detail_restaurant">리뷰 식당 상세보러가기</string>
+    <string name="home_restaurant_review_button_text">리뷰 더 보러 가기</string>
 
     <!--  검색  -->
     <string name="placeholder_search">검색</string>

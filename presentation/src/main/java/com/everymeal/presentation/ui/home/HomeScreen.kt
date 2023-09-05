@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealRestaurantItem
+import com.everymeal.presentation.components.EveryMealReviewItem
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -52,7 +54,6 @@ fun HomeScreen(
             category = "한식",
             image = listOf(
                 R.drawable.food_ex_1,
-                R.drawable.food_ex_2,
             ),
             rating = 4.5,
             reviewCount = 100,
@@ -73,6 +74,35 @@ fun HomeScreen(
         ),
     )
 
+    val reviewTestItem = listOf(
+        Review(
+            name = "슈니",
+            profileImage = R.drawable.profile_ex_image,
+            loveCount = 100,
+            image = listOf(
+                R.drawable.review_ex_1,
+                R.drawable.review_ex_1,
+            ),
+            rating = 5,
+            reviewDate = "2023-08-29T09:58:47.604732",
+            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
+            restaurantName = "왕가주방",
+        ),
+        Review(
+            name = "슈니",
+            profileImage = R.drawable.profile_ex_image,
+            loveCount = 100,
+            image = listOf(
+                R.drawable.review_ex_1,
+                R.drawable.review_ex_1,
+            ),
+            rating = 5,
+            reviewDate = "2023-08-20T09:58:47.604732",
+            content = "맛있어요",
+            restaurantName = "왕가주방",
+        ),
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,21 +117,11 @@ fun HomeScreen(
                 HomeMainTopLayout()
                 HomeCategoryList()
                 Spacer(modifier = Modifier.padding(10.dp))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = Gray100)
-                        .height(12.dp)
-                        .padding(horizontal = 0.dp)
-                )
-                Spacer(modifier = Modifier.padding(16.dp))
-                Text(
-                    modifier = Modifier.padding(start = 20.dp),
-                    text = stringResource(R.string.home_top_good_restaurant),
-                    fontSize = 20.sp,
-                    color = Color.Black,
-                    fontWeight = Bold,
-                )
+
+                HomeDivider()
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
                 Spacer(modifier = Modifier.padding(8.dp))
             }
             items(items.size) { index ->
@@ -109,11 +129,51 @@ fun HomeScreen(
                 EveryMealRestaurantItem(item) {
 
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(10.dp))
+                if (index != items.size - 1) {
+                    Divider(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
+                        color = Gray300,
+                    )
+                }
+                Spacer(modifier = Modifier.padding(10.dp))
             }
             item {
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_button_text),
+                    onClick = {
+
+                    },
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(2.dp))
+                HomeDivider()
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                LazyColumnTitle(stringResource(R.string.home_top_good_review))
+                Spacer(modifier = Modifier.padding(8.dp))
+            }
+            items(reviewTestItem.size) { index ->
+                val item = reviewTestItem[index]
+                EveryMealReviewItem(item) {
+
+                }
+                Spacer(modifier = Modifier.padding(10.dp))
+                if (index != reviewTestItem.size - 1) {
+                    Divider(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp),
+                        color = Gray300,
+                    )
+                }
+                Spacer(modifier = Modifier.padding(10.dp))
+            }
+            item {
+                EveryMealLineButton(
+                    text = stringResource(R.string.home_restaurant_review_button_text),
                     onClick = {
 
                     },
@@ -232,6 +292,27 @@ fun HomeCategoryList() {
 
         }
     }
+}
+
+@Composable
+fun HomeDivider() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Gray100)
+            .height(12.dp)
+    )
+}
+
+@Composable
+fun LazyColumnTitle(title: String) {
+    Text(
+        modifier = Modifier.padding(start = 20.dp),
+        text = title,
+        fontSize = 20.sp,
+        color = Color.Black,
+        fontWeight = Bold,
+    )
 }
 
 @Composable

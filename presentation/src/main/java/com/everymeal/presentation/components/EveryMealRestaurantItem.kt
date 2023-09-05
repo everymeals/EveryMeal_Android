@@ -2,6 +2,8 @@ package com.everymeal.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +13,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,21 +50,26 @@ fun EveryMealRestaurantItem(
             .padding(horizontal = 20.dp)
             .background(color = Color.White)
     ) {
-        RestaurantTitle(restaurant)
-        Spacer(modifier = Modifier.padding(4.dp))
-        RestaurantInfo(restaurant)
+        RestaurantTitle(Modifier.fillMaxWidth(), restaurant) {
+            onLoveClick()
+        }
+        RestaurantRating(restaurant)
         Spacer(modifier = Modifier.padding(4.dp))
         RestaurantImage(restaurant)
     }
 }
 
 @Composable
-fun RestaurantTitle(restaurant: Restaurant) {
+fun RestaurantTitle(
+    modifier: Modifier = Modifier,
+    restaurant: Restaurant,
+    onLoveClick: () -> Unit,
+) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
     ) {
         Text(
+            modifier = Modifier.padding(top = 6.dp),
             text = restaurant.name,
             color = Color.Black,
             fontSize = 17.sp,
@@ -68,7 +77,7 @@ fun RestaurantTitle(restaurant: Restaurant) {
         )
         Text(
             modifier = Modifier
-                .padding(start = 4.dp)
+                .padding(start = 4.dp, top = 7.dp)
                 .clip(RoundedCornerShape(4.dp))
                 .background(color = Gray300)
                 .padding(vertical = 3.dp, horizontal = 6.dp),
@@ -77,19 +86,41 @@ fun RestaurantTitle(restaurant: Restaurant) {
             fontSize = 12.sp
         )
         Spacer(modifier = Modifier.weight(1f))
+        RestaurantLoveCount(restaurant, onLoveClick)
+    }
+}
+
+@Composable
+fun RestaurantLoveCount(
+    restaurant: Restaurant,
+    onLoveClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) { onLoveClick() },
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Image(
-            modifier = Modifier
-                .padding(start = 4.dp),
+            modifier = Modifier,
             imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
             contentDescription = stringResource(R.string.icon_star),
+        )
+        Text(
+            text = "${restaurant.loveCount}",
+            color = Gray500,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
 
 @Composable
-fun RestaurantInfo(restaurant: Restaurant) {
+fun RestaurantRating(restaurant: Restaurant) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .width(100.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -111,12 +142,6 @@ fun RestaurantInfo(restaurant: Restaurant) {
             fontWeight = FontWeight.Medium,
         )
         Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = "${restaurant.loveCount}",
-            color = Gray500,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
-        )
     }
 }
 
@@ -128,30 +153,34 @@ fun RestaurantImage(restaurant: Restaurant) {
     ) {
         when {
             restaurant.image.size == 3 -> {
-                restaurant.image.forEach { image ->
+                restaurant.image.forEachIndexed { index, image ->
                     Image(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .padding(4.dp),
+                            .clip(RoundedCornerShape(8.dp)),
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
+                    if(index != 2) {
+                        Spacer(modifier = Modifier.padding(end = 6.dp))
+                    }
                 }
             }
 
             restaurant.image.size == 2 -> {
-                restaurant.image.forEach { image ->
+                restaurant.image.forEachIndexed { index, image ->
                     Image(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                            .padding(4.dp),
+                            .clip(RoundedCornerShape(8.dp)),
                         painter = painterResource(id = image),
                         contentDescription = null
                     )
+                    if(index != 1) {
+                        Spacer(modifier = Modifier.padding(end = 6.dp))
+                    }
                 }
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -161,12 +190,14 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(id = restaurant.image[0]),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.weight(2f))
+                Spacer(modifier = Modifier
+                    .weight(2f)
+                    .padding(end = 6.dp)
+                )
             }
 
             restaurant.image.size > 3 -> {
@@ -174,25 +205,24 @@ fun RestaurantImage(restaurant: Restaurant) {
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(restaurant.image[0]),
                     contentDescription = null
                 )
+                Spacer(modifier = Modifier.padding(end = 6.dp))
                 Image(
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(4.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     painter = painterResource(restaurant.image[1]),
                     contentDescription = null
                 )
+                Spacer(modifier = Modifier.padding(end = 6.dp))
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
-                        .padding(4.dp)
                 ) {
                     Image(
                         modifier = Modifier
@@ -217,27 +247,6 @@ fun RestaurantImage(restaurant: Restaurant) {
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun EveryMealRestaurantItemPreview() {
-    EveryMealRestaurantItem(
-        Restaurant(
-            name = "슈니",
-            category = "한식",
-            image = listOf(
-                1,
-                2,
-                3,
-            ),
-            rating = 4.5,
-            reviewCount = 100,
-            loveCount = 50,
-        )
-    ) {
-
     }
 }
 
