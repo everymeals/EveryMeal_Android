@@ -14,9 +14,7 @@ class HomeContract {
 
     sealed class HomeEvent : ViewEvent {
         data class OnClickDetailList(val detailListScreenType: DetailListScreenType) : HomeEvent()
-        data class BottomSheetStateChange(
-            val bottomSheetState: Boolean
-        ) : HomeEvent()
+        data class BottomSheetStateChange(val bottomSheetState: Boolean) : HomeEvent()
     }
 
     sealed class HomeEffect : ViewSideEffect {

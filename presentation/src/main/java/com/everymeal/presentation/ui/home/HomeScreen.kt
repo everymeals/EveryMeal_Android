@@ -53,6 +53,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 @Composable
 fun HomeScreen(
     homeViewModel : HomeViewModel = hiltViewModel(),
+    onDetailScreenClickType : (String) -> Unit,
 ) {
     val items = listOf(
         Restaurant(
@@ -138,7 +139,9 @@ fun HomeScreen(
                 HomeMainTopLayout {
                     homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
                 }
-                HomeCategoryList()
+                HomeCategoryList {
+                    onDetailScreenClickType(it)
+                }
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 HomeDivider()
@@ -291,7 +294,9 @@ fun HomeMainTopLayout(
 }
 
 @Composable
-fun HomeCategoryList() {
+fun HomeCategoryList(
+    onClick: (String) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -302,25 +307,25 @@ fun HomeCategoryList() {
             R.drawable.ic_homemenu_recommend,
             R.string.home_top_category_recommend
         ) {
-
+            onClick(R.string.home_top_category_recommend.toString())
         }
         CategoryItem(
             R.drawable.ic_homemenu_bap,
             R.string.home_top_category_rice
         ) {
-
+            onClick(R.string.home_top_category_rice.toString())
         }
         CategoryItem(
             R.drawable.ic_homemenu_cake,
             R.string.home_top_category_cafe
         ) {
-
+            onClick(R.string.home_top_category_cafe.toString())
         }
         CategoryItem(
             R.drawable.ic_homemenu_beer,
             R.string.home_top_category_drink
         ) {
-
+            onClick(R.string.home_top_category_drink.toString())
         }
     }
 }
@@ -379,6 +384,8 @@ fun CategoryItem(
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen()
+        HomeScreen() {
+
+        }
     }
 }
