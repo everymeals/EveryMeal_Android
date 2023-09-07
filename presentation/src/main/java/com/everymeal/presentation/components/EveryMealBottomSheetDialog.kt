@@ -1,6 +1,7 @@
 package com.everymeal.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,7 +71,7 @@ fun EveryMealMainBottomSheetDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealSortCategoryBottomSheetDialog(
-    onClick: () -> Unit,
+    onClick: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
@@ -85,7 +86,8 @@ fun EveryMealSortCategoryBottomSheetDialog(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 14.dp),
+                    .padding(vertical = 14.dp)
+                    .clickable { onClick("인기순") },
                 text = stringResource(R.string.popularity_sort),
                 fontSize = 17.sp,
                 color = Gray900,
