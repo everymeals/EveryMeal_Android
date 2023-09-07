@@ -3,6 +3,7 @@ package com.everymeal.presentation.ui.detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,7 +62,7 @@ fun DetailListScreen(
                     Spacer(modifier = Modifier.padding(4.dp))
                     DetailScreenChip(
                         title = "필터",
-                        isCategory = true,
+                        isCategory = false,
                         onChipClicked = {
 
                         }
@@ -78,6 +80,10 @@ fun DetailScreenChip(
     onChipClicked: () -> Unit,
 ) {
     Surface(
+        modifier = Modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) { onChipClicked() },
         color = Grey2,
         shape = RoundedCornerShape(100.dp),
     ) {
@@ -88,17 +94,25 @@ fun DetailScreenChip(
                 text = title,
                 color = Grey7,
                 style = Typography.bodySmall,
-                modifier = Modifier
-                    .padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp)
-                    .clickable { onChipClicked() }
+                modifier = Modifier.padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp)
             )
-            Image(
-                modifier = Modifier
-                    .padding(end = 12.dp)
-                    .size(12.dp),
-                imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_bottom),
-                contentDescription = "arrow_bottom"
-            )
+            if(isCategory) {
+                Image(
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .size(12.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_bottom),
+                    contentDescription = "arrow_bottom"
+                )
+            } else {
+                Image(
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .size(12.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_x_mono),
+                    contentDescription = "close"
+                )
+            }
         }
     }
 }
