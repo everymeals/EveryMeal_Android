@@ -66,3 +66,46 @@ fun EveryMealMainBottomSheetDialog(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealSortCategoryBottomSheetDialog(
+    onClick: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 14.dp),
+                text = stringResource(R.string.popularity_sort),
+                fontSize = 17.sp,
+                color = Gray900,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text = stringResource(R.string.distance_sort),
+                fontSize = 17.sp,
+                color = Gray900,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+            Text(
+                text = stringResource(R.string.recent_sort),
+                fontSize = 17.sp,
+                color = Gray900,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}

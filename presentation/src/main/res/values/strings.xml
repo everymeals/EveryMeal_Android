@@ -53,7 +53,6 @@
     <string name="empty_search">검색 결과가 없어요</string>
     <string name="recent_searches">최근 검색어</string>
 
-
     <!-- 저장 화면 -->
     <string name="save_title">저장</string>
     <string name="save_empty_description">저장한 가게가 없어요</string>
@@ -63,4 +62,8 @@
     <string name="univ_admin_review_content">바이럴 마케팅 없는 신뢰적인 정보를 공유하기 위해\n학교 인증이 필요해요</string>
     <string name="univ_admin_button">인증하러 가기</string>
 
+    <!--  상세 리스트 바텀 시트 다이얼로그  -->
+    <string name="popularity_sort">인기순</string>
+    <string name="distance_sort">거리순</string>
+    <string name="recent_sort">최신순</string>
 </resources>

@@ -62,7 +62,7 @@ fun DetailListScreen(
                     Spacer(modifier = Modifier.padding(4.dp))
                     DetailScreenChip(
                         title = "필터",
-                        isCategory = false,
+                        isCategory = true,
                         onChipClicked = {
 
                         }
