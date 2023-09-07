@@ -9,7 +9,7 @@ import com.everymeal.presentation.base.ViewState
 import com.everymeal.presentation.ui.save.chip.ChipState
 
 data class SaveState(
-    val chipElements: SnapshotStateList<ChipState> = mutableStateListOf(
+    val chipElements: List<ChipState> = listOf(
         ChipState("전체", mutableStateOf(true)),
         ChipState("밥집", mutableStateOf(false)),
         ChipState("카페", mutableStateOf(false)),
