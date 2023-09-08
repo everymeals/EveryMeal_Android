@@ -95,6 +95,10 @@ fun EveryMealSortCategoryBottomSheetDialog(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 14.dp)
+                    .clickable { onClick("거리순") },
                 text = stringResource(R.string.distance_sort),
                 fontSize = 17.sp,
                 color = Gray900,
@@ -102,6 +106,10 @@ fun EveryMealSortCategoryBottomSheetDialog(
             )
             Spacer(modifier = Modifier.padding(10.dp))
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 14.dp)
+                    .clickable { onClick("최신순") },
                 text = stringResource(R.string.recent_sort),
                 fontSize = 17.sp,
                 color = Gray900,

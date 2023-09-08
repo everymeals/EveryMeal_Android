@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
@@ -31,6 +32,7 @@ import com.everymeal.presentation.ui.theme.Typography
 
 @Composable
 fun DetailListScreen(
+    detailListViewModel: DetailListViewModel = hiltViewModel(),
     title: String,
     navigateToPreviousScreen: () -> Unit,
 ) {
@@ -120,7 +122,7 @@ fun DetailScreenChip(
 @Preview
 @Composable
 fun PreviewDetailListScreen() {
-    DetailListScreen("맛집") {
+    DetailListScreen(title = "맛집") {
 
     }
 }
