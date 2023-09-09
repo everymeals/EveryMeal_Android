@@ -1,30 +1,38 @@
 package com.everymeal.presentation.ui.review
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.search.topbar.SearchBar
 import com.everymeal.presentation.ui.theme.Grey9
 import com.everymeal.presentation.ui.theme.Typography
 
 @Composable
-fun ReviewScreen() {
+fun ReviewScreen(
+    viewModel: ReviewScreenViewModel = hiltViewModel()
+) {
+    val viewState by viewModel.viewState.collectAsState()
     Scaffold(
         topBar = {
             ReviewTopBar()
@@ -33,31 +41,74 @@ fun ReviewScreen() {
         Box(modifier = Modifier.padding(innerPadding)) {
             Column {
                 ReviewGuideHeader()
-                Spacer(modifier = Modifier.size(28.dp))
-                ReviewSearchBar()
+                ReviewSearchBar(
+                    modifier = Modifier
+                        .padding(top = 28.dp)
+                        .padding(horizontal = 20.dp),
+                    searchBarClicked = {
+                        //TODO 화면 이동
+                    }
+                )
+                StarRating(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 50.dp),
+                    ratingStateList = viewState.starRatingStateList,
+                    starRatingClicked = {
+                        viewModel.setEvent(ReviewEvent.OnStarClicked(it))
+                    }
+                )
             }
         }
     }
-
 }
 
 @Composable
-fun ReviewSearchBar() {
-    val searchQuery = remember {
-        mutableStateOf("")
-    }
-
+fun ReviewSearchBar(
+    modifier: Modifier = Modifier,
+    searchBarClicked: () -> Unit
+) {
     SearchBar(
-        searchQuery = searchQuery.value,
-        changeQuery = {
-            searchQuery.value = it
+        modifier = modifier.clickable {
+            searchBarClicked()
         },
-        setShowHistory = {
-            if (it) {
-
-            }
-        }
+        searchQuery = "",
+        changeQuery = {},
+        setShowHistory = {}
     )
+}
+
+@Composable
+fun StarRating(
+    ratingStateList: List<State<Boolean>>,
+    starRatingClicked: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        itemsIndexed(ratingStateList) { index, active ->
+            Image(
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(horizontal = 1.dp)
+                    .clickable {
+                        starRatingClicked(index)
+                    },
+                painter = if (active.value) {
+                    painterResource(
+                        id = R.drawable.icon_active_star_mono
+                    )
+                } else {
+                    painterResource(
+                        id = R.drawable.icon_unactive_star_mono
+                    )
+                },
+                contentDescription = null
+            )
+        }
+    }
 }
 
 @Composable
