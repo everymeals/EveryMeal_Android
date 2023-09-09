@@ -8,12 +8,14 @@ import com.everymeal.presentation.base.ViewState
 
 data class ReviewState(
     var starRatingStateList: List<State<Boolean>> = listOf(
-        mutableStateOf(true),
-        mutableStateOf(true),
-        mutableStateOf(true),
-        mutableStateOf(true),
-        mutableStateOf(true),
-    )
+        mutableStateOf(false),
+        mutableStateOf(false),
+        mutableStateOf(false),
+        mutableStateOf(false),
+        mutableStateOf(false),
+    ),
+    var restaurantType: String = "주점",
+    var restaurantName: String = "성신 이자카야",
 ) : ViewState
 
 sealed class ReviewEvent : ViewEvent {
