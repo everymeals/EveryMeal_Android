@@ -15,16 +15,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
+import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
+import com.everymeal.presentation.ui.home.HomeContract
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
@@ -36,6 +42,19 @@ fun DetailListScreen(
     title: String,
     navigateToPreviousScreen: () -> Unit,
 ) {
+    val detailListViewState by detailListViewModel.viewState.collectAsState()
+
+    if (detailListViewState.bottomSheetState) {
+        EveryMealSortCategoryBottomSheetDialog(
+            onClick = {
+
+            },
+            onDismiss = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(false))
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,7 +77,7 @@ fun DetailListScreen(
                         title = "최신순",
                         isCategory = true,
                         onChipClicked = {
-
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(true))
                         }
                     )
                     Spacer(modifier = Modifier.padding(4.dp))

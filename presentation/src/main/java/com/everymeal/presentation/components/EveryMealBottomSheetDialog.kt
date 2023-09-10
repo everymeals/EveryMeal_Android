@@ -86,8 +86,8 @@ fun EveryMealSortCategoryBottomSheetDialog(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 14.dp)
-                    .clickable { onClick("인기순") },
+                    .clickable { onClick("인기순") }
+                    .padding(vertical = 14.dp),
                 text = stringResource(R.string.popularity_sort),
                 fontSize = 17.sp,
                 color = Gray900,
@@ -97,19 +97,19 @@ fun EveryMealSortCategoryBottomSheetDialog(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 14.dp)
-                    .clickable { onClick("거리순") },
+                    .clickable { onClick("거리순") }
+                    .padding(vertical = 14.dp),
                 text = stringResource(R.string.distance_sort),
                 fontSize = 17.sp,
                 color = Gray900,
                 fontWeight = FontWeight.SemiBold,
             )
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 14.dp)
-                    .clickable { onClick("최신순") },
+                    .clickable { onClick("최신순") }
+                    .padding(vertical = 14.dp),
                 text = stringResource(R.string.recent_sort),
                 fontSize = 17.sp,
                 color = Gray900,
