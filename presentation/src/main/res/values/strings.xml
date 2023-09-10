@@ -50,4 +50,7 @@
     <string name="save_title">저장</string>
     <string name="save_empty_description">저장한 가게가 없어요</string>
 
+    <!-- 리뷰 화먄 -->
+    <string name="review_text_placeholder">맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!</string>
+
 </resources>

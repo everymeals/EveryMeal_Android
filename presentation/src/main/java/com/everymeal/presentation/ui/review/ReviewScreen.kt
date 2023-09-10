@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
 import com.everymeal.presentation.ui.search.topbar.SearchBar
@@ -74,6 +73,9 @@ fun ReviewScreen(
                     reviewTextChanged = {
                         viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
                     },
+                    onReviewRegisterClicked = {
+                        // TODO 리뷰 등록
+                    }
                 )
             }
         }
@@ -130,11 +132,12 @@ fun ColumnScope.RestaurantType(
 }
 
 @Composable
-fun ColumnScope.RestaurantName(viewState: ReviewState) {
+fun ColumnScope.RestaurantName(
+    modifier: Modifier = Modifier,
+    viewState: ReviewState
+) {
     Text(
-        modifier = Modifier
-            .padding(top = 12.dp)
-            .align(Alignment.CenterHorizontally),
+        modifier = modifier,
         text = viewState.restaurantName,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
@@ -165,7 +168,7 @@ fun StarRating(
     modifier: Modifier = Modifier,
     ratingStateList: List<State<Boolean>>,
     starRatingClicked: (Int) -> Unit,
-    starSize : Dp = 40.dp,
+    starSize: Dp = 40.dp,
 ) {
     LazyRow(
         modifier = modifier,
