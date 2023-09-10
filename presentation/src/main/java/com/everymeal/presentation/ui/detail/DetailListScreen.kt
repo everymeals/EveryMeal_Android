@@ -47,7 +47,8 @@ fun DetailListScreen(
     if (detailListViewState.bottomSheetState) {
         EveryMealSortCategoryBottomSheetDialog(
             onClick = {
-
+                detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickDetailListCategoryType(it.DetailSortCategoryType()))
+                detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(false))
             },
             onDismiss = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(false))
@@ -74,7 +75,7 @@ fun DetailListScreen(
             ) {
                 Row {
                     DetailScreenChip(
-                        title = "최신순",
+                        title = detailListViewState.detailSortCategoryType.title(),
                         isCategory = true,
                         onChipClicked = {
                             detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(true))

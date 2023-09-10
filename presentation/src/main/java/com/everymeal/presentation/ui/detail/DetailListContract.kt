@@ -27,3 +27,20 @@ enum class DetailSortCategoryType {
     DISTANCE,
     RECENT
 }
+
+fun String.DetailSortCategoryType(): DetailSortCategoryType {
+    return when (this) {
+        "인기순" -> DetailSortCategoryType.POPULARITY
+        "거리순" -> DetailSortCategoryType.DISTANCE
+        "최신순" -> DetailSortCategoryType.RECENT
+        else -> DetailSortCategoryType.POPULARITY
+    }
+}
+
+fun DetailSortCategoryType.title(): String {
+    return when (this) {
+        DetailSortCategoryType.POPULARITY -> "인기순"
+        DetailSortCategoryType.DISTANCE -> "거리순"
+        DetailSortCategoryType.RECENT -> "최신순"
+    }
+}
