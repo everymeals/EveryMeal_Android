@@ -21,6 +21,14 @@ class ReviewScreenViewModel @Inject constructor(
                     )
                 }
             }
+
+            is ReviewEvent.OnReviewTextChanged -> {
+                updateState {
+                    copy(
+                        reviewValue = event.reviewValue
+                    )
+                }
+            }
         }
     }
 }

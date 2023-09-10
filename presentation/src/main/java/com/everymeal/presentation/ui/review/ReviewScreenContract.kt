@@ -16,11 +16,16 @@ data class ReviewState(
     ),
     var restaurantType: String = "주점",
     var restaurantName: String = "성신 이자카야",
+    var reviewValue: String = ""
 ) : ViewState
 
 sealed class ReviewEvent : ViewEvent {
     data class OnStarClicked(
         val starIndex: Int
+    ) : ReviewEvent()
+
+    data class OnReviewTextChanged(
+        val reviewValue: String
     ) : ReviewEvent()
 }
 

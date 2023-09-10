@@ -24,11 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
 import com.everymeal.presentation.ui.search.topbar.SearchBar
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Grey2
@@ -47,22 +51,30 @@ fun ReviewScreen(
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column {
-                ReviewGuideHeader()
-                ReviewSearchBar(
-                    modifier = Modifier
-                        .padding(top = 28.dp)
-                        .padding(horizontal = 20.dp),
-                    searchBarClicked = {
-                        //TODO 화면 이동
-                    }
-                )
-                StarDetail(
+//                ReviewGuideHeader()
+//                ReviewSearchBar(
+//                    modifier = Modifier
+//                        .padding(top = 28.dp)
+//                        .padding(horizontal = 20.dp),
+//                    searchBarClicked = {
+//                        //TODO 화면 이동
+//                    }
+//                )
+//                StarDetail(
+//                    viewState = viewState,
+//                    startRatingClicked = { index ->
+//                        viewModel.setEvent(ReviewEvent.OnStarClicked(index))
+//                    },
+//                )
+                ReviewWriteScreen(
                     viewState = viewState,
-                    startRatingClicked = { index ->
+                    starRatingClicked = { index ->
                         viewModel.setEvent(ReviewEvent.OnStarClicked(index))
                     },
+                    reviewTextChanged = {
+                        viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
+                    },
                 )
-
             }
         }
     }
@@ -70,9 +82,9 @@ fun ReviewScreen(
 
 @Composable
 fun ColumnScope.StarDetail(
+    modifier: Modifier = Modifier,
     viewState: ReviewState,
     startRatingClicked: (Int) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -96,8 +108,8 @@ fun ColumnScope.StarDetail(
 
 @Composable
 fun ColumnScope.RestaurantType(
-    viewState: ReviewState,
     modifier: Modifier = Modifier,
+    viewState: ReviewState,
 ) {
     Text(
         modifier = modifier
@@ -108,6 +120,8 @@ fun ColumnScope.RestaurantType(
             )
             .padding(horizontal = 6.dp, vertical = 3.dp),
         text = viewState.restaurantType,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         fontSize = 12.sp,
         lineHeight = 16.8.sp,
         fontWeight = FontWeight(500),
@@ -122,6 +136,8 @@ fun ColumnScope.RestaurantName(viewState: ReviewState) {
             .padding(top = 12.dp)
             .align(Alignment.CenterHorizontally),
         text = viewState.restaurantName,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
         fontSize = 18.sp,
         lineHeight = 25.2.sp,
         fontWeight = FontWeight(700),
@@ -146,9 +162,10 @@ fun ReviewSearchBar(
 
 @Composable
 fun StarRating(
+    modifier: Modifier = Modifier,
     ratingStateList: List<State<Boolean>>,
     starRatingClicked: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    starSize : Dp = 40.dp,
 ) {
     LazyRow(
         modifier = modifier,
@@ -157,7 +174,7 @@ fun StarRating(
         itemsIndexed(ratingStateList) { index, active ->
             Image(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(starSize)
                     .padding(horizontal = 1.dp)
                     .clickable {
                         starRatingClicked(index)
