@@ -143,7 +143,7 @@ private fun ReviewRegisterButton(
         shape = RoundedCornerShape(12.dp),
         content = {
             Text(
-                text = "등록하기",
+                text = stringResource(R.string.register),
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight(500),

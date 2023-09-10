@@ -22,7 +22,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,6 +49,7 @@ fun ReviewScreen(
         topBar = {
             ReviewTopBar()
         },
+        containerColor = Color.White
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column {
@@ -204,7 +207,7 @@ fun ReviewGuideHeader(
     Text(
         modifier = modifier
             .padding(start = 24.dp, top = 48.dp),
-        text = "다녀온 맛집은\n어디인가요?",
+        text = stringResource(R.string.review_guide_header),
         style = Typography.titleLarge,
     )
 }
@@ -215,7 +218,7 @@ fun ReviewTopBar() {
     TopAppBar(
         title = {
             Text(
-                text = "리뷰 작성",
+                text = stringResource(R.string.review_write),
                 style = Typography.bodySmall,
                 color = Grey9
             )
