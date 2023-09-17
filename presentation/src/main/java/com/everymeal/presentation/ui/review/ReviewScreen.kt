@@ -1,5 +1,9 @@
 package com.everymeal.presentation.ui.review
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,10 +44,17 @@ import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey9
 import com.everymeal.presentation.ui.theme.Typography
 
+
 @Composable
 fun ReviewScreen(
     viewModel: ReviewScreenViewModel = hiltViewModel()
 ) {
+    val pickMultipleMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickMultipleVisualMedia(5)
+    ) {
+        viewModel.setEvent(ReviewEvent.OnImageSelected(it))
+        Log.d("ReviewScreen", "ReviewScreen: $it")
+    }
     val viewState by viewModel.viewState.collectAsState()
     Scaffold(
         topBar = {
@@ -78,6 +89,13 @@ fun ReviewScreen(
                     },
                     onReviewRegisterClicked = {
                         // TODO 리뷰 등록
+                    },
+                    onAddPhotoClicked = {
+                        pickMultipleMedia.launch(
+                            PickVisualMediaRequest(
+                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                            )
+                        )
                     }
                 )
             }

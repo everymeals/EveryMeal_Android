@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
+    implementation(libs.activity)
+    implementation(libs.activity.ktx)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
@@ -78,4 +80,7 @@ dependencies {
 
     // Navigation
     implementation(libs.compose.navigation)
+
+    // Coil
+    implementation(libs.coil.compose)
 }

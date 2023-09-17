@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.review
 
+import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.everymeal.presentation.base.ViewEvent
@@ -14,6 +15,7 @@ data class ReviewState(
         mutableStateOf(false),
         mutableStateOf(false),
     ),
+    var imageUri: List<Uri> = listOf(),
     var restaurantType: String = "주점",
     var restaurantName: String = "성신 이자카야",
     var reviewValue: String = ""
@@ -26,6 +28,10 @@ sealed class ReviewEvent : ViewEvent {
 
     data class OnReviewTextChanged(
         val reviewValue: String
+    ) : ReviewEvent()
+
+    data class OnImageSelected(
+        val imageUri: List<Uri>
     ) : ReviewEvent()
 }
 
