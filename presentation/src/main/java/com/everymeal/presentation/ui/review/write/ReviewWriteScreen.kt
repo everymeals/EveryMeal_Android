@@ -141,7 +141,6 @@ private fun AddReviewPhoto(
                 painter = painterResource(id = R.drawable.icon_picture_mono),
                 contentDescription = null
             )
-            //TODO: string resource 동적 할당
             Text(
                 modifier = Modifier.padding(top = 2.dp),
                 text = "0/10",
