@@ -27,8 +27,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.save.chip.ChipStyle
 import com.everymeal.presentation.ui.save.chip.Chips
 import com.everymeal.presentation.ui.theme.Gray800
+import com.everymeal.presentation.ui.theme.Grey2
+import com.everymeal.presentation.ui.theme.Grey7
+import com.everymeal.presentation.ui.theme.Main100
+import com.everymeal.presentation.ui.theme.RED_LIGHT
+import com.everymeal.presentation.ui.theme.Typography
+
+val chipStyle: ChipStyle = ChipStyle(
+    selectedColor = RED_LIGHT,
+    unselectedColor = Grey2,
+    chipTextStyle = Typography.bodySmall,
+    selectedTextColor = Main100,
+    unselectedTextColor = Grey7,
+    chipModifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+)
 
 @Composable
 fun SaveScreen(
@@ -46,6 +61,7 @@ fun SaveScreen(
                 .padding(start = 20.dp)
                 .padding(innerPadding),
             elements = viewState.chipElements,
+            chipStyle = chipStyle,
             onChipClicked = { _, _, chipIndex ->
                 viewModel.setEvent(SaveEvent.OnChipClicked(chipIndex))
             }

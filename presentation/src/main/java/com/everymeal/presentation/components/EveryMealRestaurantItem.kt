@@ -124,7 +124,7 @@ fun RestaurantRating(restaurant: Restaurant) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            imageVector = ImageVector.vectorResource(R.drawable.icon_star_mono),
+            imageVector = ImageVector.vectorResource(R.drawable.icon_active_star_mono),
             contentDescription = stringResource(R.string.icon_star),
         )
         Text(

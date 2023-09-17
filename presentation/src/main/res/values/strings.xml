@@ -3,6 +3,7 @@
 
     <!--  공통  -->
     <string name="select">선택하기</string>
+    <string name="register">등록하기</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
@@ -57,6 +58,12 @@
     <!-- 저장 화면 -->
     <string name="save_title">저장</string>
     <string name="save_empty_description">저장한 가게가 없어요</string>
+
+
+    <!-- 리뷰 화면 -->
+    <string name="review_text_placeholder">맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!</string>
+    <string name="review_guide_header">다녀온 맛집은\n어디인가요?</string>
+    <string name="review_write">리뷰 작성</string>
 
     <!--  홈화면 바텀 시트 다이얼로그  -->
     <string name="univ_admin_review_title">학교 인증이 된 사용자만\n리뷰를 남길 수 있어요</string>
