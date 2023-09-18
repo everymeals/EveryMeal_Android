@@ -64,6 +64,7 @@
     <string name="review_text_placeholder">맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!</string>
     <string name="review_guide_header">다녀온 맛집은\n어디인가요?</string>
     <string name="review_write">리뷰 작성</string>
+    <string name="review_photo_limit">%d/10</string>
 
     <!--  홈화면 바텀 시트 다이얼로그  -->
     <string name="univ_admin_review_title">학교 인증이 된 사용자만\n리뷰를 남길 수 있어요</string>

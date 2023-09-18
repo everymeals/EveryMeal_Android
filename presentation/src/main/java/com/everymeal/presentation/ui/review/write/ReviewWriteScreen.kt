@@ -88,6 +88,7 @@ fun ReviewWriteScreen(
             horizontalArrangement = Arrangement.Start
         ) {
             AddReviewPhoto(
+                viewState = viewState,
                 addPhotoClicked = onAddPhotoClicked
             )
             LazyRow {
@@ -118,7 +119,8 @@ fun ReviewWriteScreen(
 @Composable
 private fun AddReviewPhoto(
     modifier: Modifier = Modifier,
-    addPhotoClicked: () -> Unit
+    viewState: ReviewState,
+    addPhotoClicked: () -> Unit,
 ) {
     Surface(
         modifier = modifier
@@ -143,7 +145,7 @@ private fun AddReviewPhoto(
             )
             Text(
                 modifier = Modifier.padding(top = 2.dp),
-                text = "0/10",
+                text = stringResource(id = R.string.review_photo_limit, viewState.imageUri.size),
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 19.6.sp,
