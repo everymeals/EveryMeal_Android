@@ -119,3 +119,47 @@ fun EveryMealSortCategoryBottomSheetDialog(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealCategoryRatingBottomSheetDialog(
+    onClick: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 14.dp),
+                text = stringResource(R.string.meal_category),
+                fontSize = 17.sp,
+                color = Gray900,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 14.dp),
+                text = stringResource(R.string.rating_category),
+                fontSize = 17.sp,
+                color = Gray900,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            EveryMealMainButton(
+                text = stringResource(R.string.meal_rating_category_apply),
+                onClick = onClick,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}

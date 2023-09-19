@@ -24,7 +24,7 @@ class DetailListViewModel @Inject constructor(
             is DetailEvent.BottomSheetStateChange -> {
                 updateState {
                     copy(
-                        bottomSheetState = event.bottomSheetState
+                        sortBottomSheetState = event.sortBottomSheetState
                     )
                 }
             }

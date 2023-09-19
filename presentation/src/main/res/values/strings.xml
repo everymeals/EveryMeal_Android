@@ -66,4 +66,8 @@
     <string name="popularity_sort">인기순</string>
     <string name="distance_sort">거리순</string>
     <string name="recent_sort">최신순</string>
+
+    <string name="meal_category">음식종류</string>
+    <string name="rating_category">별점순</string>
+    <string name="meal_rating_category_apply">적용하기</string>
 </resources>
