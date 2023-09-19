@@ -20,18 +20,14 @@ class DetailListViewModel @Inject constructor(
                 )
             }
             is DetailEvent.SortBottomSheetStateChange -> {
-                updateState {
-                    copy(
-                        sortBottomSheetState = event.sortBottomSheetState
-                    )
-                }
+                reflectUpdateState(
+                    sortBottomSheetState = event.sortBottomSheetState
+                )
             }
             is DetailEvent.MealRatingBottomSheetStateChange -> {
-                updateState {
-                    copy(
-                        mealRatingBottomSheetState = event.mealRatingBottomSheetState
-                    )
-                }
+                reflectUpdateState(
+                    mealRatingBottomSheetState = event.mealRatingBottomSheetState
+                )
             }
         }
     }

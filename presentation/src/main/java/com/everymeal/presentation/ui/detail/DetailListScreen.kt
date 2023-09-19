@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
@@ -54,7 +55,7 @@ fun DetailListScreen(
     }
 
     if(detailListViewState.mealRatingBottomSheetState) {
-        EveryMealSortCategoryBottomSheetDialog(
+        EveryMealCategoryRatingBottomSheetDialog(
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
             },
@@ -94,7 +95,7 @@ fun DetailListScreen(
                         title = "필터",
                         isCategory = true,
                         onChipClicked = {
-
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(true))
                         }
                     )
                 }
