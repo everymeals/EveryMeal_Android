@@ -41,14 +41,25 @@ fun DetailListScreen(
 ) {
     val detailListViewState by detailListViewModel.viewState.collectAsState()
 
-    if (detailListViewState.sortBottomSheetState) {
+    if(detailListViewState.sortBottomSheetState) {
         EveryMealSortCategoryBottomSheetDialog(
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickDetailListCategoryType(it.DetailSortCategoryType()))
-                detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(false))
+                detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(false))
             },
             onDismiss = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(false))
+                detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(false))
+            }
+        )
+    }
+
+    if(detailListViewState.mealRatingBottomSheetState) {
+        EveryMealSortCategoryBottomSheetDialog(
+            onClick = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
+            },
+            onDismiss = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
             }
         )
     }
@@ -75,7 +86,7 @@ fun DetailListScreen(
                         title = detailListViewState.detailSortCategoryType.title(),
                         isCategory = true,
                         onChipClicked = {
-                            detailListViewModel.setEvent(DetailContract.DetailEvent.BottomSheetStateChange(true))
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(true))
                         }
                     )
                     Spacer(modifier = Modifier.padding(4.dp))

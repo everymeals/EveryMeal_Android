@@ -15,19 +15,38 @@ class DetailListViewModel @Inject constructor(
     override fun handleEvents(event: DetailEvent) {
         when (event) {
             is DetailEvent.OnClickDetailListCategoryType -> {
-                updateState {
-                    copy(
-                        detailSortCategoryType = event.detailSortCategoryType
-                    )
-                }
+                reflectUpdateState(
+                    detailSortCategoryType = event.detailSortCategoryType
+                )
             }
-            is DetailEvent.BottomSheetStateChange -> {
+            is DetailEvent.SortBottomSheetStateChange -> {
                 updateState {
                     copy(
                         sortBottomSheetState = event.sortBottomSheetState
                     )
                 }
             }
+            is DetailEvent.MealRatingBottomSheetStateChange -> {
+                updateState {
+                    copy(
+                        mealRatingBottomSheetState = event.mealRatingBottomSheetState
+                    )
+                }
+            }
+        }
+    }
+
+    private fun reflectUpdateState(
+        detailSortCategoryType: DetailSortCategoryType = viewState.value.detailSortCategoryType,
+        sortBottomSheetState: Boolean = viewState.value.sortBottomSheetState,
+        mealRatingBottomSheetState: Boolean = viewState.value.mealRatingBottomSheetState,
+    ) {
+        updateState {
+            copy(
+                detailSortCategoryType = detailSortCategoryType,
+                sortBottomSheetState = sortBottomSheetState,
+                mealRatingBottomSheetState = mealRatingBottomSheetState,
+            )
         }
     }
 }
