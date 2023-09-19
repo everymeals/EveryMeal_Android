@@ -307,12 +307,15 @@ fun HomeMainTopLayout(
 
 @Composable
 fun HomeCategoryList(
+    isBottomSheet : Boolean = false,
     onClick: (String) -> Unit
 ) {
+    val horizotalDp = if (isBottomSheet) 0.dp else 20.dp
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = horizotalDp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         CategoryItem(

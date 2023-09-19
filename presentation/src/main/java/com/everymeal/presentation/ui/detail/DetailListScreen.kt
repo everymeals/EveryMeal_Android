@@ -61,6 +61,12 @@ fun DetailListScreen(
             },
             onDismiss = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
+            },
+            onCategoryClick = {
+
+            },
+            onRatingClick = {
+
             }
         )
     }

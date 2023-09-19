@@ -2,25 +2,40 @@ package com.everymeal.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.home.CategoryItem
+import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray900
+import com.everymeal.presentation.ui.theme.Grey2
+import com.everymeal.presentation.ui.theme.Grey7
+import com.everymeal.presentation.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -124,7 +139,9 @@ fun EveryMealSortCategoryBottomSheetDialog(
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
     onClick: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onCategoryClick: (String) -> Unit,
+    onRatingClick: (Int) -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
@@ -145,6 +162,12 @@ fun EveryMealCategoryRatingBottomSheetDialog(
                 fontWeight = FontWeight.SemiBold,
             )
             Spacer(modifier = Modifier.padding(4.dp))
+            HomeCategoryList(
+                isBottomSheet = true
+            ) {
+                onCategoryClick(it)
+            }
+            Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,11 +178,54 @@ fun EveryMealCategoryRatingBottomSheetDialog(
                 fontWeight = FontWeight.SemiBold,
             )
             Spacer(modifier = Modifier.padding(4.dp))
+            LazyRow(content = {
+                items(5) {
+                    RatingItem(
+                        ratingCount = it + 1,
+                        onRatingClick = onRatingClick
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                }
+            })
+            Spacer(modifier = Modifier.padding(4.dp))
             EveryMealMainButton(
                 text = stringResource(R.string.meal_rating_category_apply),
                 onClick = onClick,
             )
             Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+fun RatingItem(
+    ratingCount: Int,
+    onRatingClick: (Int) -> Unit
+) {
+    Surface(
+        modifier = Modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) { onRatingClick(ratingCount) },
+        color = Grey2,
+        shape = RoundedCornerShape(100.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .size(16.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.icon_gray_star_mono),
+                contentDescription = "rating"
+            )
+            Text(
+                text = ratingCount.toString(),
+                color = Grey7,
+                style = Typography.bodySmall,
+                modifier = Modifier.padding(start = 4.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
+            )
         }
     }
 }
