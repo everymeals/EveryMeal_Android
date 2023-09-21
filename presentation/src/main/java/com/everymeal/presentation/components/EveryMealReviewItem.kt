@@ -91,7 +91,7 @@ fun ReviewTitle(review: Review) {
                         modifier = Modifier
                             .size(12.dp)
                             .padding(end = 2.dp),
-                        painter = painterResource(id = R.drawable.icon_star_mono),
+                        painter = painterResource(id = R.drawable.icon_active_star_mono),
                         contentDescription = stringResource(id = R.string.home_review_profile_review_score_description)
                     )
                 }
