@@ -146,7 +146,7 @@ fun DetailScreenChip(
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .size(12.dp),
-                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_x_mono),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_x_mono_12),
                     contentDescription = "close"
                 )
             }
