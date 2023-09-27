@@ -80,4 +80,7 @@
 
     <!--  신고 바텀 시트 다이얼로그  -->
     <string name="report">신고하기</string>
+    <string name="restaurant_not_review">해당 가게와 무관한 리뷰</string>
+    <string name="dangerous_speak_review">비속어 및 혐오 발언</string>
+    <string name="lustful_review">음란성 게시물</string>
 </resources>

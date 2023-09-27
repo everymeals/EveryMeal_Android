@@ -12,6 +12,7 @@ class DetailContract {
         val sortBottomSheetState: Boolean = false,
         val mealRatingBottomSheetState: Boolean = false,
         val reportBottomSheetState: Boolean = false,
+        val detailReportBottomSheetState: Boolean = false,
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
@@ -19,6 +20,7 @@ class DetailContract {
         data class SortBottomSheetStateChange(val sortBottomSheetState: Boolean) : DetailEvent()
         data class MealRatingBottomSheetStateChange(val mealRatingBottomSheetState: Boolean) : DetailEvent()
         data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()
+        data class DetailReportBottomSheetStateChange(val detailReportBottomSheetState: Boolean) : DetailEvent()
     }
 
     sealed class HomeEffect : ViewSideEffect {

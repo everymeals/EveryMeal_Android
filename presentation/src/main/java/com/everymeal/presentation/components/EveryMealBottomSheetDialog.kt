@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.Gray600
+import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
@@ -268,10 +269,11 @@ fun RatingItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealReportBottomSheetDialog(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
-        onDismissRequest = { },
+        onDismissRequest = { onDismiss() },
         containerColor = Color.White,
     ) {
         Column(
@@ -296,6 +298,89 @@ fun EveryMealReportBottomSheetDialog(
                     fontSize = 17.sp,
                     color = Gray900,
                     fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Spacer(modifier = Modifier.padding(20.dp))
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealDetailReportBottomSheetDialog(
+    onClick: () -> Unit,
+    onDismiss: () -> Unit,
+    onReportCategoryClick: (String) -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onReportCategoryClick("") },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    text = stringResource(R.string.restaurant_not_review),
+                    fontSize = 16.sp,
+                    color = Gray800,
+                    fontWeight = FontWeight.Normal,
+                )
+                Image(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
+                    contentDescription = null,
+                )
+            }
+            Spacer(modifier = Modifier.padding(4.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onReportCategoryClick("") },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    text = stringResource(R.string.dangerous_speak_review),
+                    fontSize = 16.sp,
+                    color = Gray800,
+                    fontWeight = FontWeight.Normal,
+                )
+                Image(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
+                    contentDescription = null,
+                )
+            }
+            Spacer(modifier = Modifier.padding(4.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onReportCategoryClick("") },
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 14.dp),
+                    text = stringResource(R.string.lustful_review),
+                    fontSize = 16.sp,
+                    color = Gray800,
+                    fontWeight = FontWeight.Normal,
+                )
+                Image(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
+                    contentDescription = null,
                 )
             }
             Spacer(modifier = Modifier.padding(20.dp))

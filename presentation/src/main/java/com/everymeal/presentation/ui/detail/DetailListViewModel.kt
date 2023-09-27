@@ -34,6 +34,11 @@ class DetailListViewModel @Inject constructor(
                     reportBottomSheetState = event.reportBottomSheetState
                 )
             }
+            is DetailEvent.DetailReportBottomSheetStateChange -> {
+                reflectUpdateState(
+                    detailReportBottomSheetState = event.detailReportBottomSheetState
+                )
+            }
         }
     }
 
@@ -42,6 +47,7 @@ class DetailListViewModel @Inject constructor(
         sortBottomSheetState: Boolean = viewState.value.sortBottomSheetState,
         mealRatingBottomSheetState: Boolean = viewState.value.mealRatingBottomSheetState,
         reportBottomSheetState: Boolean = viewState.value.reportBottomSheetState,
+        detailReportBottomSheetState: Boolean = viewState.value.detailReportBottomSheetState,
     ) {
         updateState {
             copy(
@@ -49,6 +55,7 @@ class DetailListViewModel @Inject constructor(
                 sortBottomSheetState = sortBottomSheetState,
                 mealRatingBottomSheetState = mealRatingBottomSheetState,
                 reportBottomSheetState = reportBottomSheetState,
+                detailReportBottomSheetState = detailReportBottomSheetState,
             )
         }
     }

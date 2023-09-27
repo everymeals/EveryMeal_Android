@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
+import com.everymeal.presentation.components.EveryMealDetailReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
@@ -74,9 +75,29 @@ fun DetailListScreen(
     }
 
     if(detailListViewState.reportBottomSheetState) {
-        EveryMealReportBottomSheetDialog {
-            detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
-        }
+        EveryMealReportBottomSheetDialog(
+            onClick = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
+                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(true))
+            },
+            onDismiss = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
+            }
+        )
+    }
+
+    if(detailListViewState.detailReportBottomSheetState) {
+        EveryMealDetailReportBottomSheetDialog(
+            onClick = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
+            },
+            onDismiss = {
+                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
+            },
+            onReportCategoryClick = {
+
+            }
+        )
     }
 
     Column(
