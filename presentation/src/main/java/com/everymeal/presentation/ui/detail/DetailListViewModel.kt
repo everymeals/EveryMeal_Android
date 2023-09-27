@@ -29,6 +29,11 @@ class DetailListViewModel @Inject constructor(
                     mealRatingBottomSheetState = event.mealRatingBottomSheetState
                 )
             }
+            is DetailEvent.ReportBottomSheetStateChange -> {
+                reflectUpdateState(
+                    reportBottomSheetState = event.reportBottomSheetState
+                )
+            }
         }
     }
 
@@ -36,12 +41,14 @@ class DetailListViewModel @Inject constructor(
         detailSortCategoryType: DetailSortCategoryType = viewState.value.detailSortCategoryType,
         sortBottomSheetState: Boolean = viewState.value.sortBottomSheetState,
         mealRatingBottomSheetState: Boolean = viewState.value.mealRatingBottomSheetState,
+        reportBottomSheetState: Boolean = viewState.value.reportBottomSheetState,
     ) {
         updateState {
             copy(
                 detailSortCategoryType = detailSortCategoryType,
                 sortBottomSheetState = sortBottomSheetState,
                 mealRatingBottomSheetState = mealRatingBottomSheetState,
+                reportBottomSheetState = reportBottomSheetState,
             )
         }
     }

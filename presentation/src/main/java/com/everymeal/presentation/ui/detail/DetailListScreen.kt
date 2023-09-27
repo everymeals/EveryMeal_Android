@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
+import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
@@ -72,6 +73,12 @@ fun DetailListScreen(
         )
     }
 
+    if(detailListViewState.reportBottomSheetState) {
+        EveryMealReportBottomSheetDialog {
+            detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,6 +110,13 @@ fun DetailListScreen(
                         isCategory = true,
                         onChipClicked = {
                             detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(true))
+                        }
+                    )
+                    DetailScreenChip(
+                        title = "TEST신고버튼",
+                        isCategory = true,
+                        onChipClicked = {
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(true))
                         }
                     )
                 }

@@ -11,12 +11,14 @@ class DetailContract {
         val detailSortCategoryType: DetailSortCategoryType = DetailSortCategoryType.POPULARITY,
         val sortBottomSheetState: Boolean = false,
         val mealRatingBottomSheetState: Boolean = false,
+        val reportBottomSheetState: Boolean = false,
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
         data class OnClickDetailListCategoryType(val detailSortCategoryType: DetailSortCategoryType) : DetailEvent()
         data class SortBottomSheetStateChange(val sortBottomSheetState: Boolean) : DetailEvent()
         data class MealRatingBottomSheetStateChange(val mealRatingBottomSheetState: Boolean) : DetailEvent()
+        data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()
     }
 
     sealed class HomeEffect : ViewSideEffect {

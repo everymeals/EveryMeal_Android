@@ -77,4 +77,7 @@
     <string name="meal_category">음식종류</string>
     <string name="rating_category">별점순</string>
     <string name="meal_rating_category_apply">적용하기</string>
+
+    <!--  신고 바텀 시트 다이얼로그  -->
+    <string name="report">신고하기</string>
 </resources>
