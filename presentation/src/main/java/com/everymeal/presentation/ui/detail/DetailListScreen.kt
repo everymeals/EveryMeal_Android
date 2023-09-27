@@ -44,6 +44,7 @@ fun DetailListScreen(
 
     if(detailListViewState.sortBottomSheetState) {
         EveryMealSortCategoryBottomSheetDialog(
+            detailListViewState.detailSortCategoryType.title(),
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickDetailListCategoryType(it.DetailSortCategoryType()))
                 detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(false))
