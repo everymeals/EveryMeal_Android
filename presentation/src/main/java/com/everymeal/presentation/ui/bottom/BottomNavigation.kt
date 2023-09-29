@@ -36,4 +36,5 @@ enum class EveryMealRoute(val route: String) {
     UNIV_FOOD("univ-food"),
     WHAT_FOOD("what-food"),
     MY_PAGE("my-page"),
+    DETAIL_LIST("detail-list"),
 }

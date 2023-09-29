@@ -24,11 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +44,7 @@ import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -55,6 +55,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 @Composable
 fun HomeScreen(
     homeViewModel : HomeViewModel = hiltViewModel(),
+    onDetailScreenClickType : (String) -> Unit,
 ) {
     val items = listOf(
         Restaurant(
@@ -96,7 +97,7 @@ fun HomeScreen(
             }
         )
     }
-    
+
     val reviewTestItem = listOf(
         Review(
             name = "슈니",
@@ -140,7 +141,10 @@ fun HomeScreen(
                 HomeMainTopLayout {
                     homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
                 }
-                HomeCategoryList()
+                HomeCategoryList {
+                    onDetailScreenClickType(it)
+                    homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
+                }
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 HomeDivider()
@@ -203,6 +207,16 @@ fun HomeScreen(
 
                     },
                 )
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = homeViewModel.effect) {
+        homeViewModel.effect.collect { effect ->
+            when (effect) {
+                is HomeContract.HomeEffect.NavigateToDetailListScreen -> {
+                    onDetailScreenClickType(effect.detailListScreenType.title())
+                }
             }
         }
     }
@@ -275,10 +289,12 @@ fun HomeMainTopLayout(
             Text(
                 text = stringResource(id = R.string.home_top_category_title, "슈니"),
                 fontSize = 15.sp,
+                style = EveryMealTypography.displaySmall,
                 color = Gray800
             )
             Text(
                 text = stringResource(R.string.home_top_category_sub_title),
+                style = EveryMealTypography.labelSmall,
                 fontSize = 14.sp,
                 color = Gray500
             )
@@ -293,36 +309,41 @@ fun HomeMainTopLayout(
 }
 
 @Composable
-fun HomeCategoryList() {
+fun HomeCategoryList(
+    isBottomSheet : Boolean = false,
+    onClick: (String) -> Unit
+) {
+    val horizotalDp = if (isBottomSheet) 0.dp else 20.dp
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = horizotalDp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         CategoryItem(
             R.drawable.ic_homemenu_recommend,
             R.string.home_top_category_recommend
         ) {
-
+            onClick("추천")
         }
         CategoryItem(
             R.drawable.ic_homemenu_bap,
             R.string.home_top_category_rice
         ) {
-
+            onClick("밥집")
         }
         CategoryItem(
             R.drawable.ic_homemenu_cake,
             R.string.home_top_category_cafe
         ) {
-
+            onClick("카페")
         }
         CategoryItem(
             R.drawable.ic_homemenu_beer,
             R.string.home_top_category_drink
         ) {
-
+            onClick("술집")
         }
     }
 }
@@ -381,6 +402,8 @@ fun CategoryItem(
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen()
+        HomeScreen() {
+
+        }
     }
 }

@@ -254,6 +254,8 @@ fun RestaurantImage(restaurant: Restaurant) {
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen()
+        HomeScreen() {
+
+        }
     }
 }

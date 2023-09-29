@@ -73,12 +73,13 @@ fun SaveScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SaveTopBar(
+    title: String = stringResource(id = R.string.save_title),
     onBackClick: () -> Unit = {}
 ) {
     TopAppBar(
         title = {
             Text(
-                text = stringResource(id = R.string.save_title),
+                text = title,
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
