@@ -10,6 +10,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -35,13 +39,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealGreyButton
+import com.everymeal.presentation.components.EveryMealRedButton
 import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
 import com.everymeal.presentation.ui.search.topbar.SearchBar
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Grey2
+import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.Grey9
+import com.everymeal.presentation.ui.theme.MONO_BLACK
 import com.everymeal.presentation.ui.theme.Typography
 
 
@@ -50,7 +60,7 @@ fun ReviewScreen(
     viewModel: ReviewScreenViewModel = hiltViewModel()
 ) {
     val pickMultipleMedia = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia(5)
+        ActivityResultContracts.PickMultipleVisualMedia(10)
     ) {
         viewModel.setEvent(ReviewEvent.OnImageSelected(it))
         Log.d("ReviewScreen", "ReviewScreen: $it")
@@ -153,7 +163,7 @@ fun ColumnScope.RestaurantType(
 }
 
 @Composable
-fun ColumnScope.RestaurantName(
+fun RestaurantName(
     modifier: Modifier = Modifier,
     viewState: ReviewState
 ) {
@@ -255,7 +265,57 @@ fun ReviewTopBar() {
 }
 
 @Composable
+fun ReviewSaveDialog(
+    modifier: Modifier = Modifier,
+) {
+    Dialog(
+        onDismissRequest = { },
+        content = {
+            Surface (
+                modifier = modifier,
+                shape = RoundedCornerShape(10.dp),
+            ){
+                Column(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.review_save_dialog_title),
+                        style = EveryMealTypography.titleLarge,
+                        color = MONO_BLACK
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(R.string.review_save_dialog_content),
+                        style = EveryMealTypography.bodyMedium,
+                        color = Grey7
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Row {
+                        EveryMealGreyButton(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 4.dp),
+                            onClick = { /*TODO*/ },
+                            buttonText = stringResource(R.string.review_save_dialog_write_continue)
+                        )
+                        EveryMealRedButton(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 4.dp),
+                            onClick = { /*TODO*/ },
+                            buttonText = stringResource(R.string.exit)
+                        )
+                    }
+                }
+            }
+        }
+    )
+}
+
+@Composable
 @Preview
 fun ReviewScreenPreview() {
-    ReviewScreen()
+    ReviewSaveDialog()
 }
