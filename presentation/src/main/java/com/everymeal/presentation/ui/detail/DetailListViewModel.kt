@@ -44,6 +44,11 @@ class DetailListViewModel @Inject constructor(
                     reportCategoryType = event.reportCategoryType
                 )
             }
+            is DetailEvent.OnClickRating -> {
+                reflectUpdateState(
+                    rating = event.rating
+                )
+            }
         }
     }
 
@@ -54,6 +59,7 @@ class DetailListViewModel @Inject constructor(
         reportBottomSheetState: Boolean = viewState.value.reportBottomSheetState,
         detailReportBottomSheetState: Boolean = viewState.value.detailReportBottomSheetState,
         reportCategoryType: ReportCategoryType = viewState.value.reportCategoryType,
+        rating: Int = viewState.value.rating,
     ) {
         updateState {
             copy(
@@ -63,6 +69,7 @@ class DetailListViewModel @Inject constructor(
                 reportBottomSheetState = reportBottomSheetState,
                 detailReportBottomSheetState = detailReportBottomSheetState,
                 reportCategoryType = reportCategoryType,
+                rating = rating,
             )
         }
     }

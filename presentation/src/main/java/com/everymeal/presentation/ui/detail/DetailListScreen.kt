@@ -59,6 +59,7 @@ fun DetailListScreen(
 
     if(detailListViewState.mealRatingBottomSheetState) {
         EveryMealCategoryRatingBottomSheetDialog(
+            detailListViewState.rating,
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
             },
@@ -69,14 +70,13 @@ fun DetailListScreen(
 
             },
             onRatingClick = {
-
+                detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickRating(it))
             }
         )
     }
 
     if(detailListViewState.reportBottomSheetState) {
         EveryMealReportBottomSheetDialog(
-
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
                 detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(true))

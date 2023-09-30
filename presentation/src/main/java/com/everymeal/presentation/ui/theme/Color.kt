@@ -28,3 +28,5 @@ val RED_LIGHT = Color(0xFFFFEDED)
 
 val Main100 = Color(0xFFFF4848)
 val Main800 = Color(0xFFCC3939)
+
+val SubMain100 = Color(0xFFFFEDED)

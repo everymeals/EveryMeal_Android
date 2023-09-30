@@ -13,7 +13,8 @@ class DetailContract {
         val mealRatingBottomSheetState: Boolean = false,
         val reportBottomSheetState: Boolean = false,
         val detailReportBottomSheetState: Boolean = false,
-        val reportCategoryType: ReportCategoryType = ReportCategoryType.NONE
+        val reportCategoryType: ReportCategoryType = ReportCategoryType.NONE,
+        val rating: Int = 1,
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
@@ -23,6 +24,7 @@ class DetailContract {
         data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()
         data class DetailReportBottomSheetStateChange(val detailReportBottomSheetState: Boolean) : DetailEvent()
         data class OnClickReportCategoryType(val reportCategoryType: ReportCategoryType) : DetailEvent()
+        data class OnClickRating(val rating: Int) : DetailEvent()
     }
 
     sealed class DetailEffect : ViewSideEffect {

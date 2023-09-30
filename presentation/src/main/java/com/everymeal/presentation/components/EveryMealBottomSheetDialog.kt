@@ -40,6 +40,7 @@ import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.Main100
+import com.everymeal.presentation.ui.theme.SubMain100
 import com.everymeal.presentation.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -159,6 +160,7 @@ fun SortCategoryItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
+    currentRating: Int,
     onClick: () -> Unit,
     onDismiss: () -> Unit,
     onCategoryClick: (String) -> Unit,
@@ -202,6 +204,7 @@ fun EveryMealCategoryRatingBottomSheetDialog(
             LazyRow(content = {
                 items(5) {
                     RatingItem(
+                        currentRating,
                         ratingCount = it + 1,
                         onRatingClick = onRatingClick
                     )
@@ -220,6 +223,7 @@ fun EveryMealCategoryRatingBottomSheetDialog(
 
 @Composable
 fun RatingItem(
+    currentRating: Int,
     ratingCount: Int,
     onRatingClick: (Int) -> Unit
 ) {
@@ -228,7 +232,7 @@ fun RatingItem(
             indication = null,
             interactionSource = remember { MutableInteractionSource() }
         ) { onRatingClick(ratingCount) },
-        color = Grey2,
+        color = if (currentRating == ratingCount) SubMain100 else Grey2,
         shape = RoundedCornerShape(100.dp),
     ) {
         Row(
@@ -239,11 +243,16 @@ fun RatingItem(
                     .padding(start = 12.dp)
                     .size(16.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.icon_gray_star_mono),
-                contentDescription = "rating"
+                contentDescription = "rating",
+                colorFilter = if (currentRating == ratingCount) {
+                    ColorFilter.tint(Main100)
+                } else {
+                    ColorFilter.tint(Gray600)
+                }
             )
             Text(
                 text = ratingCount.toString(),
-                color = Grey7,
+                color = if (currentRating == ratingCount) Main100 else Gray600,
                 style = Typography.bodySmall,
                 modifier = Modifier.padding(start = 4.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
             )
