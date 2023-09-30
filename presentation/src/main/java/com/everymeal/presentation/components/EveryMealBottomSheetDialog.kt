@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.detail.ReportCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray400
@@ -332,6 +333,7 @@ fun EveryMealDetailReportBottomSheetDialog(
             Spacer(modifier = Modifier.padding(4.dp))
             EveryMealMainButton(
                 text = stringResource(R.string.ok),
+                enabled = title.ReportCategoryType() != ReportCategoryType.NONE,
                 onClick = onClick,
             )
             Spacer(modifier = Modifier.padding(10.dp))

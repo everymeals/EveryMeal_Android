@@ -13,7 +13,7 @@ class DetailContract {
         val mealRatingBottomSheetState: Boolean = false,
         val reportBottomSheetState: Boolean = false,
         val detailReportBottomSheetState: Boolean = false,
-        val reportCategoryType: ReportCategoryType = ReportCategoryType.IRRELAVANT
+        val reportCategoryType: ReportCategoryType = ReportCategoryType.NONE
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
@@ -56,7 +56,8 @@ fun DetailSortCategoryType.title(): String {
 enum class ReportCategoryType {
     IRRELAVANT,
     SLANG,
-    LUSTFUL
+    LUSTFUL,
+    NONE
 }
 
 fun String.ReportCategoryType(): ReportCategoryType {
@@ -64,7 +65,7 @@ fun String.ReportCategoryType(): ReportCategoryType {
         "해당 가게와 무관한 리뷰" -> ReportCategoryType.IRRELAVANT
         "비속어 및 혐오 발언" -> ReportCategoryType.SLANG
         "음란성 게시물" -> ReportCategoryType.LUSTFUL
-        else -> ReportCategoryType.IRRELAVANT
+        else -> ReportCategoryType.NONE
     }
 }
 
@@ -73,5 +74,6 @@ fun ReportCategoryType.title(): String {
         ReportCategoryType.IRRELAVANT -> "해당 가게와 무관한 리뷰"
         ReportCategoryType.SLANG -> "비속어 및 혐오 발언"
         ReportCategoryType.LUSTFUL -> "음란성 게시물"
+        ReportCategoryType.NONE -> ""
     }
 }
