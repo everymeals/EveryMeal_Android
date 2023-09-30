@@ -100,75 +100,54 @@ fun EveryMealSortCategoryBottomSheetDialog(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("인기순") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
-                    text = stringResource(R.string.popularity_sort),
-                    fontSize = 17.sp,
-                    color = Gray900,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                if(title == "인기순") {
-                    Image(
-                        modifier = Modifier.size(24.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
-                        contentDescription = null,
-                    )
-                }
-            }
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.popularity_sort),
+                onClick = onClick
+            )
             Spacer(modifier = Modifier.padding(4.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("거리순") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
-                    text = stringResource(R.string.distance_sort),
-                    fontSize = 17.sp,
-                    color = Gray900,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                if(title == "거리순") {
-                    Image(
-                        modifier = Modifier.size(24.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
-                        contentDescription = null,
-                    )
-                }
-            }
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.distance_sort),
+                onClick = onClick
+            )
             Spacer(modifier = Modifier.padding(4.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("최신순") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
-                    text = stringResource(R.string.recent_sort),
-                    fontSize = 17.sp,
-                    color = Gray900,
-                    fontWeight = FontWeight.SemiBold,
-                )
-                if(title == "최신순") {
-                    Image(
-                        modifier = Modifier.size(24.dp),
-                        imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
-                        contentDescription = null,
-                    )
-                }
-            }
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.recent_sort),
+                onClick = onClick
+            )
             Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+fun SortCategoryItem(
+    title: String,
+    category: String,
+    onClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick(category) },
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 14.dp),
+            text = category,
+            fontSize = 17.sp,
+            color = Gray900,
+            style = EveryMealTypography.displayMedium,
+        )
+        if(title == category) {
+            Image(
+                modifier = Modifier.size(24.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
+                contentDescription = null,
+            )
         }
     }
 }
@@ -394,7 +373,12 @@ fun EveryMealDetailReportBottomSheetDialog(
                     contentDescription = null,
                 )
             }
-            Spacer(modifier = Modifier.padding(20.dp))
+            Spacer(modifier = Modifier.padding(4.dp))
+            EveryMealMainButton(
+                text = stringResource(R.string.ok),
+                onClick = onClick,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }

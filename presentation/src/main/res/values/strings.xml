@@ -4,6 +4,7 @@
     <!--  공통  -->
     <string name="select">선택하기</string>
     <string name="register">등록하기</string>
+    <string name="ok">확인</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
