@@ -44,6 +44,7 @@ import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -288,10 +289,12 @@ fun HomeMainTopLayout(
             Text(
                 text = stringResource(id = R.string.home_top_category_title, "슈니"),
                 fontSize = 15.sp,
+                style = EveryMealTypography.displaySmall,
                 color = Gray800
             )
             Text(
                 text = stringResource(R.string.home_top_category_sub_title),
+                style = EveryMealTypography.labelSmall,
                 fontSize = 14.sp,
                 color = Gray500
             )
