@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.HomeCategoryList
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
@@ -321,6 +322,13 @@ fun EveryMealDetailReportBottomSheetDialog(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
+            Text(
+                modifier = Modifier.padding(bottom = 18.dp),
+                text = "무엇으로 신고하시나요?",
+                fontSize = 22.sp,
+                style = EveryMealTypography.titleMedium,
+                color = Gray900
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -329,11 +337,12 @@ fun EveryMealDetailReportBottomSheetDialog(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
+                    modifier = Modifier.padding(vertical = 10.dp),
                     text = stringResource(R.string.restaurant_not_review),
                     fontSize = 16.sp,
                     color = Gray800,
                     fontWeight = FontWeight.Normal,
+                    style = EveryMealTypography.bodySmall
                 )
                 Image(
                     modifier = Modifier.size(24.dp),
@@ -350,11 +359,12 @@ fun EveryMealDetailReportBottomSheetDialog(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
+                    modifier = Modifier.padding(vertical = 10.dp),
                     text = stringResource(R.string.dangerous_speak_review),
                     fontSize = 16.sp,
                     color = Gray800,
                     fontWeight = FontWeight.Normal,
+                    style = EveryMealTypography.bodySmall
                 )
                 Image(
                     modifier = Modifier.size(24.dp),
@@ -371,11 +381,12 @@ fun EveryMealDetailReportBottomSheetDialog(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.padding(vertical = 14.dp),
+                    modifier = Modifier.padding(vertical = 10.dp),
                     text = stringResource(R.string.lustful_review),
                     fontSize = 16.sp,
                     color = Gray800,
                     fontWeight = FontWeight.Normal,
+                    style = EveryMealTypography.bodySmall
                 )
                 Image(
                     modifier = Modifier.size(24.dp),
