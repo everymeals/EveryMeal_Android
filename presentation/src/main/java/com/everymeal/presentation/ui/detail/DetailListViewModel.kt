@@ -3,12 +3,12 @@ package com.everymeal.presentation.ui.detail
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
 import com.everymeal.presentation.ui.detail.DetailContract.DetailState
-import com.everymeal.presentation.ui.detail.DetailContract.HomeEffect
+import com.everymeal.presentation.ui.detail.DetailContract.DetailEffect
 import javax.inject.Inject
 
 class DetailListViewModel @Inject constructor(
 
-): BaseViewModel<DetailState, HomeEffect, DetailEvent>(
+): BaseViewModel<DetailState, DetailEffect, DetailEvent>(
     DetailState()
 ) {
 
@@ -39,6 +39,11 @@ class DetailListViewModel @Inject constructor(
                     detailReportBottomSheetState = event.detailReportBottomSheetState
                 )
             }
+            is DetailEvent.OnClickReportCategoryType -> {
+                reflectUpdateState(
+                    reportCategoryType = event.reportCategoryType
+                )
+            }
         }
     }
 
@@ -48,6 +53,7 @@ class DetailListViewModel @Inject constructor(
         mealRatingBottomSheetState: Boolean = viewState.value.mealRatingBottomSheetState,
         reportBottomSheetState: Boolean = viewState.value.reportBottomSheetState,
         detailReportBottomSheetState: Boolean = viewState.value.detailReportBottomSheetState,
+        reportCategoryType: ReportCategoryType = viewState.value.reportCategoryType,
     ) {
         updateState {
             copy(
@@ -56,6 +62,7 @@ class DetailListViewModel @Inject constructor(
                 mealRatingBottomSheetState = mealRatingBottomSheetState,
                 reportBottomSheetState = reportBottomSheetState,
                 detailReportBottomSheetState = detailReportBottomSheetState,
+                reportCategoryType = reportCategoryType,
             )
         }
     }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,11 +32,13 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
+import com.everymeal.presentation.ui.theme.Main100
 import com.everymeal.presentation.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -288,6 +291,7 @@ fun EveryMealReportBottomSheetDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealDetailReportBottomSheetDialog(
+    title: String,
     onClick: () -> Unit,
     onDismiss: () -> Unit,
     onReportCategoryClick: (String) -> Unit
@@ -303,76 +307,28 @@ fun EveryMealDetailReportBottomSheetDialog(
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 18.dp),
-                text = "무엇으로 신고하시나요?",
+                text = stringResource(R.string.select_what_report),
                 fontSize = 22.sp,
                 style = EveryMealTypography.titleMedium,
                 color = Gray900
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onReportCategoryClick("") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 10.dp),
-                    text = stringResource(R.string.restaurant_not_review),
-                    fontSize = 16.sp,
-                    color = Gray800,
-                    fontWeight = FontWeight.Normal,
-                    style = EveryMealTypography.bodySmall
-                )
-                Image(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
-                    contentDescription = null,
-                )
-            }
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.restaurant_not_review),
+                onClick = onReportCategoryClick
+            )
             Spacer(modifier = Modifier.padding(4.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onReportCategoryClick("") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 10.dp),
-                    text = stringResource(R.string.dangerous_speak_review),
-                    fontSize = 16.sp,
-                    color = Gray800,
-                    fontWeight = FontWeight.Normal,
-                    style = EveryMealTypography.bodySmall
-                )
-                Image(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
-                    contentDescription = null,
-                )
-            }
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.dangerous_speak_review),
+                onClick = onReportCategoryClick
+            )
             Spacer(modifier = Modifier.padding(4.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onReportCategoryClick("") },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 10.dp),
-                    text = stringResource(R.string.lustful_review),
-                    fontSize = 16.sp,
-                    color = Gray800,
-                    fontWeight = FontWeight.Normal,
-                    style = EveryMealTypography.bodySmall
-                )
-                Image(
-                    modifier = Modifier.size(24.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
-                    contentDescription = null,
-                )
-            }
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.lustful_review),
+                onClick = onReportCategoryClick
+            )
             Spacer(modifier = Modifier.padding(4.dp))
             EveryMealMainButton(
                 text = stringResource(R.string.ok),
@@ -380,5 +336,42 @@ fun EveryMealDetailReportBottomSheetDialog(
             )
             Spacer(modifier = Modifier.padding(10.dp))
         }
+    }
+}
+
+@Composable
+fun ReportCategoryItem(
+    title: String,
+    category: String,
+    onClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick(category) },
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 10.dp),
+            text = category,
+            fontSize = 16.sp,
+            color = Gray800,
+            fontWeight = FontWeight.Normal,
+            style = EveryMealTypography.bodySmall
+        )
+        Image(
+            modifier = Modifier.size(24.dp),
+            imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
+            contentDescription = null,
+            colorFilter = if(title == category) {
+                ColorFilter.tint(Main100)
+            } else {
+                ColorFilter.tint(Gray400)
+            }
+        )
     }
 }

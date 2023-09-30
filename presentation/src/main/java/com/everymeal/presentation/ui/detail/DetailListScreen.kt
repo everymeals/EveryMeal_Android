@@ -76,6 +76,7 @@ fun DetailListScreen(
 
     if(detailListViewState.reportBottomSheetState) {
         EveryMealReportBottomSheetDialog(
+
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
                 detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(true))
@@ -88,6 +89,7 @@ fun DetailListScreen(
 
     if(detailListViewState.detailReportBottomSheetState) {
         EveryMealDetailReportBottomSheetDialog(
+            detailListViewState.reportCategoryType.title(),
             onClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
             },
@@ -95,7 +97,7 @@ fun DetailListScreen(
                 detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
             },
             onReportCategoryClick = {
-
+                detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickReportCategoryType(it.ReportCategoryType()))
             }
         )
     }
