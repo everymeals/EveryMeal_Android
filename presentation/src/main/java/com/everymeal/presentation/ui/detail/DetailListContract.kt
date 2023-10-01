@@ -8,22 +8,24 @@ import com.everymeal.presentation.base.ViewState
 class DetailContract {
     data class DetailState(
         val uiState: LoadState = LoadState.SUCCESS,
-        val detailSortCategoryType: DetailSortCategoryType = DetailSortCategoryType.POPULARITY,
         val sortBottomSheetState: Boolean = false,
         val mealRatingBottomSheetState: Boolean = false,
         val reportBottomSheetState: Boolean = false,
         val detailReportBottomSheetState: Boolean = false,
+        val detailSortCategoryType: DetailSortCategoryType = DetailSortCategoryType.POPULARITY,
         val reportCategoryType: ReportCategoryType = ReportCategoryType.NONE,
-        val rating: Int = 1,
+        val restaurantCategoryType: RestaurantCategoryType = RestaurantCategoryType.NONE,
+        val rating: Int = 0,
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
-        data class OnClickDetailListCategoryType(val detailSortCategoryType: DetailSortCategoryType) : DetailEvent()
         data class SortBottomSheetStateChange(val sortBottomSheetState: Boolean) : DetailEvent()
         data class MealRatingBottomSheetStateChange(val mealRatingBottomSheetState: Boolean) : DetailEvent()
         data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()
         data class DetailReportBottomSheetStateChange(val detailReportBottomSheetState: Boolean) : DetailEvent()
+        data class OnClickDetailListCategoryType(val detailSortCategoryType: DetailSortCategoryType) : DetailEvent()
         data class OnClickReportCategoryType(val reportCategoryType: ReportCategoryType) : DetailEvent()
+        data class OnClickRestaurantCategoryType(val restaurantCategoryType: RestaurantCategoryType) : DetailEvent()
         data class OnClickRating(val rating: Int) : DetailEvent()
     }
 
@@ -77,5 +79,33 @@ fun ReportCategoryType.title(): String {
         ReportCategoryType.SLANG -> "비속어 및 혐오 발언"
         ReportCategoryType.LUSTFUL -> "음란성 게시물"
         ReportCategoryType.NONE -> ""
+    }
+}
+
+enum class RestaurantCategoryType {
+    RECOMMEND,
+    RICE,
+    CAFE,
+    DRINK,
+    NONE
+}
+
+fun String.RestaurantCategoryType(): RestaurantCategoryType {
+    return when (this) {
+        "추천" -> RestaurantCategoryType.RECOMMEND
+        "밥집" -> RestaurantCategoryType.RICE
+        "카페" -> RestaurantCategoryType.CAFE
+        "술집" -> RestaurantCategoryType.DRINK
+        else -> RestaurantCategoryType.RECOMMEND
+    }
+}
+
+fun RestaurantCategoryType.title(): String {
+    return when (this) {
+        RestaurantCategoryType.RECOMMEND -> "추천"
+        RestaurantCategoryType.RICE -> "밥집"
+        RestaurantCategoryType.CAFE -> "카페"
+        RestaurantCategoryType.DRINK -> "술집"
+        RestaurantCategoryType.NONE -> ""
     }
 }

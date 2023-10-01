@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.detail.ReportCategoryType
+import com.everymeal.presentation.ui.detail.RestaurantCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray400
@@ -161,6 +162,7 @@ fun SortCategoryItem(
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
     currentRating: Int,
+    restaurantCategoryType: String,
     onClick: () -> Unit,
     onDismiss: () -> Unit,
     onCategoryClick: (String) -> Unit,
@@ -186,7 +188,8 @@ fun EveryMealCategoryRatingBottomSheetDialog(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             HomeCategoryList(
-                isBottomSheet = true
+                isBottomSheet = true,
+                restaurantCategoryType
             ) {
                 onCategoryClick(it)
             }

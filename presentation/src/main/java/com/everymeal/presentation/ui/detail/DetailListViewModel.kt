@@ -49,6 +49,11 @@ class DetailListViewModel @Inject constructor(
                     rating = event.rating
                 )
             }
+            is DetailEvent.OnClickRestaurantCategoryType -> {
+                reflectUpdateState(
+                    restaurantCategoryType = event.restaurantCategoryType
+                )
+            }
         }
     }
 
@@ -60,6 +65,7 @@ class DetailListViewModel @Inject constructor(
         detailReportBottomSheetState: Boolean = viewState.value.detailReportBottomSheetState,
         reportCategoryType: ReportCategoryType = viewState.value.reportCategoryType,
         rating: Int = viewState.value.rating,
+        restaurantCategoryType: RestaurantCategoryType = viewState.value.restaurantCategoryType,
     ) {
         updateState {
             copy(
@@ -70,6 +76,7 @@ class DetailListViewModel @Inject constructor(
                 detailReportBottomSheetState = detailReportBottomSheetState,
                 reportCategoryType = reportCategoryType,
                 rating = rating,
+                restaurantCategoryType = restaurantCategoryType,
             )
         }
     }
