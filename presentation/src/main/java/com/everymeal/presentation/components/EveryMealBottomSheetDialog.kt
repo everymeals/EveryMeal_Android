@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -31,15 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.detail.ReportCategoryType
-import com.everymeal.presentation.ui.detail.RestaurantCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
-import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.Main100
 import com.everymeal.presentation.ui.theme.SubMain100
 import com.everymeal.presentation.ui.theme.Typography
@@ -193,6 +193,10 @@ fun EveryMealCategoryRatingBottomSheetDialog(
             ) {
                 onCategoryClick(it)
             }
+            Spacer(modifier = Modifier.padding(14.dp))
+            Divider(
+                color = Gray200,
+            )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 modifier = Modifier
