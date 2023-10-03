@@ -1,12 +1,20 @@
 package com.everymeal.presentation.ui.restaurant
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -18,9 +26,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.presentation.R
+import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray900
@@ -30,15 +47,23 @@ import kotlinx.coroutines.launch
 fun DetailRestaurantScreen(
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
 ) {
-    LazyColumn {
-        item {
-            DetailRestaurantImage()
+    Scaffold(
+        topBar = {
+            SaveTopBar(title = "")
         }
-        item {
-            DetailRestaurantInfo()
-        }
-        item {
-            DetailRestaurantTabLayout(detailRestaurantViewModel)
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier.padding(innerPadding),
+        ) {
+            item {
+                DetailRestaurantImage()
+            }
+            item {
+                DetailRestaurantInfo()
+            }
+            item {
+                DetailRestaurantTabLayout(detailRestaurantViewModel)
+            }
         }
     }
 }
@@ -47,10 +72,28 @@ fun DetailRestaurantScreen(
 fun DetailRestaurantImage(
 
 ) {
-    Column {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(9f / 7f)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.test_image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         Text(
-            text = "이미지",
-            style = EveryMealTypography.labelSmall,
+            modifier = Modifier
+                .padding(10.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .align(Alignment.BottomStart)
+                .background(Color.Black.copy(alpha = 0.6f))
+                .padding(horizontal = 8.dp, vertical = 2.dp),
+            text = "1/6",
+            style = EveryMealTypography.bodySmall,
+            fontSize = 14.sp,
+            color = Color.White,
         )
     }
 }
@@ -124,4 +167,10 @@ fun DetailRestaurantTabLayout(
             2 -> Text("This is Page 2", modifier = Modifier.fillMaxSize())
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewDetailRestaurantScreen() {
+    DetailRestaurantImage()
 }
