@@ -44,6 +44,7 @@ import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
+import com.everymeal.presentation.ui.detail.RestaurantCategoryType
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
@@ -318,6 +319,7 @@ fun HomeMainTopLayout(
 @Composable
 fun HomeCategoryList(
     isBottomSheet : Boolean = false,
+    restaurantCategoryType: String = "",
     onClick: (String) -> Unit
 ) {
     val horizotalDp = if (isBottomSheet) 0.dp else 20.dp
@@ -329,24 +331,32 @@ fun HomeCategoryList(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         CategoryItem(
+            isBottomSheet,
+            restaurantCategoryType,
             R.drawable.ic_homemenu_recommend,
             R.string.home_top_category_recommend
         ) {
             onClick("추천")
         }
         CategoryItem(
+            isBottomSheet,
+            restaurantCategoryType,
             R.drawable.ic_homemenu_bap,
             R.string.home_top_category_rice
         ) {
             onClick("밥집")
         }
         CategoryItem(
+            isBottomSheet,
+            restaurantCategoryType,
             R.drawable.ic_homemenu_cake,
             R.string.home_top_category_cafe
         ) {
             onClick("카페")
         }
         CategoryItem(
+            isBottomSheet,
+            restaurantCategoryType,
             R.drawable.ic_homemenu_beer,
             R.string.home_top_category_drink
         ) {
@@ -378,6 +388,8 @@ fun LazyColumnTitle(title: String) {
 
 @Composable
 fun CategoryItem(
+    isBottomSheet: Boolean = false,
+    restaurantCategoryType: String = "",
     categoryIcon: Int,
     categoryText: Int,
     onClick: () -> Unit,
@@ -388,7 +400,13 @@ fun CategoryItem(
         Column(
             modifier = Modifier
                 .clickable { onClick() }
-                .background(Color.White, RoundedCornerShape(12.dp))
+                .background(
+                    when {
+                        !isBottomSheet -> Color.White
+                        restaurantCategoryType == stringResource(categoryText) -> Gray100
+                        else -> Color.White
+                    },
+                    RoundedCornerShape(12.dp))
                 .padding(horizontal = 17.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
