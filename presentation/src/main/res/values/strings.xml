@@ -4,6 +4,7 @@
     <!--  공통  -->
     <string name="select">선택하기</string>
     <string name="register">등록하기</string>
+    <string name="ok">확인</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
@@ -77,4 +78,11 @@
     <string name="meal_category">음식종류</string>
     <string name="rating_category">별점순</string>
     <string name="meal_rating_category_apply">적용하기</string>
+
+    <!--  신고 바텀 시트 다이얼로그  -->
+    <string name="report">신고하기</string>
+    <string name="restaurant_not_review">해당 가게와 무관한 리뷰</string>
+    <string name="dangerous_speak_review">비속어 및 혐오 발언</string>
+    <string name="lustful_review">음란성 게시물</string>
+    <string name="select_what_report">무엇으로 신고하시나요?</string>
 </resources>
