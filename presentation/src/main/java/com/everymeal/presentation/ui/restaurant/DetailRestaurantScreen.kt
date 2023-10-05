@@ -3,6 +3,7 @@ package com.everymeal.presentation.ui.restaurant
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -51,6 +53,7 @@ import com.everymeal.presentation.components.RestaurantRating
 import com.everymeal.presentation.components.RestaurantTitle
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
 import com.everymeal.presentation.ui.theme.Gray600
@@ -164,6 +167,58 @@ fun DetailRestaurantInfo(
                 fontWeight = FontWeight.Medium,
             )
             Spacer(modifier = Modifier.weight(1f))
+        }
+        Spacer(modifier = Modifier.padding(12.dp))
+        Row(
+
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Gray300,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .padding(vertical = 12.dp)
+            ) {
+                Image(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_heart_mono),
+                    contentDescription = stringResource(R.string.icon_star),
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = "89",
+                    color = Gray500,
+                    fontSize = 15.sp,
+                    style = EveryMealTypography.displaySmall
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .background(
+                        color = Gray100,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_download_mono),
+                    contentDescription = "restaurant share",
+                )
+                Text(
+                    modifier = Modifier.padding(start = 6.dp),
+                    text = stringResource(R.string.restaurant_share),
+                    color = Gray600,
+                    fontSize = 15.sp,
+                    style = EveryMealTypography.displaySmall
+                )
+            }
         }
     }
 }
