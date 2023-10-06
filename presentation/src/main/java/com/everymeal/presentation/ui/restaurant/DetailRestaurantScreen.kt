@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsEndWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -170,7 +172,8 @@ fun DetailRestaurantInfo(
         }
         Spacer(modifier = Modifier.padding(12.dp))
         Row(
-
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Row(
                 modifier = Modifier
@@ -183,7 +186,9 @@ fun DetailRestaurantInfo(
                         color = Gray300,
                         shape = RoundedCornerShape(12.dp)
                     )
-                    .padding(vertical = 12.dp)
+                    .weight(1f)
+                    .padding(vertical = 12.dp),
+                horizontalArrangement = Arrangement.Center,
             ) {
                 Image(
                     modifier = Modifier.size(24.dp),
@@ -198,6 +203,7 @@ fun DetailRestaurantInfo(
                     style = EveryMealTypography.displaySmall
                 )
             }
+            Spacer(modifier = Modifier.width(8.dp))
             Row(
                 modifier = Modifier
                     .background(
