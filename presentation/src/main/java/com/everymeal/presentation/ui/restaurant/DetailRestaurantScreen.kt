@@ -20,6 +20,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -58,6 +59,7 @@ import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray700
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
+import com.everymeal.presentation.ui.theme.Main100
 import kotlinx.coroutines.launch
 
 @Composable
@@ -67,7 +69,23 @@ fun DetailRestaurantScreen(
     Scaffold(
         topBar = {
             SaveTopBar(title = "")
-        }
+        },
+        floatingActionButton = {
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 20.dp)
+                    .clip(RoundedCornerShape(100.dp))
+                    .background(color = Main100)
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_pencil_mono),
+                    contentDescription = "floating",
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier.padding(innerPadding),
@@ -325,6 +343,23 @@ fun DetailRestaurantTabInfo(
                 style = EveryMealTypography.bodySmall
             )
         }
+        Spacer(modifier = Modifier.padding(6.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
+                contentDescription = "link",
+            )
+            Text(
+                modifier = Modifier.padding(start = 4.dp),
+                text = "카카오맵 이동하기",
+                color = Gray800,
+                fontSize = 14.sp,
+                style = EveryMealTypography.bodySmall
+            )
+        }
+        Spacer(modifier = Modifier.padding(18.dp))
     }
 }
 
