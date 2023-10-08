@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -297,8 +300,8 @@ fun DetailRestaurantTabLayout(
     HorizontalPager(state = pagerState) { page ->
         when (page) {
             0 -> DetailRestaurantTabInfo(Modifier.padding(horizontal = 20.dp))
-            1 -> Text("This is Page 1", modifier = Modifier.fillMaxSize())
-            2 -> Text("This is Page 2", modifier = Modifier.fillMaxSize())
+            1 -> DetailRestaurantTabImage()
+            2 -> DetailRestaurantReview()
         }
     }
 }
@@ -361,6 +364,48 @@ fun DetailRestaurantTabInfo(
         }
         Spacer(modifier = Modifier.padding(18.dp))
     }
+}
+
+@Composable
+fun DetailRestaurantTabImage() {
+    // Mock Data
+    val items = listOf(
+        R.drawable.food_ex_1,
+        R.drawable.food_ex_2,
+        R.drawable.food_ex_3,
+        R.drawable.food_ex_1,
+        R.drawable.food_ex_2,
+        R.drawable.food_ex_3,
+        R.drawable.food_ex_1,
+        R.drawable.food_ex_2,
+        R.drawable.food_ex_3,
+    )
+
+    Column {
+        for (rowItems in items.chunked(3)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 3.dp),
+            ) {
+                for (item in rowItems) {
+                    Image(
+                        painter = painterResource(id = item),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = if(rowItems.indexOf(item) != 2) 3.dp else 0.dp)
+                            .weight(1f)
+                            .aspectRatio(1f)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DetailRestaurantReview() {
+
 }
 
 @Preview
