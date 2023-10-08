@@ -85,4 +85,8 @@
     <string name="dangerous_speak_review">비속어 및 혐오 발언</string>
     <string name="lustful_review">음란성 게시물</string>
     <string name="select_what_report">무엇으로 신고하시나요?</string>
+
+    <!--  뭐먹지 화면  -->
+    <string name="what_food_current_service">해당 서비스는 준비중이에요</string>
+    <string name="what_food_everymeal_ready">빠른 시일 내에 이용하실 수 있도록\n에브리밀이 준비하고 있어요.</string>
 </resources>
