@@ -9,10 +9,12 @@ import com.everymeal.presentation.base.ViewState
 data class DetailRestaurantState(
     val uiState: LoadState = LoadState.SUCCESS,
     val selectedTabIndex: Int = 0,
+    val isFabClicked: Boolean = false,
 ) : ViewState
 
 sealed class DetailRestaurantEvent : ViewEvent {
     data class OnTabSelectedChanged(val selectedTabIndex: Int) : DetailRestaurantEvent()
+    data class OnFloatingButtonClick(val isFabClicked: Boolean) : DetailRestaurantEvent()
 }
 
 sealed class DetailRestaurantEffect : ViewSideEffect {

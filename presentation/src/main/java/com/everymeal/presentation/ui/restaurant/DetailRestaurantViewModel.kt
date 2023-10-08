@@ -18,15 +18,22 @@ class DetailRestaurantViewModel @Inject constructor(
                     selectedTabIndex = event.selectedTabIndex
                 )
             }
+            is DetailRestaurantEvent.OnFloatingButtonClick -> {
+                reflectUpdateState(
+                    isFabClicked = event.isFabClicked
+                )
+            }
         }
     }
 
     private fun reflectUpdateState(
         selectedTabIndex: Int = viewState.value.selectedTabIndex,
+        isFabClicked: Boolean = viewState.value.isFabClicked,
     ) {
         updateState {
             copy(
                 selectedTabIndex = selectedTabIndex,
+                isFabClicked = isFabClicked,
             )
         }
     }

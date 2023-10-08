@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -34,7 +36,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +74,8 @@ import kotlinx.coroutines.launch
 fun DetailRestaurantScreen(
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
 ) {
+    val viewState by detailRestaurantViewModel.viewState.collectAsState()
+
     Scaffold(
         topBar = {
             SaveTopBar(title = "")
@@ -79,7 +86,10 @@ fun DetailRestaurantScreen(
                     .padding(bottom = 20.dp)
                     .clip(RoundedCornerShape(100.dp))
                     .background(color = Main100)
-                    .padding(12.dp),
+                    .padding(12.dp)
+                    .clickable {
+                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.OnFloatingButtonClick(!viewState.isFabClicked))
+                    },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
@@ -102,6 +112,20 @@ fun DetailRestaurantScreen(
             item {
                 DetailRestaurantTabLayout(detailRestaurantViewModel)
             }
+        }
+    }
+    if (viewState.isFabClicked) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha=0.5f))
+                .clickable {
+                    detailRestaurantViewModel.setEvent(DetailRestaurantEvent.OnFloatingButtonClick(false))
+                }
+        )
+        Box(contentAlignment=Alignment.BottomEnd){
+            Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=80.dp, bottom=120.dp)){ Text("Button 1") }
+            Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=80.dp, bottom=60.dp)){ Text("Button 2") }
         }
     }
 }
