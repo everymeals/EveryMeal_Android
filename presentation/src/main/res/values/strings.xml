@@ -88,4 +88,7 @@
 
     <!--  식당 상세 화면  -->
     <string name="restaurant_share">공유하기</string>
+    <string name="restaurant_only_picture">사진만 올리기</string>
+    <string name="restaurant_review">리뷰 작성하기</string>
+
 </resources>

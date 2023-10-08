@@ -79,7 +79,7 @@ fun DetailRestaurantScreen(
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .clip(RoundedCornerShape(100.dp))
-                    .background(if(viewState.isFabClicked) Gray100 else Main100)
+                    .background(if (viewState.isFabClicked) Gray100 else Main100)
                     .padding(12.dp)
                     .clickable {
                         detailRestaurantViewModel.setEvent(
@@ -130,8 +130,44 @@ fun DetailRestaurantScreen(
                     },
                 contentAlignment=Alignment.BottomEnd
             ) {
-                Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=20.dp, bottom=160.dp)){ Text("Button 1") }
-                Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=20.dp, bottom=100.dp)){ Text("Button 2") }
+                Row(
+                    modifier = Modifier
+                        .padding(end = 20.dp, bottom = 160.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(color = Gray100)
+                        .padding(vertical = 7.dp, horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.icon_camera_mono),
+                        contentDescription = "camera",
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 2.dp),
+                        text = stringResource(R.string.restaurant_only_picture),
+                        color = Gray900,
+                        style = EveryMealTypography.bodySmall
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(end = 20.dp, bottom = 100.dp)
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(color = Gray100)
+                        .padding(vertical = 7.dp, horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.icon_document_mono),
+                        contentDescription = "review",
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 2.dp),
+                        text = stringResource(R.string.restaurant_review),
+                        color = Gray900,
+                        style = EveryMealTypography.bodySmall
+                    )
+                }
             }
         }
     }
