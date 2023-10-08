@@ -17,9 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,10 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,16 +79,25 @@ fun DetailRestaurantScreen(
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                     .clip(RoundedCornerShape(100.dp))
-                    .background(color = Main100)
+                    .background(if(viewState.isFabClicked) Gray100 else Main100)
                     .padding(12.dp)
                     .clickable {
-                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.OnFloatingButtonClick(!viewState.isFabClicked))
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.OnFloatingButtonClick(
+                                !viewState.isFabClicked
+                            )
+                        )
                     },
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.icon_pencil_mono),
+                    imageVector =
+                    if(viewState.isFabClicked)
+                        ImageVector.vectorResource(R.drawable.icon_x_mono)
+                    else
+                        ImageVector.vectorResource(R.drawable.icon_pencil_mono),
                     contentDescription = "floating",
+                    colorFilter = ColorFilter.tint(if(viewState.isFabClicked) Gray800 else Color.White),
                 )
             }
         },
@@ -113,19 +116,23 @@ fun DetailRestaurantScreen(
                 DetailRestaurantTabLayout(detailRestaurantViewModel)
             }
         }
-    }
-    if (viewState.isFabClicked) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha=0.5f))
-                .clickable {
-                    detailRestaurantViewModel.setEvent(DetailRestaurantEvent.OnFloatingButtonClick(false))
-                }
-        )
-        Box(contentAlignment=Alignment.BottomEnd){
-            Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=80.dp, bottom=120.dp)){ Text("Button 1") }
-            Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=80.dp, bottom=60.dp)){ Text("Button 2") }
+        if (viewState.isFabClicked) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .clickable {
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.OnFloatingButtonClick(
+                                false
+                            )
+                        )
+                    },
+                contentAlignment=Alignment.BottomEnd
+            ) {
+                Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=20.dp, bottom=160.dp)){ Text("Button 1") }
+                Button(onClick={/*Handle click*/},modifier=Modifier.padding(end=20.dp, bottom=100.dp)){ Text("Button 2") }
+            }
         }
     }
 }
@@ -417,7 +424,7 @@ fun DetailRestaurantTabImage() {
                         painter = painterResource(id = item),
                         contentDescription = null,
                         modifier = Modifier
-                            .padding(end = if(rowItems.indexOf(item) != 2) 3.dp else 0.dp)
+                            .padding(end = if (rowItems.indexOf(item) != 2) 3.dp else 0.dp)
                             .weight(1f)
                             .aspectRatio(1f)
                     )
