@@ -66,7 +66,61 @@ fun ReviewDetailScreen() {
                     .aspectRatio(1f)
                     .padding(top = 24.dp)
             )
+            ReviewText(
+                modifier = Modifier.padding(
+                    vertical = 20.dp,
+                    horizontal = 20.dp,
+                ),
+            )
         }
+    }
+}
+
+@Composable
+private fun UserProfileAppbar(
+    userName: String,
+    userProfileUrl: String? = null,
+    ratingList: List<MutableState<Boolean>>
+) {
+    Row {
+        Image(
+            modifier = Modifier.size(40.dp),
+            painter = painterResource(id = R.drawable.profile_ex_image),
+            contentDescription = "profile"
+        )
+        Column(modifier = Modifier.padding(start = 12.dp)) {
+            Text(
+                text = userName,
+                fontSize = 12.sp,
+                fontWeight = FontWeight(600),
+                color = Gray800,
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                StarRating(
+                    modifier = Modifier.padding(horizontal = 1.dp),
+                    ratingStateList = ratingList,
+                    starSize = 14.dp
+                )
+                // TODO 시간 계산 필요
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "3일전",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight(400),
+                    color = Gray800,
+                )
+            }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Image(
+            modifier = Modifier
+                .size(24.dp)
+                .padding(end = 20.dp),
+            painter = painterResource(id = R.drawable.icon_dots_mono),
+            contentDescription = "more"
+        )
     }
 }
 
@@ -163,51 +217,16 @@ private fun PageInfo(
 }
 
 @Composable
-private fun UserProfileAppbar(
-    userName: String,
-    userProfileUrl: String? = null,
-    ratingList: List<MutableState<Boolean>>
+fun ReviewText(
+    modifier: Modifier = Modifier
 ) {
-    Row {
-        Image(
-            modifier = Modifier.size(40.dp),
-            painter = painterResource(id = R.drawable.profile_ex_image),
-            contentDescription = "profile"
-        )
-        Column(modifier = Modifier.padding(start = 12.dp)) {
-            Text(
-                text = userName,
-                fontSize = 12.sp,
-                fontWeight = FontWeight(600),
-                color = Gray800,
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                StarRating(
-                    modifier = Modifier.padding(horizontal = 1.dp),
-                    ratingStateList = ratingList,
-                    starSize = 14.dp
-                )
-                // TODO 시간 계산 필요
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = "3일전",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight(400),
-                    color = Gray800,
-                )
-            }
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        Image(
-            modifier = Modifier
-                .size(24.dp)
-                .padding(end = 20.dp),
-            painter = painterResource(id = R.drawable.icon_dots_mono),
-            contentDescription = "more"
-        )
-    }
+    Text(
+        modifier = modifier,
+        text = "이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다. 이자카야는 늘 사람이 많아서 대기가 길지만, 맛있어서 자주 갑니다.",
+        fontSize = 14.sp,
+        fontWeight = FontWeight(400),
+        color = Gray800,
+    )
 }
 
 @Composable
