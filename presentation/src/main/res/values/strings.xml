@@ -63,6 +63,7 @@
 
 
     <!-- 리뷰 화면 -->
+    <string name="review_title">리뷰</string>
     <string name="review_text_placeholder">맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!</string>
     <string name="review_guide_header">다녀온 맛집은\n어디인가요?</string>
     <string name="review_write">리뷰 작성</string>
@@ -96,5 +97,6 @@
     <string name="restaurant_share">공유하기</string>
     <string name="restaurant_only_picture">사진만 올리기</string>
     <string name="restaurant_review">리뷰 작성하기</string>
+    <string name="register_review">리뷰가 등록되었어요</string>
 
 </resources>

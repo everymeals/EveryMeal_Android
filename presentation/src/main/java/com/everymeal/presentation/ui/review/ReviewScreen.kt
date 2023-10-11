@@ -1,6 +1,7 @@
 package com.everymeal.presentation.ui.review
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,9 +61,15 @@ fun ReviewScreen(
         Log.d("ReviewScreen", "ReviewScreen: $it")
     }
     val viewState by viewModel.viewState.collectAsState()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
-            ReviewTopBar()
+            ReviewTopBar(
+                title = stringResource(R.string.review_write),
+                onBackClicked = {
+
+                },
+            )
         },
         containerColor = Color.White
     ) { innerPadding ->
@@ -91,7 +99,11 @@ fun ReviewScreen(
                         viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
                     },
                     onReviewRegisterClicked = {
-                        // TODO 리뷰 등록
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.register_review),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     },
                     onAddPhotoClicked = {
                         pickMultipleMedia.launch(
@@ -191,7 +203,7 @@ fun ReviewSearchBar(
 fun StarRating(
     modifier: Modifier = Modifier,
     ratingStateList: List<State<Boolean>>,
-    starRatingClicked: (Int) -> Unit,
+    starRatingClicked: ((Int) -> Unit)? = null,
     starSize: Dp = 40.dp,
 ) {
     LazyRow(
@@ -204,7 +216,7 @@ fun StarRating(
                     .size(starSize)
                     .padding(horizontal = 1.dp)
                     .clickable {
-                        starRatingClicked(index)
+                        starRatingClicked?.invoke(index)
                     },
                 painter = if (active.value) {
                     painterResource(
@@ -235,21 +247,26 @@ fun ReviewGuideHeader(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReviewTopBar() {
+fun ReviewTopBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    onBackClicked: () -> Unit
+) {
     TopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.review_write),
+                text = title,
                 style = Typography.bodySmall,
                 color = Grey9
             )
         },
         actions = {
             Icon(
-                modifier = Modifier
+                modifier = modifier
                     .size(48.dp)
                     .padding(12.dp)
-                    .padding(end = 4.dp),
+                    .padding(end = 4.dp)
+                    .clickable(onClick = onBackClicked),
                 painter = painterResource(id = R.drawable.icon_x_mono),
                 contentDescription = null
             )
