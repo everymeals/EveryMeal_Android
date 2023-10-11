@@ -3,7 +3,8 @@
 
     <!--  공통  -->
     <string name="select">선택하기</string>
-    <string name="register">등록하기</string>기
+    <string name="register">등록하기</string>
+    <string name="ok">확인</string>
     <string name="close">닫기</string>
     <string name="exit">나가기</string>
 
@@ -83,4 +84,17 @@
     <string name="meal_category">음식종류</string>
     <string name="rating_category">별점순</string>
     <string name="meal_rating_category_apply">적용하기</string>
+
+    <!--  신고 바텀 시트 다이얼로그  -->
+    <string name="report">신고하기</string>
+    <string name="restaurant_not_review">해당 가게와 무관한 리뷰</string>
+    <string name="dangerous_speak_review">비속어 및 혐오 발언</string>
+    <string name="lustful_review">음란성 게시물</string>
+    <string name="select_what_report">무엇으로 신고하시나요?</string>
+
+    <!--  식당 상세 화면  -->
+    <string name="restaurant_share">공유하기</string>
+    <string name="restaurant_only_picture">사진만 올리기</string>
+    <string name="restaurant_review">리뷰 작성하기</string>
+
 </resources>

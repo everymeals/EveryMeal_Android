@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,12 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
-import com.everymeal.presentation.ui.home.CategoryItem
+import com.everymeal.presentation.ui.detail.ReportCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
+import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.Gray200
+import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
+import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
-import com.everymeal.presentation.ui.theme.Grey7
+import com.everymeal.presentation.ui.theme.Main100
+import com.everymeal.presentation.ui.theme.SubMain100
 import com.everymeal.presentation.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,6 +93,7 @@ fun EveryMealMainBottomSheetDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealSortCategoryBottomSheetDialog(
+    title: String,
     onClick: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -98,39 +106,54 @@ fun EveryMealSortCategoryBottomSheetDialog(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("인기순") }
-                    .padding(vertical = 14.dp),
-                text = stringResource(R.string.popularity_sort),
-                fontSize = 17.sp,
-                color = Gray900,
-                fontWeight = FontWeight.SemiBold,
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.popularity_sort),
+                onClick = onClick
             )
             Spacer(modifier = Modifier.padding(4.dp))
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("거리순") }
-                    .padding(vertical = 14.dp),
-                text = stringResource(R.string.distance_sort),
-                fontSize = 17.sp,
-                color = Gray900,
-                fontWeight = FontWeight.SemiBold,
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.distance_sort),
+                onClick = onClick
             )
             Spacer(modifier = Modifier.padding(4.dp))
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onClick("최신순") }
-                    .padding(vertical = 14.dp),
-                text = stringResource(R.string.recent_sort),
-                fontSize = 17.sp,
-                color = Gray900,
-                fontWeight = FontWeight.SemiBold,
+            SortCategoryItem(
+                title = title,
+                category = stringResource(R.string.recent_sort),
+                onClick = onClick
             )
             Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+fun SortCategoryItem(
+    title: String,
+    category: String,
+    onClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick(category) },
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 14.dp),
+            text = category,
+            fontSize = 17.sp,
+            color = Gray900,
+            style = EveryMealTypography.displayMedium,
+        )
+        if(title == category) {
+            Image(
+                modifier = Modifier.size(24.dp),
+                imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
+                contentDescription = null,
+            )
         }
     }
 }
@@ -138,6 +161,8 @@ fun EveryMealSortCategoryBottomSheetDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
+    currentRating: Int,
+    restaurantCategoryType: String,
     onClick: () -> Unit,
     onDismiss: () -> Unit,
     onCategoryClick: (String) -> Unit,
@@ -163,10 +188,15 @@ fun EveryMealCategoryRatingBottomSheetDialog(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             HomeCategoryList(
-                isBottomSheet = true
+                isBottomSheet = true,
+                restaurantCategoryType
             ) {
                 onCategoryClick(it)
             }
+            Spacer(modifier = Modifier.padding(14.dp))
+            Divider(
+                color = Gray200,
+            )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 modifier = Modifier
@@ -181,6 +211,7 @@ fun EveryMealCategoryRatingBottomSheetDialog(
             LazyRow(content = {
                 items(5) {
                     RatingItem(
+                        currentRating,
                         ratingCount = it + 1,
                         onRatingClick = onRatingClick
                     )
@@ -199,6 +230,7 @@ fun EveryMealCategoryRatingBottomSheetDialog(
 
 @Composable
 fun RatingItem(
+    currentRating: Int,
     ratingCount: Int,
     onRatingClick: (Int) -> Unit
 ) {
@@ -207,7 +239,7 @@ fun RatingItem(
             indication = null,
             interactionSource = remember { MutableInteractionSource() }
         ) { onRatingClick(ratingCount) },
-        color = Grey2,
+        color = if (currentRating == ratingCount) SubMain100 else Grey2,
         shape = RoundedCornerShape(100.dp),
     ) {
         Row(
@@ -218,14 +250,146 @@ fun RatingItem(
                     .padding(start = 12.dp)
                     .size(16.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.icon_gray_star_mono),
-                contentDescription = "rating"
+                contentDescription = "rating",
+                colorFilter = if (currentRating == ratingCount) {
+                    ColorFilter.tint(Main100)
+                } else {
+                    ColorFilter.tint(Gray600)
+                }
             )
             Text(
                 text = ratingCount.toString(),
-                color = Grey7,
+                color = if (currentRating == ratingCount) Main100 else Gray600,
                 style = Typography.bodySmall,
                 modifier = Modifier.padding(start = 4.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
             )
         }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealReportBottomSheetDialog(
+    onClick: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onClick() },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = ImageVector.vectorResource(R.drawable.icon_siren_mono),
+                    contentDescription = null,
+                )
+                Text(
+                    modifier = Modifier.padding(start = 12.dp),
+                    text = stringResource(R.string.report),
+                    fontSize = 17.sp,
+                    color = Gray900,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            Spacer(modifier = Modifier.padding(20.dp))
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealDetailReportBottomSheetDialog(
+    title: String,
+    onClick: () -> Unit,
+    onDismiss: () -> Unit,
+    onReportCategoryClick: (String) -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(bottom = 18.dp),
+                text = stringResource(R.string.select_what_report),
+                fontSize = 22.sp,
+                style = EveryMealTypography.titleMedium,
+                color = Gray900
+            )
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.restaurant_not_review),
+                onClick = onReportCategoryClick
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.dangerous_speak_review),
+                onClick = onReportCategoryClick
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            ReportCategoryItem(
+                title = title,
+                category = stringResource(R.string.lustful_review),
+                onClick = onReportCategoryClick
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+            EveryMealMainButton(
+                text = stringResource(R.string.ok),
+                enabled = title.ReportCategoryType() != ReportCategoryType.NONE,
+                onClick = onClick,
+            )
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+fun ReportCategoryItem(
+    title: String,
+    category: String,
+    onClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick(category) },
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 10.dp),
+            text = category,
+            fontSize = 16.sp,
+            color = Gray800,
+            fontWeight = FontWeight.Normal,
+            style = EveryMealTypography.bodySmall
+        )
+        Image(
+            modifier = Modifier.size(24.dp),
+            imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
+            contentDescription = null,
+            colorFilter = if(title == category) {
+                ColorFilter.tint(Main100)
+            } else {
+                ColorFilter.tint(Gray400)
+            }
+        )
     }
 }
