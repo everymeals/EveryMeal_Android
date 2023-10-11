@@ -60,35 +60,44 @@ fun ReviewDetailScreen() {
                 userName = "햄식이",
                 ratingList = mockRatingList
             )
-            Box(
+            FoodImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .padding(top = 24.dp)
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = R.drawable.food_ex_2),
-                    contentDescription = "more"
-                )
-                LocationButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(
-                            start = 16.dp,
-                            bottom = 16.dp
-                        )
-                )
-                PageInfo(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(
-                            end = 16.dp,
-                            bottom = 16.dp
-                        )
-                )
-            }
+            )
         }
+    }
+}
+
+@Composable
+private fun FoodImage(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+    ) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.food_ex_2),
+            contentDescription = "more"
+        )
+        LocationButton(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(
+                    start = 16.dp,
+                    bottom = 16.dp
+                )
+        )
+        PageInfo(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(
+                    end = 16.dp,
+                    bottom = 16.dp
+                )
+        )
     }
 }
 
