@@ -57,6 +57,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 fun HomeScreen(
     homeViewModel : HomeViewModel = hiltViewModel(),
     onDetailScreenClickType : (String) -> Unit,
+    onDetailRestaurantClick : () -> Unit,
 ) {
     val items = listOf(
         Restaurant(
@@ -156,9 +157,15 @@ fun HomeScreen(
             }
             items(items.size) { index ->
                 val item = items[index]
-                EveryMealRestaurantItem(item) {
+                EveryMealRestaurantItem(
+                    item,
+                    onLoveClick = {
 
-                }
+                    },
+                    onDetailClick = {
+                        onDetailRestaurantClick()
+                    }
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
                 if (index != items.size - 1) {
                     Divider(
@@ -420,8 +427,9 @@ fun CategoryItem(
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen() {
-
-        }
+        HomeScreen(
+            onDetailScreenClickType = {},
+            onDetailRestaurantClick = {},
+        )
     }
 }

@@ -85,4 +85,10 @@
     <string name="dangerous_speak_review">비속어 및 혐오 발언</string>
     <string name="lustful_review">음란성 게시물</string>
     <string name="select_what_report">무엇으로 신고하시나요?</string>
+
+    <!--  식당 상세 화면  -->
+    <string name="restaurant_share">공유하기</string>
+    <string name="restaurant_only_picture">사진만 올리기</string>
+    <string name="restaurant_review">리뷰 작성하기</string>
+
 </resources>
