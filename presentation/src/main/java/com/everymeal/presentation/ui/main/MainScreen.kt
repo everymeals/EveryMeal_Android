@@ -23,6 +23,7 @@ import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
+import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 
@@ -59,6 +60,9 @@ fun MainScreen(
                 HomeScreen(
                     onDetailScreenClickType = { detailScreenType ->
                         navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
+                    },
+                    onDetailRestaurantClick = {
+                        navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route)
                     }
                 )
             }
@@ -77,6 +81,9 @@ fun MainScreen(
                     title = detailScreenType,
                     navigateToPreviousScreen = { navController.popBackStack() }
                 )
+            }
+            composable(route = EveryMealRoute.DETAIL_RESTAURANT.route) {
+                DetailRestaurantScreen()
             }
         }
     }

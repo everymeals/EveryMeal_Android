@@ -43,10 +43,17 @@ import com.everymeal.presentation.ui.theme.Gray700
 fun EveryMealRestaurantItem(
     restaurant: Restaurant,
     onLoveClick: () -> Unit,
+    onDetailClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onDetailClick()
+            }
             .padding(horizontal = 20.dp)
             .background(color = Color.White)
     ) {
@@ -254,8 +261,9 @@ fun RestaurantImage(restaurant: Restaurant) {
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen() {
-
-        }
+        HomeScreen(
+            onDetailScreenClickType = {},
+            onDetailRestaurantClick = {},
+        )
     }
 }
