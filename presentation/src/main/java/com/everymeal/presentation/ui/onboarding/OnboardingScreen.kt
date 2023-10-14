@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
@@ -32,16 +33,22 @@ import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Main100
 
+data class OnBoardingItem(
+    val imageRes: Int,
+    val imageSize: Dp,
+    val text: String
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen(
     onNavigateToUnivSelect: () -> Unit
 ) {
     val onBoardingList = listOf(
-        Triple(R.drawable.icon_onboarding_image_bowel, 160.dp, stringResource(id = R.string.onboarding_today_what_food)),
-        Triple(R.drawable.icon_onboarding_image_bowel, 160.dp, "여기는 로티가 들어가요"),
-        Triple(R.drawable.icon_onboarding_image_school, 144.dp, stringResource(id = R.string.onboarding_school_food)),
-        Triple(R.drawable.icon_onboarding_image_logo, 140.dp, stringResource(id = R.string.onboarding_everymeal)),
+        OnBoardingItem(R.drawable.icon_onboarding_image_bowel, 160.dp, stringResource(id = R.string.onboarding_today_what_food)),
+        OnBoardingItem(R.drawable.icon_onboarding_image_bowel, 160.dp, "여기는 로티가 들어가요"),
+        OnBoardingItem(R.drawable.icon_onboarding_image_school, 144.dp, stringResource(id = R.string.onboarding_school_food)),
+        OnBoardingItem(R.drawable.icon_onboarding_image_logo, 140.dp, stringResource(id = R.string.onboarding_everymeal)),
     )
 
     Column(
@@ -66,14 +73,14 @@ fun OnboardingScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(id = onBoardingList[it].first),
+                        painter = painterResource(id = onBoardingList[it].imageRes),
                         contentDescription = "onboarding",
                         modifier = Modifier
-                            .size(onBoardingList[it].second)
+                            .size(onBoardingList[it].imageSize)
                     )
                     Spacer(modifier = Modifier.size(20.dp))
                     Text(
-                        text = onBoardingList[it].third,
+                        text = onBoardingList[it].text,
                         style = EveryMealTypography.titleLarge,
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center,
