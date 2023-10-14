@@ -37,6 +37,11 @@
             android:theme="@style/Theme.EveryMeal_Android">
 
         </activity>
+        <activity
+            android:name="com.everymeal.presentation.ui.onboarding.OnboardingActivity"
+            android:theme="@style/Theme.EveryMeal_Android">
+
+        </activity>
     </application>
 
 </manifest>
