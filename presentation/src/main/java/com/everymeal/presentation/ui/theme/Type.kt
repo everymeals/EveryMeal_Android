@@ -52,17 +52,17 @@ val EveryMealTypography = Typography(
     titleLarge = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontSize = 18.sp,
     ),
     titleMedium = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
+        fontSize = 16.sp,
     ),
     titleSmall = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontSize = 15.sp,
     ),
     displayLarge = TextStyle(
         fontFamily = Pretendard,
@@ -97,16 +97,16 @@ val EveryMealTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
+        fontSize = 16.sp,
     ),
     bodyMedium = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp,
+        fontSize = 15.sp,
     ),
     bodySmall = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 14.sp,
     ),
 )

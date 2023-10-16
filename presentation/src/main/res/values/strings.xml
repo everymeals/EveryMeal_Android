@@ -5,6 +5,8 @@
     <string name="select">선택하기</string>
     <string name="register">등록하기</string>
     <string name="ok">확인</string>
+    <string name="close">닫기</string>
+    <string name="exit">나가기</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
@@ -61,14 +63,19 @@
 
 
     <!-- 리뷰 화면 -->
+    <string name="review_title">리뷰</string>
     <string name="review_text_placeholder">맛집에 대한 의견을 자세히 적어주시면 다른 사용자에게 도움이 돼요!</string>
     <string name="review_guide_header">다녀온 맛집은\n어디인가요?</string>
     <string name="review_write">리뷰 작성</string>
+    <string name="review_photo_limit">%d/10</string>
 
     <!--  홈화면 바텀 시트 다이얼로그  -->
     <string name="univ_admin_review_title">학교 인증이 된 사용자만\n리뷰를 남길 수 있어요</string>
     <string name="univ_admin_review_content">바이럴 마케팅 없는 신뢰적인 정보를 공유하기 위해\n학교 인증이 필요해요</string>
     <string name="univ_admin_button">인증하러 가기</string>
+    <string name="review_save_dialog_title">다음에 리뷰를 남길까요?</string>
+    <string name="review_save_dialog_content">지금까지 작성한 내용은 저장되지 않아요.</string>
+    <string name="review_save_dialog_write_continue">계속쓰기</string>
 
     <!--  상세 리스트 바텀 시트 다이얼로그  -->
     <string name="popularity_sort">인기순</string>
@@ -100,5 +107,6 @@
     <string name="restaurant_share">공유하기</string>
     <string name="restaurant_only_picture">사진만 올리기</string>
     <string name="restaurant_review">리뷰 작성하기</string>
+    <string name="register_review">리뷰가 등록되었어요</string>
 
 </resources>

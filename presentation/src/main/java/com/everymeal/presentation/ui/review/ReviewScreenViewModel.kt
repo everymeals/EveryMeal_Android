@@ -29,6 +29,14 @@ class ReviewScreenViewModel @Inject constructor(
                     )
                 }
             }
+
+            is ReviewEvent.OnImageSelected -> {
+                updateState {
+                    copy(
+                        imageUri = event.imageUri
+                    )
+                }
+            }
         }
     }
 }
