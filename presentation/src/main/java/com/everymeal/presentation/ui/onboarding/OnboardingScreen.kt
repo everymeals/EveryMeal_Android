@@ -17,6 +17,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.ui.theme.EveryMealTypography
@@ -44,6 +48,8 @@ data class OnBoardingItem(
 fun OnboardingScreen(
     onNavigateToUnivSelect: () -> Unit
 ) {
+    val onboardingLottie by rememberLottieComposition(LottieCompositionSpec.Asset("onboarding_food.json"))
+
     val onBoardingList = listOf(
         OnBoardingItem(R.drawable.icon_onboarding_image_bowel, 160.dp, stringResource(id = R.string.onboarding_today_what_food)),
         OnBoardingItem(R.drawable.icon_onboarding_image_bowel, 160.dp, "여기는 로티가 들어가요"),
@@ -72,20 +78,28 @@ fun OnboardingScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = onBoardingList[it].imageRes),
-                        contentDescription = "onboarding",
-                        modifier = Modifier
-                            .size(onBoardingList[it].imageSize)
-                    )
-                    Spacer(modifier = Modifier.size(20.dp))
-                    Text(
-                        text = onBoardingList[it].text,
-                        style = EveryMealTypography.titleLarge,
-                        fontSize = 22.sp,
-                        textAlign = TextAlign.Center,
-                        lineHeight = 30.sp
-                    )
+                    if(it == 1) {
+                        LottieAnimation(
+                            composition = onboardingLottie,
+                            modifier = Modifier.size(400.dp),
+                            iterations = Int.MAX_VALUE
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = onBoardingList[it].imageRes),
+                            contentDescription = "onboarding",
+                            modifier = Modifier
+                                .size(onBoardingList[it].imageSize)
+                        )
+                        Spacer(modifier = Modifier.size(20.dp))
+                        Text(
+                            text = onBoardingList[it].text,
+                            style = EveryMealTypography.titleLarge,
+                            fontSize = 22.sp,
+                            textAlign = TextAlign.Center,
+                            lineHeight = 30.sp
+                        )
+                    }
                 }
             }
         }
