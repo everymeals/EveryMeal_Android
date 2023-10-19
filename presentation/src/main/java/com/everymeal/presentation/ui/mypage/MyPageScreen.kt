@@ -2,6 +2,8 @@ package com.everymeal.presentation.ui.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -27,7 +30,10 @@ import androidx.compose.ui.unit.dp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray100
+import com.everymeal.presentation.ui.theme.Gray200
+import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
+import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 
 
@@ -49,6 +55,23 @@ fun MyPageScreen(
             item(key = "My Information") {
                 Spacer(modifier = Modifier.padding(8.dp))
                 MyInformation(Modifier.padding(horizontal = 20.dp))
+                Spacer(modifier = Modifier.padding(20.dp))
+                Divider(
+                    modifier = Modifier.padding(20.dp),
+                    color = Gray200,
+                    thickness = 1.dp
+                )
+                Spacer(modifier = Modifier.padding(24.dp))
+            }
+
+            item(key = "My Activities") {
+                MyActivities(Modifier.padding(horizontal = 20.dp))
+                Spacer(modifier = Modifier.padding(24.dp))
+                Divider(
+                    color = Gray100,
+                    thickness = 12.dp
+                )
+                Spacer(modifier = Modifier.padding(24.dp))
             }
         }
     }
@@ -107,6 +130,66 @@ fun MyInformation(
                     maxLines = 2
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun MyActivities(
+    modifier: Modifier = Modifier
+) {
+    Column (
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(id = R.string.my_page_my_activities),
+            style = EveryMealTypography.titleLarge,
+            color = Gray900
+        )
+        MyTabMenu(
+            menuTitle = "저장",
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "리뷰 내역",
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "사진 내역",
+            onClick = { }
+        )
+    }
+}
+
+@Composable
+fun MyTabMenu(
+    modifier: Modifier = Modifier,
+    menuTitle: String,
+    onClick: () -> Unit,
+) {
+    Column (
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp)
+            .clickable(onClick = onClick)
+            .padding(vertical = 3.dp)
+    ) {
+        Row (
+            modifier = modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = menuTitle,
+                style = EveryMealTypography.bodyLarge,
+                color = Gray800
+            )
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp),
+                tint = Gray400
+            )
         }
     }
 }
