@@ -109,4 +109,8 @@
     <string name="restaurant_review">리뷰 작성하기</string>
     <string name="register_review">리뷰가 등록되었어요</string>
 
+    <!--  마이페이지 화면  -->
+    <string name="my_page_univ_correct">인증하기</string>
+    <string name="my_page_univ_need">학교 인증이 필요해요</string>
+    <string name="my_page_if_need_can_function">학교를 인증하면 리뷰 작성, 사진 등록 등 에브리밀을 다양하게 이용할 수 있어요!</string>
 </resources>
