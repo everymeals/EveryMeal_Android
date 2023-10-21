@@ -15,7 +15,7 @@ hilt-compose = "1.0.0"
 
 okhttp = "4.11.0"
 retrofit = "2.9.0"
-serialization = "1.5.1"
+serialization = "1.6.0"
 kotlin-serilization = "1.0.0"
 
 lottie = "6.1.0"
