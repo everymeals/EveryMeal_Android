@@ -33,7 +33,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
-import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Main100
 
@@ -94,7 +94,7 @@ fun OnboardingScreen(
                         Spacer(modifier = Modifier.size(20.dp))
                         Text(
                             text = onBoardingList[it].text,
-                            style = EveryMealTypography.titleLarge,
+                            style = EveryMealTypo.titleLarge,
                             fontSize = 22.sp,
                             textAlign = TextAlign.Center,
                             lineHeight = 30.sp
