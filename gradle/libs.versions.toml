@@ -13,7 +13,7 @@ compose-bom = "2023.10.01"
 dagger-hilt = "2.46.1"
 hilt-compose = "1.0.0"
 
-okhttp = "4.11.0"
+okhttp = "4.12.0"
 retrofit = "2.9.0"
 serialization = "1.6.0"
 kotlin-serilization = "1.0.0"
