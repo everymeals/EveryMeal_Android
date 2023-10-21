@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
@@ -52,7 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.save.SaveTopBar
-import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray400
@@ -146,7 +145,7 @@ fun DetailRestaurantScreen(
                         modifier = Modifier.padding(start = 2.dp),
                         text = stringResource(R.string.restaurant_only_picture),
                         color = Gray900,
-                        style = EveryMealTypography.bodySmall
+                        style = EveryMealTypo.bodySmall
                     )
                 }
                 Row(
@@ -165,7 +164,7 @@ fun DetailRestaurantScreen(
                         modifier = Modifier.padding(start = 2.dp),
                         text = stringResource(R.string.restaurant_review),
                         color = Gray900,
-                        style = EveryMealTypography.bodySmall
+                        style = EveryMealTypo.bodySmall
                     )
                 }
             }
@@ -196,7 +195,7 @@ fun DetailRestaurantImage(
                 .background(Color.Black.copy(alpha = 0.6f))
                 .padding(horizontal = 8.dp, vertical = 2.dp),
             text = "1/6",
-            style = EveryMealTypography.bodySmall,
+            style = EveryMealTypo.bodySmall,
             fontSize = 14.sp,
             color = Color.White,
         )
@@ -222,14 +221,14 @@ fun DetailRestaurantMainInfo(
             text = "술집",
             color = Gray600,
             fontSize = 12.sp,
-            style = EveryMealTypography.labelSmall,
+            style = EveryMealTypo.labelSmall,
         )
         Text(
             modifier = Modifier.padding(top = 6.dp),
             text = "스타벅스 서울대 입구점",
             color = Color.Black,
             fontSize = 22.sp,
-            style = EveryMealTypography.titleMedium,
+            style = EveryMealTypo.titleMedium,
         )
         Spacer(modifier = Modifier.padding(5.dp))
         Row(
@@ -285,7 +284,7 @@ fun DetailRestaurantMainInfo(
                     text = "89",
                     color = Gray500,
                     fontSize = 15.sp,
-                    style = EveryMealTypography.displaySmall
+                    style = EveryMealTypo.displaySmall
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
@@ -307,7 +306,7 @@ fun DetailRestaurantMainInfo(
                     text = stringResource(R.string.restaurant_share),
                     color = Gray600,
                     fontSize = 15.sp,
-                    style = EveryMealTypography.displaySmall
+                    style = EveryMealTypo.displaySmall
                 )
             }
         }
@@ -350,7 +349,7 @@ fun DetailRestaurantTabLayout(
             Tab(
                 text = { Text(
                     text = title,
-                    style = EveryMealTypography.labelSmall,
+                    style = EveryMealTypo.labelSmall,
                 ) },
                 selected = viewState.selectedTabIndex == index,
                 onClick = {
@@ -394,7 +393,7 @@ fun DetailRestaurantTabInfo(
                 text = "서울특별시 관악구 관악로 1",
                 color = Gray800,
                 fontSize = 14.sp,
-                style = EveryMealTypography.bodySmall
+                style = EveryMealTypo.bodySmall
             )
         }
         Spacer(modifier = Modifier.padding(6.dp))
@@ -410,7 +409,7 @@ fun DetailRestaurantTabInfo(
                 text = "1533-2233",
                 color = Gray800,
                 fontSize = 14.sp,
-                style = EveryMealTypography.bodySmall
+                style = EveryMealTypo.bodySmall
             )
         }
         Spacer(modifier = Modifier.padding(6.dp))
@@ -426,7 +425,7 @@ fun DetailRestaurantTabInfo(
                 text = "카카오맵 이동하기",
                 color = Gray800,
                 fontSize = 14.sp,
-                style = EveryMealTypography.bodySmall
+                style = EveryMealTypo.bodySmall
             )
         }
         Spacer(modifier = Modifier.padding(18.dp))

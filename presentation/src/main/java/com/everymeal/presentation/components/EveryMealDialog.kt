@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.MONO_BLACK
 
@@ -41,13 +41,13 @@ fun EveryMealDialog(
                 ) {
                     Text(
                         text = title,
-                        style = EveryMealTypography.titleLarge,
+                        style = EveryMealTypo.titleLarge,
                         color = MONO_BLACK
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = message,
-                        style = EveryMealTypography.bodyMedium,
+                        style = EveryMealTypo.bodyMedium,
                         color = Grey7
                     )
                     Spacer(modifier = Modifier.height(24.dp))

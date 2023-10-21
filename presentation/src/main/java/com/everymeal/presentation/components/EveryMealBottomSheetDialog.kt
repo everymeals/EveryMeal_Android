@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.detail.ReportCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
-import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
@@ -146,7 +146,7 @@ fun SortCategoryItem(
             text = category,
             fontSize = 17.sp,
             color = Gray900,
-            style = EveryMealTypography.displayMedium,
+            style = EveryMealTypo.displayMedium,
         )
         if(title == category) {
             Image(
@@ -326,7 +326,7 @@ fun EveryMealDetailReportBottomSheetDialog(
                 modifier = Modifier.padding(bottom = 18.dp),
                 text = stringResource(R.string.select_what_report),
                 fontSize = 22.sp,
-                style = EveryMealTypography.titleMedium,
+                style = EveryMealTypo.titleMedium,
                 color = Gray900
             )
             ReportCategoryItem(
@@ -379,7 +379,7 @@ fun ReportCategoryItem(
             fontSize = 16.sp,
             color = Gray800,
             fontWeight = FontWeight.Normal,
-            style = EveryMealTypography.bodySmall
+            style = EveryMealTypo.bodySmall
         )
         Image(
             modifier = Modifier.size(24.dp),

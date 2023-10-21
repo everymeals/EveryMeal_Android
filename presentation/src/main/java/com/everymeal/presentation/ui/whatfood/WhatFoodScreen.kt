@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
-import com.everymeal.presentation.ui.theme.EveryMealTypography
+import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray700
 
 @Composable
@@ -38,13 +38,13 @@ fun WhatFoodScreen(
         Spacer(modifier = Modifier.size(10.dp))
         Text(
             text = stringResource(id = R.string.what_food_current_service),
-            style = EveryMealTypography.titleMedium,
+            style = EveryMealTypo.titleMedium,
             color = Color.Black
         )
         Spacer(modifier = Modifier.size(10.dp))
         Text(
             text = stringResource(id = R.string.what_food_everymeal_ready),
-            style = EveryMealTypography.bodySmall,
+            style = EveryMealTypo.bodySmall,
             color = Gray700,
             fontSize = 14.sp,
             textAlign = TextAlign.Center
