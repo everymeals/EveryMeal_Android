@@ -110,3 +110,99 @@ val EveryMealTypography = Typography(
         fontSize = 14.sp,
     ),
 )
+
+val Heading1 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 24.sp
+)
+
+val Heading2 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 22.sp
+)
+
+val Heading3 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp
+)
+
+val Title1 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 18.sp
+)
+
+val Title2 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 16.sp
+)
+
+val Title3 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Bold,
+    fontSize = 15.sp
+)
+
+val Subtitle1 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 17.sp
+)
+
+val Subtitle2 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp
+)
+
+val Subtitle3 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 15.sp
+)
+
+val Subtitle4 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 14.sp
+)
+
+val Subtitle5 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 12.sp
+)
+
+val Body1 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp
+)
+
+val Body2 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Normal,
+    fontSize = 15.sp
+)
+
+val Body3 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp
+)
+
+val Body4 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Normal,
+    fontSize = 13.sp
+)
+
+val Body5 = TextStyle(
+    fontFamily = Pretendard,
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp
+)
