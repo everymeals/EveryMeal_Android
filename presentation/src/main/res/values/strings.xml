@@ -7,6 +7,9 @@
     <string name="ok">확인</string>
     <string name="close">닫기</string>
     <string name="exit">나가기</string>
+    <string name="next">다음</string>
+    <string name="email">이메일</string>
+    <string name="email_error">잘못된 이메일 형식이에요</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
@@ -98,7 +101,6 @@
     <string name="what_food_everymeal_ready">빠른 시일 내에 이용하실 수 있도록\n에브리밀이 준비하고 있어요.</string>
 
     <!--  온보딩화면  -->
-    <string name="next">다음</string>
     <string name="onboarding_today_what_food">우리 오늘 뭐먹지?</string>
     <string name="onboarding_school_food">학식에서\n학교 주변 맛집까지</string>
     <string name="onboarding_everymeal">에브리밀에서\n간편하게</string>
@@ -108,5 +110,9 @@
     <string name="restaurant_only_picture">사진만 올리기</string>
     <string name="restaurant_review">리뷰 작성하기</string>
     <string name="register_review">리뷰가 등록되었어요</string>
+
+    <!--    학교 인증 화면    -->
+    <string name="school_auth_title">학교 인증</string>
+    <string name="school_auth_content">학교 인증을 위해\n대학 메일을 입력해주세요</string>
 
 </resources>

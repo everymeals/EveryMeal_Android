@@ -1,0 +1,21 @@
+package com.everymeal.presentation.ui.signup.school
+
+import com.everymeal.presentation.base.ViewEvent
+import com.everymeal.presentation.base.ViewSideEffect
+import com.everymeal.presentation.base.ViewState
+
+class SchoolContract {
+
+    data class State(
+        val isEmailError: Boolean = false,
+        val emailLink: String = ""
+    ) : ViewState
+
+    sealed class Event : ViewEvent {
+        data class OnEmailTextChanged(val emailLink: String) : Event()
+
+    }
+
+    sealed class Effect : ViewSideEffect {
+    }
+}

@@ -19,7 +19,9 @@ fun EveryMealTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    placeholderText: String,
+    placeholderText: String = "",
+    isError: Boolean = false,
+    supportingText: (@Composable () -> Unit)? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
     otherCustomization: (@Composable () -> Unit)? = null
 ) {
@@ -28,6 +30,8 @@ fun EveryMealTextField(
         value = value,
         onValueChange = onValueChange,
         leadingIcon = leadingIcon,
+        isError = isError,
+        supportingText = supportingText,
         placeholder = {
             Text(
                 text = placeholderText,
