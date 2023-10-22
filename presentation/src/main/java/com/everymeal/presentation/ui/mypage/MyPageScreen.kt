@@ -94,7 +94,7 @@ fun MyInformation(
             )
             Text(
                 text = stringResource(id = R.string.my_page_univ_correct),
-                style = EveryMealTypography.titleLarge,
+                style = EveryMealTypography.Heading1,
                 modifier = Modifier.padding(start = 16.dp)
             )
             Spacer(Modifier.weight(1f))
@@ -119,13 +119,13 @@ fun MyInformation(
             Column {
                 Text(
                     text = stringResource(id = R.string.my_page_univ_need),
-                    style = EveryMealTypography.titleSmall,
+                    style = EveryMealTypography.Heading2,
                     color = Gray900
                 )
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(
                     text = stringResource(id = R.string.my_page_if_need_can_function),
-                    style = EveryMealTypography.bodySmall,
+                    style = EveryMealTypography.Body4,
                     color = Gray600,
                     maxLines = 2
                 )
@@ -143,7 +143,7 @@ fun MyActivities(
     ) {
         Text(
             text = stringResource(id = R.string.my_page_my_activities),
-            style = EveryMealTypography.titleLarge,
+            style = EveryMealTypography.Heading1,
             color = Gray900
         )
         MyTabMenu(
@@ -181,7 +181,7 @@ fun MyTabMenu(
         ) {
             Text(
                 text = menuTitle,
-                style = EveryMealTypography.bodyLarge,
+                style = EveryMealTypography.Body2,
                 color = Gray800
             )
             Icon(
