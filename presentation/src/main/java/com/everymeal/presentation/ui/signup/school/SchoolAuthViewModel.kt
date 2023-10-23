@@ -19,6 +19,13 @@ class SchoolAuthViewModel :
                     )
                 }
             }
+            is SchoolContract.Event.OnNextButtonClicked -> {
+                updateState {
+                    copy(
+                        isShowConditionBottomSheet = true
+                    )
+                }
+            }
         }
     }
 

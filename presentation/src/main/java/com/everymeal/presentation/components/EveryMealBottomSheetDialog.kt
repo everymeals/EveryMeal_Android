@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,9 +36,11 @@ import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.detail.ReportCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypo
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
+import com.everymeal.presentation.ui.theme.Gray700
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 import com.everymeal.presentation.ui.theme.Grey2
@@ -49,7 +53,7 @@ import com.everymeal.presentation.ui.theme.Typography
 fun EveryMealMainBottomSheetDialog(
     title: String,
     content: String,
-    onClick : () -> Unit,
+    onClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
@@ -148,7 +152,7 @@ fun SortCategoryItem(
             color = Gray900,
             style = EveryMealTypo.displayMedium,
         )
-        if(title == category) {
+        if (title == category) {
             Image(
                 modifier = Modifier.size(24.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.icon_check_mono),
@@ -266,6 +270,7 @@ fun RatingItem(
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealReportBottomSheetDialog(
@@ -301,6 +306,71 @@ fun EveryMealReportBottomSheetDialog(
                 )
             }
             Spacer(modifier = Modifier.padding(20.dp))
+        }
+    }
+}
+
+data class EveryMealConditionAgreeDialogItem(
+    val title: String,
+    val isAgreed: Boolean,
+    val onClick: () -> Unit
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EveryMealConditionAgreeDialog(
+    onClick: () -> Unit,
+    onDismiss: () -> Unit,
+    conditionItems: List<EveryMealConditionAgreeDialogItem>
+) {
+    ModalBottomSheet(
+        onDismissRequest = { onDismiss() },
+        containerColor = Color.White,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.condition_agree_title),
+                style = EveryMealTypography.Heading2,
+                color = Gray900,
+            )
+            Spacer(modifier = Modifier.size(13.dp))
+            LazyColumn(content = {
+                items(conditionItems) {
+                    Row(
+                        modifier = Modifier
+                            .clickable(onClick = onClick)
+                            .padding(vertical = 7.dp),
+                    ) {
+                        Image(
+                            painter = if (it.isAgreed) painterResource(
+                                id = R.drawable.icon_check_mono
+                            ) else painterResource(id = R.drawable.icon_check_gray_mono),
+                            contentDescription = "check"
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 6.dp),
+                            text = it.title,
+                            style = EveryMealTypography.Subtitle3,
+                            color = Gray700,
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Image(
+                            painter = painterResource(id = R.drawable.icon_arrow_right),
+                            contentDescription = null
+                        )
+                    }
+                }
+            })
+            EveryMealMainButton(
+                text = stringResource(R.string.ok),
+                enabled = true,
+                onClick = onClick,
+            )
+            Spacer(modifier = Modifier.size(24.dp))
         }
     }
 }
@@ -385,7 +455,7 @@ fun ReportCategoryItem(
             modifier = Modifier.size(24.dp),
             imageVector = ImageVector.vectorResource(R.drawable.icon_check_gray_mono),
             contentDescription = null,
-            colorFilter = if(title == category) {
+            colorFilter = if (title == category) {
                 ColorFilter.tint(Main100)
             } else {
                 ColorFilter.tint(Gray400)

@@ -114,5 +114,7 @@
     <!--    학교 인증 화면    -->
     <string name="school_auth_title">학교 인증</string>
     <string name="school_auth_content">학교 인증을 위해\n대학 메일을 입력해주세요</string>
+    <string name="condition_agree_title">이용을 위한 동의가 필요해요</string>
+    <string name="condition_agree">[필수] 이용 약관 동의</string>
 
 </resources>

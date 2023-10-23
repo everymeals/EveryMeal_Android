@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
+import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.components.EveryMealTextField
 import com.everymeal.presentation.ui.theme.EveryMealTypography
@@ -60,6 +62,35 @@ fun SchoolAuthScreen(
             viewModel = viewModel,
             state = viewState
         )
+        if (viewState.isShowConditionBottomSheet) {
+            EveryMealConditionAgreeDialog(
+                onClick = { },
+                onDismiss = { },
+                conditionItems = listOf(
+                    EveryMealConditionAgreeDialogItem(
+                        title = "[필수] 이용 약관 동의",
+                        isAgreed = true,
+                        onClick = {
+
+                        }
+                    ),
+                    EveryMealConditionAgreeDialogItem(
+                        title = "[필수] 개인정보 수집 및 이용 동의",
+                        isAgreed = true,
+                        onClick = {
+
+                        }
+                    ),
+                    EveryMealConditionAgreeDialogItem(
+                        title = "[선택] 마케팅 정보 수집 동의",
+                        isAgreed = true,
+                        onClick = {
+
+                        }
+                    )
+                )
+            )
+        }
     }
 }
 
@@ -102,13 +133,12 @@ fun SchoolAuthContent(
         EveryMealMainButton(
             text = stringResource(id = R.string.next),
             onClick = {
-
-            }
+                viewModel.setEvent(SchoolContract.Event.OnNextButtonClicked)
+            },
         )
-
-
     }
 }
+
 
 @Preview
 @Composable
