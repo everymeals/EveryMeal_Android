@@ -55,13 +55,11 @@ fun MyPageScreen(
             item(key = "My Information") {
                 Spacer(modifier = Modifier.padding(8.dp))
                 MyInformation(Modifier.padding(horizontal = 20.dp))
-                Spacer(modifier = Modifier.padding(20.dp))
                 Divider(
                     modifier = Modifier.padding(20.dp),
                     color = Gray200,
                     thickness = 1.dp
                 )
-                Spacer(modifier = Modifier.padding(24.dp))
             }
 
             item(key = "My Activities") {
@@ -73,8 +71,20 @@ fun MyPageScreen(
                 )
                 Spacer(modifier = Modifier.padding(24.dp))
             }
+
+            item(key = "My Settings") {
+                MySettings(Modifier.padding(horizontal = 20.dp))
+                Spacer(modifier = Modifier.padding(24.dp))
+            }
         }
     }
+}
+
+@Composable
+fun MySettings(
+    modifier: Modifier = Modifier
+) {
+
 }
 
 @Composable
@@ -94,7 +104,7 @@ fun MyInformation(
             )
             Text(
                 text = stringResource(id = R.string.my_page_univ_correct),
-                style = EveryMealTypography.Heading1,
+                style = EveryMealTypography.Title1,
                 modifier = Modifier.padding(start = 16.dp)
             )
             Spacer(Modifier.weight(1f))
@@ -119,13 +129,13 @@ fun MyInformation(
             Column {
                 Text(
                     text = stringResource(id = R.string.my_page_univ_need),
-                    style = EveryMealTypography.Heading2,
+                    style = EveryMealTypography.Title3,
                     color = Gray900
                 )
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(
                     text = stringResource(id = R.string.my_page_if_need_can_function),
-                    style = EveryMealTypography.Body4,
+                    style = EveryMealTypography.Body3,
                     color = Gray600,
                     maxLines = 2
                 )
@@ -143,7 +153,7 @@ fun MyActivities(
     ) {
         Text(
             text = stringResource(id = R.string.my_page_my_activities),
-            style = EveryMealTypography.Heading1,
+            style = EveryMealTypography.Title1,
             color = Gray900
         )
         MyTabMenu(
