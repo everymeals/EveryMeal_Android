@@ -18,9 +18,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,7 +48,10 @@ fun MyPageScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { }
+                title = { },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                )
             )
         }
     ) { innerPadding ->
@@ -78,13 +84,6 @@ fun MyPageScreen(
             }
         }
     }
-}
-
-@Composable
-fun MySettings(
-    modifier: Modifier = Modifier
-) {
-
 }
 
 @Composable
@@ -172,9 +171,46 @@ fun MyActivities(
 }
 
 @Composable
+fun MySettings(
+    modifier: Modifier = Modifier
+) {
+    Column (
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(id = R.string.my_page_settings),
+            style = EveryMealTypography.Title1,
+            color = Gray900
+        )
+        MyTabMenu(
+            menuTitle = "문의하기",
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "서비스 약관",
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "오픈소스 라이센스",
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "오픈소스 라이센스",
+            isAppVersion = true,
+            onClick = { }
+        )
+        MyTabMenu(
+            menuTitle = "탈퇴하기",
+            onClick = { }
+        )
+    }
+}
+
+@Composable
 fun MyTabMenu(
     modifier: Modifier = Modifier,
     menuTitle: String,
+    isAppVersion: Boolean = false,
     onClick: () -> Unit,
 ) {
     Column (
@@ -194,12 +230,20 @@ fun MyTabMenu(
                 style = EveryMealTypography.Body2,
                 color = Gray800
             )
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
-                contentDescription = null,
-                modifier = Modifier.size(20.dp),
-                tint = Gray400
-            )
+            if(isAppVersion) {
+                Text(
+                    text = "1.0.0",
+                    style = EveryMealTypography.Body2,
+                    color = Gray400
+                )
+            } else {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                    tint = Gray400
+                )
+            }
         }
     }
 }
