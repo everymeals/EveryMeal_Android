@@ -2,8 +2,12 @@ package com.everymeal.everymeal_android.di
 
 import com.everymeal.data.datasource.FoodDataSource
 import com.everymeal.data.datasource.FoodDataSourceImpl
+import com.everymeal.data.datasource.remote.onboarding.OnboardingDataSource
+import com.everymeal.data.datasource.remote.onboarding.OnboardingDataSourceImpl
 import com.everymeal.data.repository.FoodRepositoryImpl
+import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.domain.repository.FoodRepository
+import com.everymeal.domain.repository.onboarding.OnboardingRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +29,16 @@ abstract class RepositoryModule {
     abstract fun bindFoodV2DataSource(
         foodDataSourceImpl: FoodDataSourceImpl
     ): FoodDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindOnboardingRepository(
+        onboardingRepositoryImpl: OnboardingRepositoryImpl
+    ): OnboardingRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindOnboardingDataSource(
+        onboardingDataSourceImpl: OnboardingDataSourceImpl
+    ): OnboardingDataSource
 }

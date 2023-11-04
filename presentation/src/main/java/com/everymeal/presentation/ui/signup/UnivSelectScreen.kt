@@ -1,6 +1,7 @@
 package com.everymeal.presentation.ui.signup
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,7 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.domain.model.onboarding.GetUniversityEntity
 import com.everymeal.presentation.R
+import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
@@ -48,11 +51,6 @@ import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Paddings
 
-data class Item(
-    val univName: String,
-    val campusName: String? = null
-)
-
 @Composable
 fun UnivSelectScreen(
     viewModel: UnivSelectViewModel = hiltViewModel(),
@@ -60,97 +58,8 @@ fun UnivSelectScreen(
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    val items = listOf(
-        Item(univName = "명지대", campusName = "자연캠퍼스"),
-        Item(univName = "명지대", campusName = "인문캠퍼스"),
-        Item(univName = "성신여대", campusName = "수정캠퍼스"),
-        Item(univName = "성신여대", campusName = "운정캠퍼스"),
-        Item(univName = "서울여대"),
-        Item(univName = "연세대학교", campusName = "서울캠퍼스"),
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = Paddings.extra)
-        ) {
-            Spacer(modifier = Modifier.padding(40.dp))
-            Image(
-                painter = painterResource(id = R.drawable.icon_school),
-                contentDescription = stringResource(R.string.icon_univ),
-                modifier = Modifier.size(64.dp)
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            Text(
-                text = stringResource(R.string.univ_select_title),
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                ),
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.weight(1f),
-            ) {
-                items(items.size) { index ->
-                    val item = items[index]
-                    val isSelected = viewState.selectedUniv == "${item.univName}+${item.campusName}"
-                    UnivSelectItem(
-                        item = item,
-                        isSelected = isSelected,
-                        index = index
-                    ) {
-                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(
-                            "${item.univName}+${item.campusName}")
-                        )
-                    }
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Gray300, RoundedCornerShape(100.dp))
-                    .padding(horizontal = Paddings.extra, vertical = 14.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_chat),
-                    contentDescription = stringResource(id = R.string.icon_chat_description),
-                    tint = Gray500
-                )
-                Spacer(modifier = Modifier.padding(14.dp))
-                Column {
-                    Text(
-                        text = stringResource(id = R.string.univ_select_not_univ),
-                        fontSize = 15.sp,
-                        color = Gray800
-                    )
-                    Text(
-                        text = stringResource(id = R.string.univ_select_apply),
-                        fontSize = 14.sp,
-                        color = Gray500
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
-                    contentDescription = stringResource(id = R.string.icon_arrow_right),
-                    tint = Gray500
-                )
-            }
-            EveryMealMainButton(
-                text = stringResource(R.string.select),
-                enabled = viewState.selectedUniv.isNotEmpty(),
-            ) {
-                viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked)
-            }
-        }
+    LaunchedEffect(key1 = true) {
+        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.InitUnivSelectScreen)
     }
 
     LaunchedEffect(key1 = viewModel.effect) {
@@ -162,11 +71,108 @@ fun UnivSelectScreen(
             }
         }
     }
+
+    when(viewState.univSelectLoadState) {
+        LoadState.LOADING -> {
+            //Todo 로딩 UI 구현 필요
+            Log.d("UnivSelectScreen", "Loading")
+        }
+        LoadState.SUCCESS -> {
+            Log.d("UnivSelectScreen", "Success")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = Paddings.extra)
+                ) {
+                    Spacer(modifier = Modifier.padding(40.dp))
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_school),
+                        contentDescription = stringResource(R.string.icon_univ),
+                        modifier = Modifier.size(64.dp)
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    Text(
+                        text = stringResource(R.string.univ_select_title),
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.weight(1f),
+                    ) {
+                        items(viewState.universities.size) { index ->
+                            val item = viewState.universities[index]
+                            val isSelected = viewState.selectedUniv == "${item.universityShortName}+${item.campusName}"
+                            UnivSelectItem(
+                                item = item,
+                                isSelected = isSelected,
+                                index = index
+                            ) {
+                                viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(
+                                    "${item.universityShortName}+${item.campusName}")
+                                )
+                            }
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Gray300, RoundedCornerShape(100.dp))
+                            .padding(horizontal = Paddings.extra, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.icon_chat),
+                            contentDescription = stringResource(id = R.string.icon_chat_description),
+                            tint = Gray500
+                        )
+                        Spacer(modifier = Modifier.padding(14.dp))
+                        Column {
+                            Text(
+                                text = stringResource(id = R.string.univ_select_not_univ),
+                                fontSize = 15.sp,
+                                color = Gray800
+                            )
+                            Text(
+                                text = stringResource(id = R.string.univ_select_apply),
+                                fontSize = 14.sp,
+                                color = Gray500
+                            )
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.icon_arrow_right),
+                            contentDescription = stringResource(id = R.string.icon_arrow_right),
+                            tint = Gray500
+                        )
+                    }
+                    EveryMealMainButton(
+                        text = stringResource(R.string.select),
+                        enabled = viewState.selectedUniv.isNotEmpty(),
+                    ) {
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked)
+                    }
+                }
+            }
+        }
+        LoadState.ERROR -> {
+            //Todo 네트워크 에러 다이얼로그 구현 필요
+            Log.d("UnivSelectScreen", "Error")
+        }
+    }
 }
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun UnivSelectItem(item: Item, isSelected: Boolean, index: Int, onSelectClick: (Item) -> Unit) {
+fun UnivSelectItem(item: GetUniversityEntity.UniversityData, isSelected: Boolean, index: Int, onSelectClick: (GetUniversityEntity.UniversityData) -> Unit) {
     Column(
         modifier = Modifier
             .clickable(
@@ -180,18 +186,18 @@ fun UnivSelectItem(item: Item, isSelected: Boolean, index: Int, onSelectClick: (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val spacerSize = if (item.campusName == null) 17.dp else 10.dp
+        val spacerSize = if (item.campusName.isEmpty()) 17.dp else 10.dp
         Spacer(modifier = Modifier.padding(spacerSize))
         Text(
-            text = item.univName,
+            text = item.universityShortName,
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold,
             color = Gray800
         )
-        item.campusName?.let { campusName ->
+        if (item.campusName.isNotEmpty()) {
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = campusName,
+                text = item.campusName,
                 fontSize = 13.sp,
                 color = Gray600,
             )
@@ -214,14 +220,6 @@ fun UnivSelectScreenPreview() {
 @Composable
 fun UnivSelectScreenItemPreview() {
     EveryMeal_AndroidTheme {
-        UnivSelectItem(item = Item(
-                univName = "명지대",
-                campusName = "용인캠퍼스"
-            ),
-            false,
-            index = 0
-        ) {
 
-        }
     }
 }
