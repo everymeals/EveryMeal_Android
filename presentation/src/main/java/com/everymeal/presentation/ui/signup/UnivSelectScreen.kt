@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +43,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.domain.model.onboarding.GetUniversityEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
+import com.everymeal.presentation.components.EveryMealDialog
+import com.everymeal.presentation.components.EveryMealLoadingDialog
 import com.everymeal.presentation.components.EveryMealMainButton
+import com.everymeal.presentation.ui.onboarding.OnboardingActivity
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -55,6 +59,7 @@ import com.everymeal.presentation.ui.theme.Paddings
 fun UnivSelectScreen(
     viewModel: UnivSelectViewModel = hiltViewModel(),
     onUnivSelectClick : () -> Unit,
+    onNetWorkErrorCancelClick : () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
@@ -71,14 +76,13 @@ fun UnivSelectScreen(
             }
         }
     }
+    val showDialog = remember { mutableStateOf(true) }
 
     when(viewState.univSelectLoadState) {
         LoadState.LOADING -> {
-            //Todo 로딩 UI 구현 필요
-            Log.d("UnivSelectScreen", "Loading")
+            EveryMealLoadingDialog()
         }
         LoadState.SUCCESS -> {
-            Log.d("UnivSelectScreen", "Success")
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -164,8 +168,25 @@ fun UnivSelectScreen(
             }
         }
         LoadState.ERROR -> {
-            //Todo 네트워크 에러 다이얼로그 구현 필요
-            Log.d("UnivSelectScreen", "Error")
+            if(showDialog.value) {
+                EveryMealDialog(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = stringResource(R.string.error_dialog_title),
+                    message = stringResource(R.string.error_dialog_content),
+                    confirmButtonText = stringResource(R.string.retry),
+                    dismissButtonText = stringResource(R.string.cancel),
+                    onDismissRequest = { },
+                    onConfirmClick = {
+                        showDialog.value = false
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.InitUnivSelectScreen)
+                        showDialog.value = true
+                    },
+                    onDisMissClicked = {
+                        showDialog.value = false
+                        onNetWorkErrorCancelClick()
+                    }
+                )
+            }
         }
     }
 }
@@ -210,9 +231,10 @@ fun UnivSelectItem(item: GetUniversityEntity.UniversityData, isSelected: Boolean
 @Composable
 fun UnivSelectScreenPreview() {
     EveryMeal_AndroidTheme {
-        UnivSelectScreen {
-
-        }
+        UnivSelectScreen(
+            onUnivSelectClick = { },
+            onNetWorkErrorCancelClick = { }
+        )
     }
 }
 

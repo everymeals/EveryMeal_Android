@@ -9,6 +9,7 @@ import com.everymeal.presentation.ui.signup.UnivSelectContract.UnivSelectEffect
 import com.everymeal.presentation.ui.signup.UnivSelectContract.UnivSelectEvent
 import com.everymeal.presentation.ui.signup.UnivSelectContract.UnivSelectState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
