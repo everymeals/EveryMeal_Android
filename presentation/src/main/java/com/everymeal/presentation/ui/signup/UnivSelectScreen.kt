@@ -76,7 +76,6 @@ fun UnivSelectScreen(
             }
         }
     }
-    val showDialog = remember { mutableStateOf(true) }
 
     when(viewState.univSelectLoadState) {
         LoadState.LOADING -> {
@@ -168,7 +167,7 @@ fun UnivSelectScreen(
             }
         }
         LoadState.ERROR -> {
-            if(showDialog.value) {
+            if(viewState.networkErrorDialog) {
                 EveryMealDialog(
                     modifier = Modifier.fillMaxWidth(),
                     title = stringResource(R.string.error_dialog_title),
@@ -177,12 +176,12 @@ fun UnivSelectScreen(
                     dismissButtonText = stringResource(R.string.cancel),
                     onDismissRequest = { },
                     onConfirmClick = {
-                        showDialog.value = false
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.NetworkErrorDialogClicked(false))
                         viewModel.setEvent(UnivSelectContract.UnivSelectEvent.InitUnivSelectScreen)
-                        showDialog.value = true
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.NetworkErrorDialogClicked(true))
                     },
                     onDisMissClicked = {
-                        showDialog.value = false
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.NetworkErrorDialogClicked(false))
                         onNetWorkErrorCancelClick()
                     }
                 )
@@ -193,14 +192,19 @@ fun UnivSelectScreen(
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun UnivSelectItem(item: GetUniversityEntity.UniversityData, isSelected: Boolean, index: Int, onSelectClick: (GetUniversityEntity.UniversityData) -> Unit) {
+fun UnivSelectItem(
+    item: GetUniversityEntity.UniversityData,
+    isSelected: Boolean,
+    index: Int,
+    onSelectClick: (GetUniversityEntity.UniversityData) -> Unit
+) {
     Column(
         modifier = Modifier
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) { onSelectClick(item) }
-            .padding(bottom = Paddings.medium, end = if(index%2==0) Paddings.medium else 0.dp)
+            .padding(bottom = Paddings.medium, end = if (index % 2 == 0) Paddings.medium else 0.dp)
             .clip(RoundedCornerShape(Paddings.medium))
             .background(if (isSelected) Gray500 else Gray100)
             .fillMaxSize(),

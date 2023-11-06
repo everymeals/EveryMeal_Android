@@ -15,7 +15,8 @@ class UnivSelectContract {
     data class UnivSelectState(
         val univSelectLoadState: LoadState = LoadState.LOADING,
         val selectedUniv: String = "",
-        val universities: List<UniversityData> = emptyList()
+        val universities: List<UniversityData> = emptyList(),
+        val networkErrorDialog: Boolean = true
     ) : ViewState
 
     /*
@@ -27,6 +28,9 @@ class UnivSelectContract {
         object SelectButtonClicked : UnivSelectEvent()
         data class SelectedUniv(
             val selectedUniv: String
+        ) : UnivSelectEvent()
+        data class NetworkErrorDialogClicked(
+            val dialogStateChange: Boolean
         ) : UnivSelectEvent()
     }
 

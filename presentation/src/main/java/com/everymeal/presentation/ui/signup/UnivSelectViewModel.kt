@@ -38,6 +38,14 @@ class UnivSelectViewModel @Inject constructor(
                     )
                 }
             }
+
+            is UnivSelectEvent.NetworkErrorDialogClicked -> {
+                updateState {
+                    copy(
+                        networkErrorDialog = event.dialogStateChange
+                    )
+                }
+            }
         }
     }
 
