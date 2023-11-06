@@ -1,6 +1,6 @@
 package com.everymeal.data.repository.onboarding
 
-import com.everymeal.data.datasource.remote.onboarding.OnboardingDataSource
+import com.everymeal.data.datasource.onboarding.OnboardingDataSource
 import com.everymeal.data.model.onboarding.toUniversityEntity
 import com.everymeal.domain.model.onboarding.GetUniversityEntity
 import com.everymeal.domain.repository.onboarding.OnboardingRepository

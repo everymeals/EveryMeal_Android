@@ -1,4 +1,4 @@
-package com.everymeal.data.datasource.remote.onboarding
+package com.everymeal.data.datasource.onboarding
 
 import com.everymeal.data.model.onboarding.UniversityData
 
