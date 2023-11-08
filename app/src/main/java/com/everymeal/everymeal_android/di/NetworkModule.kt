@@ -1,6 +1,5 @@
 package com.everymeal.everymeal_android.di
 
-import com.everymeal.data.service.ExampleApi
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -39,12 +38,6 @@ object NetworkModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .client(client)
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideApi(retrofit: Retrofit): ExampleApi {
-        return retrofit.create(ExampleApi::class.java)
     }
 
     @Provides
