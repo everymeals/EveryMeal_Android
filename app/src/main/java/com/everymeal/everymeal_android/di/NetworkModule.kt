@@ -1,6 +1,7 @@
 package com.everymeal.everymeal_android.di
 
 import com.everymeal.data.service.onboarding.OnboardingApi
+import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ object NetworkModule {
     private val contentType = "application/json".toMediaType()
     private val json = Json { ignoreUnknownKeys = true }
 
-    private const val BASE_URL = "http://dev.everymeal.shop:8085"
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     @Provides
     @Singleton
