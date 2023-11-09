@@ -15,6 +15,7 @@ class SchoolContract {
     sealed class Event : ViewEvent {
         data class OnEmailTextChanged(val emailLink: String) : Event()
         object OnNextButtonClicked : Event()
+        object OnPostEmail : Event()
     }
 
     sealed class Effect : ViewSideEffect {

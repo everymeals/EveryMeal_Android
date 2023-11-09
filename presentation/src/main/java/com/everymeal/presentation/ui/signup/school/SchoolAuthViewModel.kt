@@ -1,8 +1,15 @@
 package com.everymeal.presentation.ui.signup.school
 
+import androidx.lifecycle.viewModelScope
+import com.everymeal.domain.model.auth.Email
+import com.everymeal.domain.usecase.auth.PostEmailUseCase
 import com.everymeal.presentation.base.BaseViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SchoolAuthViewModel :
+class SchoolAuthViewModel @Inject constructor(
+    private val postEmailUseCase: PostEmailUseCase
+) :
     BaseViewModel<SchoolContract.State, SchoolContract.Effect, SchoolContract.Event>(SchoolContract.State()) {
 
     companion object {
@@ -19,6 +26,7 @@ class SchoolAuthViewModel :
                     )
                 }
             }
+
             is SchoolContract.Event.OnNextButtonClicked -> {
                 updateState {
                     copy(
@@ -26,11 +34,21 @@ class SchoolAuthViewModel :
                     )
                 }
             }
+
+            is SchoolContract.Event.OnPostEmail -> {
+                postEmail()
+            }
         }
     }
 
 
     private fun isValidEmail(email: String): Boolean {
         return EMAIL_REGEX.matches(email)
+    }
+
+    private fun postEmail() {
+        viewModelScope.launch {
+            postEmailUseCase(Email(viewState.value.emailLink))
+        }
     }
 }
