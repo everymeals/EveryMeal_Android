@@ -24,7 +24,6 @@ class OnboardingActivity : ComponentActivity() {
             EveryMeal_AndroidTheme {
                 OnboardingScreen{
                     UnivSelectActivity.startActivity(this)
-                    finish()
                 }
             }
         }

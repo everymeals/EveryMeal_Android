@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.signup
 
+import com.everymeal.domain.model.onboarding.GetUniversityEntity.UniversityData
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
@@ -12,8 +13,10 @@ class UnivSelectContract {
     대학교 선택하기 State Hoisting
      */
     data class UnivSelectState(
-        val univSelectLoadState: LoadState = LoadState.SUCCESS,
-        val selectedUniv: String = ""
+        val univSelectLoadState: LoadState = LoadState.LOADING,
+        val selectedUniv: String = "",
+        val universities: List<UniversityData> = emptyList(),
+        val networkErrorDialog: Boolean = true
     ) : ViewState
 
     /*
@@ -21,9 +24,13 @@ class UnivSelectContract {
     대학교 선택하기 ViewEvent
      */
     sealed class UnivSelectEvent : ViewEvent {
+        object InitUnivSelectScreen : UnivSelectEvent()
         object SelectButtonClicked : UnivSelectEvent()
         data class SelectedUniv(
             val selectedUniv: String
+        ) : UnivSelectEvent()
+        data class NetworkErrorDialogClicked(
+            val dialogStateChange: Boolean
         ) : UnivSelectEvent()
     }
 

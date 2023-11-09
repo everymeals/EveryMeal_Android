@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.konan.properties.Properties
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("com.android.application")
@@ -23,6 +24,10 @@ android {
         }
     }
 
+    val localPropertiesFile = rootProject.file("local.properties")
+    val localProperties = Properties()
+    localProperties.load(localPropertiesFile.inputStream())
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,6 +35,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"${localProperties.getProperty("BASE_URL")}\"")
         }
     }
     compileOptions {
@@ -41,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.7"
