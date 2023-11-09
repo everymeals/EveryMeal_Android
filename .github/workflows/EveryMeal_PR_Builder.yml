@@ -38,6 +38,12 @@ jobs:
       - name: Change gradlew permissions
         run: chmod +x ./gradlew
 
+      - name: Add Local Properties
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+        run: |
+          echo pophoryBaseUrl=BASE_URL >> ./local.properties
+
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
 
