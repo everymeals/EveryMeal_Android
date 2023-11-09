@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.everymeal.presentation.ui.main.MainActivity
+import com.everymeal.presentation.ui.onboarding.OnboardingActivity
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,10 +22,16 @@ class UnivSelectActivity : ComponentActivity() {
     private fun setUnivSelectScreen() {
         setContent {
             EveryMeal_AndroidTheme {
-                UnivSelectScreen{
-                    MainActivity.startActivity(this)
-                    finish()
-                }
+                UnivSelectScreen(
+                    onUnivSelectClick = {
+                        MainActivity.startActivity(this)
+                        finish()
+                    },
+                    onNetWorkErrorCancelClick = {
+                        OnboardingActivity.startActivity(this)
+                        finish()
+                    }
+                )
             }
         }
     }

@@ -1,20 +1,25 @@
 package com.everymeal.presentation.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.MONO_BLACK
+import com.everymeal.presentation.ui.theme.Main100
 
 @Composable
 fun EveryMealDialog(
@@ -71,4 +76,16 @@ fun EveryMealDialog(
             }
         }
     )
+}
+
+@Composable
+fun EveryMealLoadingDialog(
+    modifier: Modifier = Modifier.fillMaxSize(),
+) {
+    Box(modifier = modifier) {
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center),
+            color = Main100
+        )
+    }
 }

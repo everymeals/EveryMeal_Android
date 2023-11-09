@@ -1,6 +1,7 @@
 package com.everymeal.everymeal_android.di
 
-import com.everymeal.data.service.ExampleApi
+import com.everymeal.data.service.onboarding.OnboardingApi
+import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ object NetworkModule {
     private val contentType = "application/json".toMediaType()
     private val json = Json { ignoreUnknownKeys = true }
 
-    private const val BASE_URL = "https://api.github.com/"
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     @Provides
     @Singleton
@@ -42,7 +43,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): ExampleApi {
-        return retrofit.create(ExampleApi::class.java)
+    fun provideOnboardingApi(retrofit: Retrofit): OnboardingApi {
+        return retrofit.create(OnboardingApi::class.java)
     }
 }
