@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -313,13 +313,14 @@ fun EveryMealReportBottomSheetDialog(
 data class EveryMealConditionAgreeDialogItem(
     val title: String,
     val isAgreed: Boolean,
-    val onClick: () -> Unit
+    val isEssential: Boolean = false,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealConditionAgreeDialog(
-    onClick: () -> Unit,
+    onItemClicked: (Int) -> Unit,
+    onNextButtonClicked: () -> Unit,
     onDismiss: () -> Unit,
     conditionItems: List<EveryMealConditionAgreeDialogItem>
 ) {
@@ -339,21 +340,23 @@ fun EveryMealConditionAgreeDialog(
             )
             Spacer(modifier = Modifier.size(13.dp))
             LazyColumn(content = {
-                items(conditionItems) {
+                itemsIndexed(conditionItems) {index, item ->
                     Row(
                         modifier = Modifier
-                            .clickable(onClick = onClick)
+                            .clickable(onClick = {
+                                onItemClicked(index)
+                            })
                             .padding(vertical = 7.dp),
                     ) {
                         Image(
-                            painter = if (it.isAgreed) painterResource(
+                            painter = if (item.isAgreed) painterResource(
                                 id = R.drawable.icon_check_mono
                             ) else painterResource(id = R.drawable.icon_check_gray_mono),
                             contentDescription = "check"
                         )
                         Text(
                             modifier = Modifier.padding(start = 6.dp),
-                            text = it.title,
+                            text = item.title,
                             style = EveryMealTypography.Subtitle3,
                             color = Gray700,
                         )
@@ -368,7 +371,7 @@ fun EveryMealConditionAgreeDialog(
             EveryMealMainButton(
                 text = stringResource(R.string.ok),
                 enabled = true,
-                onClick = onClick,
+                onClick = onNextButtonClicked,
             )
             Spacer(modifier = Modifier.size(24.dp))
         }

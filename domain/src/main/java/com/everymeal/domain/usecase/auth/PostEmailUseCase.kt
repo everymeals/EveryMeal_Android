@@ -9,5 +9,7 @@ class PostEmailUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         email: Email
-    ) = authRepository.postEmail(email)
+    ): Result<String> {
+        return authRepository.postEmail(email)
+    }
 }

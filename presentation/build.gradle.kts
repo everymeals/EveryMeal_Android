@@ -76,6 +76,9 @@ dependencies {
     implementation(libs.hilt.compose)
     kapt(libs.hilt.testing.compiler)
 
+    // Retrofit
+    implementation(libs.retrofit)
+
     // Lottie
     implementation(libs.compose.lottie)
 

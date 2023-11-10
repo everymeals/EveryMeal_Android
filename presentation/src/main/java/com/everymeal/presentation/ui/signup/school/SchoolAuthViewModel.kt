@@ -5,6 +5,7 @@ import com.everymeal.domain.model.auth.Email
 import com.everymeal.domain.usecase.auth.PostEmailUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class SchoolAuthViewModel @Inject constructor(
@@ -29,14 +30,16 @@ class SchoolAuthViewModel @Inject constructor(
 
             is SchoolContract.Event.OnNextButtonClicked -> {
                 updateState {
-                    copy(
-                        isShowConditionBottomSheet = true
-                    )
+                    copy(isShowConditionBottomSheet = true)
                 }
             }
 
             is SchoolContract.Event.OnPostEmail -> {
                 postEmail()
+            }
+
+            SchoolContract.Event.FailEmailVerification -> {
+                sendEffect()
             }
         }
     }
@@ -48,7 +51,15 @@ class SchoolAuthViewModel @Inject constructor(
 
     private fun postEmail() {
         viewModelScope.launch {
-            postEmailUseCase(Email(viewState.value.emailLink))
+            postEmailUseCase(Email(viewState.value.emailLink)).onSuccess {
+                updateState {
+                    copy(emailAuthToken = it)
+                }
+            }.onFailure {
+                if (it is HttpException) {
+                    sendEffect({ SchoolContract.Effect.Error(it.code()) })
+                }
+            }
         }
     }
 }

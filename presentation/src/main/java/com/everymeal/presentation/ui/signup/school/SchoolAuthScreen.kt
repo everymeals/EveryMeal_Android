@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -63,35 +65,45 @@ fun SchoolAuthScreen(
             state = viewState
         )
         if (viewState.isShowConditionBottomSheet) {
-            EveryMealConditionAgreeDialog(
-                onClick = { },
-                onDismiss = { },
-                conditionItems = listOf(
-                    EveryMealConditionAgreeDialogItem(
-                        title = "[필수] 이용 약관 동의",
-                        isAgreed = true,
-                        onClick = {
-
-                        }
-                    ),
-                    EveryMealConditionAgreeDialogItem(
-                        title = "[필수] 개인정보 수집 및 이용 동의",
-                        isAgreed = true,
-                        onClick = {
-
-                        }
-                    ),
-                    EveryMealConditionAgreeDialogItem(
-                        title = "[선택] 마케팅 정보 수집 동의",
-                        isAgreed = true,
-                        onClick = {
-
-                        }
-                    )
-                )
-            )
+            EmailAuthBottomSheet(viewModel)
         }
     }
+}
+
+@Composable
+private fun EmailAuthBottomSheet(viewModel: SchoolAuthViewModel) {
+    val conditionItems = remember {
+        mutableStateListOf(
+            EveryMealConditionAgreeDialogItem(
+                title = "[필수] 이용 약관 동의",
+                isAgreed = true,
+                isEssential = true,
+            ),
+            EveryMealConditionAgreeDialogItem(
+                title = "[필수] 개인정보 수집 및 이용 동의",
+                isAgreed = true,
+                isEssential = true,
+            ),
+            EveryMealConditionAgreeDialogItem(
+                title = "[선택] 마케팅 정보 수집 동의",
+                isAgreed = true,
+            )
+        )
+    }
+
+    EveryMealConditionAgreeDialog(
+        onItemClicked = {
+            conditionItems[it] =
+                conditionItems[it].copy(isAgreed = !conditionItems[it].isAgreed)
+        },
+        onNextButtonClicked = {
+            if (conditionItems.filter { it.isEssential }.any { it.isAgreed }) {
+                viewModel.setEvent(SchoolContract.Event.OnPostEmail)
+            }
+        },
+        onDismiss = {},
+        conditionItems = conditionItems
+    )
 }
 
 @Composable
