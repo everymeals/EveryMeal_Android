@@ -7,6 +7,7 @@ import com.everymeal.presentation.base.ViewState
 class SchoolContract {
 
     data class State(
+        val schoolAuthScreenType: SchoolAuthScreenType = SchoolAuthScreenType.POST_EMAIL,
         val isShowConditionBottomSheet: Boolean = false,
         val isEmailError: Boolean = false,
         val emailLink: String = "",

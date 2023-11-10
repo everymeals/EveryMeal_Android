@@ -9,6 +9,7 @@
     <string name="exit">나가기</string>
     <string name="next">다음</string>
     <string name="email">이메일</string>
+    <string name="verify_token">인증번호</string>
     <string name="email_error">잘못된 이메일 형식이에요</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
@@ -123,6 +124,7 @@
     <string name="school_auth_content">학교 인증을 위해\n대학 메일을 입력해주세요</string>
     <string name="condition_agree_title">이용을 위한 동의가 필요해요</string>
     <string name="condition_agree">[필수] 이용 약관 동의</string>
+    <string name="email_token_verify_title">메일로 전달받은\n인증번호를 입력해주세요</string>
 
 
     <!--  에러다이얼로그  -->

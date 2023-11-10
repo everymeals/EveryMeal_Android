@@ -1,9 +1,6 @@
 package com.everymeal.presentation.ui.signup.school
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -24,10 +21,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
-import com.everymeal.presentation.components.EveryMealMainButton
-import com.everymeal.presentation.components.EveryMealTextField
+import com.everymeal.presentation.ui.signup.school.email.SchoolAuthPostEmailScreen
 import com.everymeal.presentation.ui.theme.EveryMealTypography
-import com.everymeal.presentation.ui.theme.Main100
+
+enum class SchoolAuthScreenType {
+    POST_EMAIL,
+    VERIFY_TOKEN,
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,8 +59,7 @@ fun SchoolAuthScreen(
         SchoolAuthContent(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(horizontal = 20.dp)
-                .padding(top = 28.dp),
+                .padding(horizontal = 20.dp),
             viewModel = viewModel,
             state = viewState
         )
@@ -112,43 +111,11 @@ fun SchoolAuthContent(
     viewModel: SchoolAuthViewModel,
     state: SchoolContract.State
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = stringResource(id = R.string.school_auth_content),
-            style = EveryMealTypography.Heading1
-        )
-        Spacer(modifier = Modifier.size(40.dp))
-        Text(
-            text = stringResource(id = R.string.email),
-            style = EveryMealTypography.Body5
-        )
-        Spacer(modifier = Modifier.size(6.dp))
-        EveryMealTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = state.emailLink,
-            onValueChange = {
-                viewModel.setEvent(SchoolContract.Event.OnEmailTextChanged(it))
-            },
-            supportingText = {
-                if (state.isEmailError) {
-                    Text(
-                        text = stringResource(id = R.string.email_error),
-                        style = EveryMealTypography.Body5,
-                        color = Main100
-                    )
-                }
-            }
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        EveryMealMainButton(
-            text = stringResource(id = R.string.next),
-            onClick = {
-                viewModel.setEvent(SchoolContract.Event.OnNextButtonClicked)
-            },
-        )
-    }
+    SchoolAuthPostEmailScreen(
+        modifier = modifier,
+        viewModel = viewModel,
+        state = state,
+    )
 }
 
 
