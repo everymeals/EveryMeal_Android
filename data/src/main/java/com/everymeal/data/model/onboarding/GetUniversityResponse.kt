@@ -4,14 +4,14 @@ import com.everymeal.domain.model.onboarding.GetUniversityEntity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UniversityData(
+data class UniversityResponse(
     val idx: Int,
     val universityName: String,
     val campusName: String,
     val universityShortName: String
 )
 
-fun List<UniversityData>.toUniversityEntity(): GetUniversityEntity {
+fun List<UniversityResponse>.toUniversityEntity(): GetUniversityEntity {
     val universityDataList = this.map { result ->
         GetUniversityEntity.UniversityData(
             idx = result.idx,

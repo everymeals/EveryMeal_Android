@@ -1,7 +1,7 @@
 package com.everymeal.data.datasource.onboarding
 
-import com.everymeal.data.model.onboarding.UniversityData
+import com.everymeal.data.model.onboarding.UniversityResponse
 
 interface OnboardingDataSource {
-    suspend fun getUniversity(): Result<List<UniversityData>>
+    suspend fun getUniversity(): Result<List<UniversityResponse>>
 }
