@@ -1,17 +1,23 @@
 package com.everymeal.everymeal_android.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
+import java.util.prefs.Preferences
 import javax.inject.Singleton
 
 @Module
@@ -21,6 +27,7 @@ object NetworkModule {
     private val json = Json { ignoreUnknownKeys = true }
 
     private const val BASE_URL = BuildConfig.BASE_URL
+    private const val DATASTORE_NAME = "everymeal_datastore"
 
     @Provides
     @Singleton
@@ -40,6 +47,13 @@ object NetworkModule {
             .client(client)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<androidx.datastore.preferences.core.Preferences> =
+        PreferenceDataStoreFactory.create(
+            produceFile = { context.preferencesDataStoreFile(DATASTORE_NAME) }
+        )
 
     @Provides
     @Singleton
