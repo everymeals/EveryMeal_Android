@@ -22,6 +22,8 @@ lottie = "6.1.0"
 
 compose-navigation = "2.7.4"
 
+data-store = "1.0.0"
+
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
@@ -71,6 +73,8 @@ compose-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "
 #Compose-Navigation
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
 
+#data-store
+data-store = { module = "androidx.datastore:datastore-preferences", version.ref = "data-store" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
