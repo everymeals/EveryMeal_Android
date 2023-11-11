@@ -8,6 +8,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -21,6 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
+import com.everymeal.presentation.ui.home.HomeContract
+import com.everymeal.presentation.ui.home.title
 import com.everymeal.presentation.ui.signup.school.email.SchoolAuthPostEmailScreen
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 
@@ -32,9 +35,22 @@ enum class SchoolAuthScreenType {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SchoolAuthScreen(
-    viewModel: SchoolAuthViewModel = hiltViewModel()
+    viewModel: SchoolAuthViewModel = hiltViewModel(),
+    onSuccessEmailVerification: () -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
+    LaunchedEffect(key1 = viewModel.effect) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is SchoolContract.Effect.Error -> {
+                    // TODO Error 처리
+                }
+                is SchoolContract.Effect.SuccessEmailVerification -> {
+                    // TODO 이메일 인증 성공
+                }
+            }
+        }
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -122,5 +138,5 @@ fun SchoolAuthContent(
 @Preview
 @Composable
 fun SchoolAuthScreenPreview() {
-    SchoolAuthScreen()
+
 }

@@ -23,12 +23,19 @@ class SchoolAuthViewModel @Inject constructor(
                 updateState {
                     copy(
                         isEmailError = isValidEmail(event.emailLink),
-                        emailLink = event.emailLink
+                        emailText = event.emailLink
+                    )
+                }
+            }
+            is SchoolContract.Event.OnTokenTextChanged -> {
+                updateState {
+                    copy(
+                        tokenText = event.token
                     )
                 }
             }
 
-            is SchoolContract.Event.OnNextButtonClicked -> {
+            is SchoolContract.Event.OnEmailNextButtonClicked -> {
                 updateState {
                     copy(isShowConditionBottomSheet = true)
                 }
@@ -41,6 +48,13 @@ class SchoolAuthViewModel @Inject constructor(
             SchoolContract.Event.FailEmailVerification -> {
                 sendEffect()
             }
+
+            SchoolContract.Event.OnTokenNextButtonClicked -> {
+                val viewState = viewState.value
+                if (viewState.emailAuthToken == viewState.tokenText ) {
+                    sendEffect({ SchoolContract.Effect.SuccessEmailVerification })
+                }
+            }
         }
     }
 
@@ -51,7 +65,7 @@ class SchoolAuthViewModel @Inject constructor(
 
     private fun postEmail() {
         viewModelScope.launch {
-            postEmailUseCase(Email(viewState.value.emailLink)).onSuccess {
+            postEmailUseCase(Email(viewState.value.emailText)).onSuccess {
                 updateState {
                     copy(emailAuthToken = it)
                 }

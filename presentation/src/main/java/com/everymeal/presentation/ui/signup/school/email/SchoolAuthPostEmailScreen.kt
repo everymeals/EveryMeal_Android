@@ -40,7 +40,7 @@ fun SchoolAuthPostEmailScreen(
         )
         Spacer(modifier = Modifier.size(40.dp))
         Text(
-            text = when(state.schoolAuthScreenType) {
+            text = when (state.schoolAuthScreenType) {
                 SchoolAuthScreenType.POST_EMAIL -> stringResource(id = R.string.email)
                 SchoolAuthScreenType.VERIFY_TOKEN -> stringResource(id = R.string.verify_token)
             },
@@ -50,12 +50,24 @@ fun SchoolAuthPostEmailScreen(
         Spacer(modifier = Modifier.size(6.dp))
         EveryMealTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = state.emailLink,
+            value = state.emailText,
             onValueChange = {
-                viewModel.setEvent(SchoolContract.Event.OnEmailTextChanged(it))
+                when (state.schoolAuthScreenType) {
+                    SchoolAuthScreenType.POST_EMAIL -> viewModel.setEvent(
+                        SchoolContract.Event.OnEmailTextChanged(
+                            it
+                        )
+                    )
+
+                    SchoolAuthScreenType.VERIFY_TOKEN -> viewModel.setEvent(
+                        SchoolContract.Event.OnTokenTextChanged(
+                            it
+                        )
+                    )
+                }
             },
             supportingText = {
-                if (state.isEmailError) {
+                if (state.isEmailError && state.schoolAuthScreenType == SchoolAuthScreenType.POST_EMAIL) {
                     Text(
                         text = stringResource(id = R.string.email_error),
                         style = EveryMealTypography.Body5,
@@ -68,7 +80,10 @@ fun SchoolAuthPostEmailScreen(
         EveryMealMainButton(
             text = stringResource(id = R.string.next),
             onClick = {
-                viewModel.setEvent(SchoolContract.Event.OnNextButtonClicked)
+                when (state.schoolAuthScreenType) {
+                    SchoolAuthScreenType.POST_EMAIL -> viewModel.setEvent(SchoolContract.Event.OnEmailNextButtonClicked)
+                    SchoolAuthScreenType.VERIFY_TOKEN -> viewModel.setEvent(SchoolContract.Event.OnTokenNextButtonClicked)
+                }
             },
         )
     }
