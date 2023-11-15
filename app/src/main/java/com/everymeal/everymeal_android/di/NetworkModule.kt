@@ -1,5 +1,6 @@
 package com.everymeal.everymeal_android.di
 
+import com.everymeal.data.service.auth.AuthApi
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -24,7 +25,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideClient(): OkHttpClient  {
+    fun provideClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS)
@@ -45,5 +46,11 @@ object NetworkModule {
     @Singleton
     fun provideOnboardingApi(retrofit: Retrofit): OnboardingApi {
         return retrofit.create(OnboardingApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApi {
+        return retrofit.create(AuthApi::class.java)
     }
 }
