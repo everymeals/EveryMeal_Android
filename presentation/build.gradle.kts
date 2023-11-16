@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.accompanist.webview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -74,6 +75,9 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
     kapt(libs.hilt.testing.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
 
     // Lottie
     implementation(libs.compose.lottie)

@@ -7,6 +7,10 @@
     <string name="ok">확인</string>
     <string name="close">닫기</string>
     <string name="exit">나가기</string>
+    <string name="next">다음</string>
+    <string name="email">이메일</string>
+    <string name="verify_token">인증번호</string>
+    <string name="email_error">잘못된 이메일 형식이에요</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>
@@ -98,7 +102,7 @@
     <string name="what_food_everymeal_ready">빠른 시일 내에 이용하실 수 있도록\n에브리밀이 준비하고 있어요.</string>
 
     <!--  온보딩화면  -->
-    <string name="next">시작하기</string>
+    <string name="start">시작하기</string>
     <string name="onboarding_today_what_food">우리 오늘 뭐먹지?</string>
     <string name="onboarding_school_food">학식에서\n학교 주변 맛집까지</string>
     <string name="onboarding_everymeal">에브리밀에서\n간편하게</string>
@@ -115,6 +119,14 @@
     <string name="my_page_if_need_can_function">학교를 인증하면 리뷰 작성, 사진 등록 등 에브리밀을 다양하게 이용할 수 있어요!</string>
     <string name="my_page_my_activities">나의 활동</string>
     <string name="my_page_settings">설정</string>
+
+    <!--    학교 인증 화면    -->
+    <string name="school_auth_title">학교 인증</string>
+    <string name="school_auth_content">학교 인증을 위해\n대학 메일을 입력해주세요</string>
+    <string name="condition_agree_title">이용을 위한 동의가 필요해요</string>
+    <string name="condition_agree">[필수] 이용 약관 동의</string>
+    <string name="email_token_verify_title">메일로 전달받은\n인증번호를 입력해주세요</string>
+
 
     <!--  에러다이얼로그  -->
     <string name="error_dialog_title">네트워크에 연결할 수 없어요</string>

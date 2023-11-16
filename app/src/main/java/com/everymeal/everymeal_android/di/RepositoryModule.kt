@@ -1,12 +1,12 @@
 package com.everymeal.everymeal_android.di
 
-import com.everymeal.data.datasource.local.LocalDataSource
-import com.everymeal.data.datasource.local.LocalDataSourceImpl
 import com.everymeal.data.datasource.onboarding.OnboardingDataSource
 import com.everymeal.data.datasource.onboarding.OnboardingDataSourceImpl
 import com.everymeal.data.repository.local.LocalRepositoryImpl
+import com.everymeal.data.repository.DefaultAuthRepository
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.domain.repository.local.LocalRepository
+import com.everymeal.domain.repository.auth.AuthRepository
 import com.everymeal.domain.repository.onboarding.OnboardingRepository
 import dagger.Binds
 import dagger.Module
@@ -41,4 +41,16 @@ abstract class RepositoryModule {
     abstract fun bindLocalDataSource(
         localDataSourceImpl: LocalDataSourceImpl
     ): LocalDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindAuthRemoteDataSource(
+        authRemoteDataSourceImpl: AuthRemoteRemoteDataSourceImpl
+    ): AuthRemoteDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindAuthRepository(
+        defaultAuthRepository: DefaultAuthRepository
+    ): AuthRepository
 }
