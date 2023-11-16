@@ -1,5 +1,9 @@
 package com.everymeal.everymeal_android.di
 
+import com.everymeal.data.datasource.auth.AuthRemoteDataSource
+import com.everymeal.data.datasource.auth.AuthRemoteRemoteDataSourceImpl
+import com.everymeal.data.datasource.local.LocalDataSource
+import com.everymeal.data.datasource.local.LocalDataSourceImpl
 import com.everymeal.data.datasource.onboarding.OnboardingDataSource
 import com.everymeal.data.datasource.onboarding.OnboardingDataSourceImpl
 import com.everymeal.data.repository.local.LocalRepositoryImpl
