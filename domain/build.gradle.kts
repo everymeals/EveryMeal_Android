@@ -11,4 +11,7 @@ java {
 dependencies {
     // Hilt
     implementation(libs.hilt.core)
+
+    // Coroutines
+    implementation(libs.kotlin.coroutines)
 }

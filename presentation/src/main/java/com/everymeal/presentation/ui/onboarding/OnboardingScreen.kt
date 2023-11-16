@@ -121,7 +121,7 @@ fun OnboardingScreen(
         }
         Spacer(modifier = Modifier.size(30.dp))
         EveryMealMainButton(
-            text = stringResource(id = R.string.next),
+            text = stringResource(id = R.string.start),
             onClick = onNavigateToUnivSelect
         )
     }
