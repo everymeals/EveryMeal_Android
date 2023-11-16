@@ -7,13 +7,13 @@ import com.everymeal.presentation.base.ViewState
 
 class SplashContract {
     data class SplashViewState(
-        val loginState: LoadState = LoadState.LOADING
+        val loginState: LoadState = LoadState.SUCCESS,
+        val selectedUnitIndex: String? = null,
     ) : ViewState
 
-    sealed class SplashSideEffect : ViewSideEffect {
-        object MoveToMain: SplashSideEffect()
-        object MoveToOnboarding: SplashSideEffect()
-    }
+    sealed class SplashSideEffect : ViewSideEffect
 
-    sealed class SplashEvent : ViewEvent
+    sealed class SplashEvent : ViewEvent {
+        object InitSplashScreen: SplashEvent()
+    }
 }
