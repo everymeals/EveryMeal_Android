@@ -37,7 +37,7 @@ class LocalDataSourceImpl @Inject constructor(
                 }
             }
             .map { prefs ->
-                prefs[DataStoreKey.UNIVERSITY_INDEX] ?: ""
+                prefs[DataStoreKey.UNIVERSITY_INDEX].orEmpty()
             }
     }
 }
