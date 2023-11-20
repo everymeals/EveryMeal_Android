@@ -16,7 +16,10 @@ class UnivSelectContract {
         val univSelectLoadState: LoadState = LoadState.LOADING,
         val selectedUniv: String = "",
         val universities: List<UniversityData> = emptyList(),
-        val networkErrorDialog: Boolean = true
+        val networkErrorDialog: Boolean = true,
+        val univIdx: Int = 0,
+        val univSelectFullName: String = "",
+        val campusName: String = ""
     ) : ViewState
 
     /*
@@ -25,9 +28,16 @@ class UnivSelectContract {
      */
     sealed class UnivSelectEvent : ViewEvent {
         object InitUnivSelectScreen : UnivSelectEvent()
-        object SelectButtonClicked : UnivSelectEvent()
+        data class SelectButtonClicked(
+            val univIdx: Int,
+            val univSelectFullName: String,
+            val campusName: String
+        ) : UnivSelectEvent()
         data class SelectedUniv(
-            val selectedUniv: String
+            val selectedUniv: String,
+            val univIdx: Int,
+            val univSelectFullName: String,
+            val campusName: String
         ) : UnivSelectEvent()
         data class NetworkErrorDialogClicked(
             val dialogStateChange: Boolean

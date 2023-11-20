@@ -102,6 +102,7 @@
     <string name="what_food_everymeal_ready">빠른 시일 내에 이용하실 수 있도록\n에브리밀이 준비하고 있어요.</string>
 
     <!--  온보딩화면  -->
+    <string name="start">시작하기</string>
     <string name="onboarding_today_what_food">우리 오늘 뭐먹지?</string>
     <string name="onboarding_school_food">학식에서\n학교 주변 맛집까지</string>
     <string name="onboarding_everymeal">에브리밀에서\n간편하게</string>

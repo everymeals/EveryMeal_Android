@@ -93,4 +93,7 @@ dependencies {
     // Serialization
     implementation(libs.serialization)
     implementation(libs.kotlin.serilization)
+
+    //DataStore
+    implementation(libs.data.store)
 }

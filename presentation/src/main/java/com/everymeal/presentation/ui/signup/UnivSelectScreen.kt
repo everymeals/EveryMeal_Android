@@ -120,7 +120,10 @@ fun UnivSelectScreen(
                                 index = index
                             ) {
                                 viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectedUniv(
-                                    "${item.universityShortName}+${item.campusName}")
+                                    selectedUniv = "${item.universityShortName}+${item.campusName}",
+                                    univIdx = item.idx,
+                                    univSelectFullName = item.universityName,
+                                    campusName = item.campusName)
                                 )
                             }
                         }
@@ -161,7 +164,11 @@ fun UnivSelectScreen(
                         text = stringResource(R.string.select),
                         enabled = viewState.selectedUniv.isNotEmpty(),
                     ) {
-                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked)
+                        viewModel.setEvent(UnivSelectContract.UnivSelectEvent.SelectButtonClicked(
+                            univIdx = viewState.univIdx,
+                            univSelectFullName = viewState.univSelectFullName,
+                            campusName = viewState.campusName
+                        ))
                     }
                 }
             }
