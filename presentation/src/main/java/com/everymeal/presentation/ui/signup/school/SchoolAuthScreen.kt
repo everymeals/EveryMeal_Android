@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.signup.school
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,14 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
-import com.everymeal.presentation.ui.home.HomeContract
-import com.everymeal.presentation.ui.home.title
 import com.everymeal.presentation.ui.signup.school.email.SchoolAuthPostEmailScreen
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 
@@ -45,6 +43,7 @@ fun SchoolAuthScreen(
                 is SchoolContract.Effect.Error -> {
                     // TODO Error 처리
                 }
+
                 is SchoolContract.Effect.SuccessEmailVerification -> {
                     // TODO 이메일 인증 성공
                 }
@@ -91,17 +90,17 @@ private fun EmailAuthBottomSheet(viewModel: SchoolAuthViewModel) {
         mutableStateListOf(
             EveryMealConditionAgreeDialogItem(
                 title = "[필수] 이용 약관 동의",
-                isAgreed = true,
+                isAgreed = false,
                 isEssential = true,
             ),
             EveryMealConditionAgreeDialogItem(
                 title = "[필수] 개인정보 수집 및 이용 동의",
-                isAgreed = true,
+                isAgreed = false,
                 isEssential = true,
             ),
             EveryMealConditionAgreeDialogItem(
                 title = "[선택] 마케팅 정보 수집 동의",
-                isAgreed = true,
+                isAgreed = false,
             )
         )
     }
@@ -113,6 +112,7 @@ private fun EmailAuthBottomSheet(viewModel: SchoolAuthViewModel) {
         },
         onNextButtonClicked = {
             if (conditionItems.filter { it.isEssential }.any { it.isAgreed }) {
+                Log.d("TAG", "EmailAuthBottomSheet: ${conditionItems.filter { it.isEssential }.any { it.isAgreed }}")
                 viewModel.setEvent(SchoolContract.Event.OnPostEmail)
             }
         },
@@ -132,11 +132,4 @@ fun SchoolAuthContent(
         viewModel = viewModel,
         state = state,
     )
-}
-
-
-@Preview
-@Composable
-fun SchoolAuthScreenPreview() {
-
 }
