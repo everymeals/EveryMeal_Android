@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.everymeal.domain.model.auth.Email
 import com.everymeal.domain.usecase.auth.PostEmailUseCase
+import com.everymeal.domain.usecase.auth.VerifyTokenUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SchoolAuthViewModel @Inject constructor(
-    private val postEmailUseCase: PostEmailUseCase
+    private val postEmailUseCase: PostEmailUseCase,
+    private val verifyTokenUseCase: VerifyTokenUseCase
 ) :
     BaseViewModel<SchoolContract.State, SchoolContract.Effect, SchoolContract.Event>(SchoolContract.State()) {
 
@@ -33,17 +35,12 @@ class SchoolAuthViewModel @Inject constructor(
 
             is SchoolContract.Event.OnTokenTextChanged -> {
                 updateState {
-                    copy(
-                        tokenText = event.token
-                    )
+                    copy(emailAuthValue = event.authValue)
                 }
             }
 
             is SchoolContract.Event.OnEmailNextButtonClicked -> {
-                if (viewState.value.isEmailError) {
-                    // TODO 이메일 에러
-                    sendEffect({ SchoolContract.Effect.Error(400) })
-                } else {
+                if (!viewState.value.isEmailError) {
                     updateState {
                         copy(isShowConditionBottomSheet = true)
                     }
@@ -59,10 +56,7 @@ class SchoolAuthViewModel @Inject constructor(
             }
 
             SchoolContract.Event.OnTokenNextButtonClicked -> {
-                val viewState = viewState.value
-                if (viewState.emailAuthToken == viewState.tokenText) {
-                    sendEffect({ SchoolContract.Effect.SuccessEmailVerification })
-                }
+                verifyToken()
             }
         }
     }
@@ -77,12 +71,36 @@ class SchoolAuthViewModel @Inject constructor(
             postEmailUseCase(Email(viewState.value.emailText)).onSuccess {
                 Log.d("SchoolAuthViewModel", "postEmail: $it")
                 updateState {
-                    copy(emailAuthToken = it.emailAuthToken)
+                    copy(
+                        emailAuthToken = it.emailAuthToken,
+                        schoolAuthScreenType = SchoolAuthScreenType.VERIFY_TOKEN,
+                        isShowConditionBottomSheet = false
+                    )
                 }
             }.onFailure {
                 Log.d("SchoolAuthViewModel", "postEmail: $it")
-                if (it is HttpException) {
-                    sendEffect({ SchoolContract.Effect.Error(it.code()) })
+                when (it) {
+                    is HttpException -> sendEffect({ SchoolContract.Effect.Error(code = it.code()) })
+                    else -> sendEffect({ SchoolContract.Effect.Error(message = it.message) })
+                }
+            }
+        }
+    }
+
+    private fun verifyToken() {
+        viewModelScope.launch {
+            val state = viewState.value
+            verifyTokenUseCase(
+                emailAuthToken = state.emailAuthToken,
+                emailAuthValue = state.emailAuthValue
+            ).onSuccess {
+                Log.d("SchoolAuthViewModel", "postEmail: $it")
+                sendEffect({ SchoolContract.Effect.SuccessEmailVerification })
+            }.onFailure {
+                Log.d("SchoolAuthViewModel", "postEmail: $it")
+                when (it) {
+                    is HttpException -> sendEffect({ SchoolContract.Effect.Error(code = it.code()) })
+                    else -> sendEffect({ SchoolContract.Effect.Error(message = it.message) })
                 }
             }
         }

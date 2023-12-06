@@ -11,13 +11,13 @@ class SchoolContract {
         val isShowConditionBottomSheet: Boolean = false,
         val isEmailError: Boolean = false,
         val emailText: String = "",
-        val tokenText: String = "",
+        val emailAuthValue: String = "",
         val emailAuthToken: String = ""
     ) : ViewState
 
     sealed class Event : ViewEvent {
         data class OnEmailTextChanged(val emailLink: String) : Event()
-        data class OnTokenTextChanged(val token: String) : Event()
+        data class OnTokenTextChanged(val authValue: String) : Event()
         object OnEmailNextButtonClicked : Event()
         object OnTokenNextButtonClicked : Event()
         object OnPostEmail : Event()
@@ -25,7 +25,11 @@ class SchoolContract {
     }
 
     sealed class Effect : ViewSideEffect {
-        data class Error(val code: Int) : Effect()
+        data class Error(
+            val code: Int? = null,
+            val message: String? = null
+        ) : Effect()
+
         object SuccessEmailVerification : Effect()
     }
 }

@@ -17,4 +17,8 @@ class AuthRemoteRemoteDataSourceImpl @Inject constructor(
     override suspend fun postEmail(email: Email): Result<EmailAuthToken> = runCatching {
         authApi.postEmail(email.toEmailRequest()).data.toEmailAuthToken()
     }
+
+    override suspend fun verifyToken(emailAuthToken: String, emailAuthValue: String) = runCatching {
+        authApi.verifyToken(emailAuthToken, emailAuthValue).data
+    }
 }

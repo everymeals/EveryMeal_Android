@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
+import com.everymeal.presentation.ui.signup.school.email.EmailTokenVerifyScreen
 import com.everymeal.presentation.ui.signup.school.email.SchoolAuthPostEmailScreen
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 
@@ -41,11 +42,14 @@ fun SchoolAuthScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is SchoolContract.Effect.Error -> {
-                    // TODO Error 처리
+                    Log.e(
+                        "SchoolAuthScreen",
+                        "code: ${effect.code.toString()} message: ${effect.message}"
+                    )
                 }
 
                 is SchoolContract.Effect.SuccessEmailVerification -> {
-                    // TODO 이메일 인증 성공
+                    onSuccessEmailVerification()
                 }
             }
         }
@@ -112,7 +116,12 @@ private fun EmailAuthBottomSheet(viewModel: SchoolAuthViewModel) {
         },
         onNextButtonClicked = {
             if (conditionItems.filter { it.isEssential }.any { it.isAgreed }) {
-                Log.d("TAG", "EmailAuthBottomSheet: ${conditionItems.filter { it.isEssential }.any { it.isAgreed }}")
+                Log.d(
+                    "TAG",
+                    "EmailAuthBottomSheet: ${
+                        conditionItems.filter { it.isEssential }.any { it.isAgreed }
+                    }"
+                )
                 viewModel.setEvent(SchoolContract.Event.OnPostEmail)
             }
         },
@@ -127,9 +136,22 @@ fun SchoolAuthContent(
     viewModel: SchoolAuthViewModel,
     state: SchoolContract.State
 ) {
-    SchoolAuthPostEmailScreen(
-        modifier = modifier,
-        viewModel = viewModel,
-        state = state,
-    )
+    when (state.schoolAuthScreenType) {
+        SchoolAuthScreenType.POST_EMAIL -> {
+            SchoolAuthPostEmailScreen(
+                modifier = modifier,
+                viewModel = viewModel,
+                state = state,
+            )
+        }
+
+        SchoolAuthScreenType.VERIFY_TOKEN -> {
+            EmailTokenVerifyScreen(
+                modifier = modifier,
+                state = state,
+                viewModel = viewModel
+            )
+        }
+    }
+
 }

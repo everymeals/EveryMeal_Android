@@ -12,4 +12,11 @@ class DefaultAuthRepository @Inject constructor(
     override suspend fun postEmail(email: Email): Result<EmailAuthToken> {
         return authRemoteDataSource.postEmail(email)
     }
+
+    override suspend fun verifyToken(
+        emailAuthToken: String,
+        emailAuthValue: String
+    ): Result<Boolean> {
+        return authRemoteDataSource.verifyToken(emailAuthToken, emailAuthValue)
+    }
 }
