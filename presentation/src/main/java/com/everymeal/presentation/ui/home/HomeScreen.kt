@@ -143,7 +143,6 @@ fun HomeScreen(
                     homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
                 }
                 HomeCategoryList {
-                    onDetailScreenClickType(it)
                     homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
