@@ -1,14 +1,10 @@
 package com.everymeal.data.model.restaruant
 
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetUnivRestaurantResponse(
-    val content: PagignRestaurantResponse
-)
-
-@Serializable
-data class PagignRestaurantResponse(
     val content: List<RestaurantResponse>,
     val pageable: Pageable,
     val totalPages: Int,
@@ -53,3 +49,19 @@ data class Sort(
     val sorted: Boolean,
     val unsorted: Boolean
 )
+
+fun RestaurantResponse.toEntity(): RestaurantDataEntity {
+    return RestaurantDataEntity(
+        idx = this.idx,
+        name = this.name,
+        address = this.address,
+        phoneNumber = this.phoneNumber,
+        categoryDetail = this.categoryDetail,
+        distance = this.distance,
+        grade = this.grade,
+        reviewCount = this.reviewCount,
+        recommendedCount = this.recommendedCount,
+        images = this.images,
+        isLiked = this.isLiked
+    )
+}
