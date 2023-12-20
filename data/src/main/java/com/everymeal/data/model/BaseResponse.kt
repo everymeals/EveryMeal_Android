@@ -12,3 +12,7 @@ data class BaseResponse<T>(
 fun <T> Result<BaseResponse<T>>.unwrapData(): Result<T> {
     return this.map { it.data }
 }
+
+suspend fun <T> unwrapRunCatching(block: suspend () -> BaseResponse<T>): Result<T> {
+    return runCatching { block() }.unwrapData()
+}

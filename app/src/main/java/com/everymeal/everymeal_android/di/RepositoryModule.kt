@@ -7,7 +7,7 @@ import com.everymeal.data.datasource.local.LocalDataSourceImpl
 import com.everymeal.data.datasource.onboarding.OnboardingDataSource
 import com.everymeal.data.datasource.onboarding.OnboardingDataSourceImpl
 import com.everymeal.data.repository.local.LocalRepositoryImpl
-import com.everymeal.data.repository.DefaultAuthRepository
+import com.everymeal.data.repository.auth.DefaultAuthRepository
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.domain.repository.local.LocalRepository
 import com.everymeal.domain.repository.auth.AuthRepository
@@ -55,6 +55,18 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindAuthRepository(
+        defaultAuthRepository: DefaultAuthRepository
+    ): AuthRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindReviewDataSource(
+        defaultAuthRepository: DefaultAuthRepository
+    ): AuthRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindReviewRepository(
         defaultAuthRepository: DefaultAuthRepository
     ): AuthRepository
 }

@@ -99,6 +99,13 @@ fun ReviewScreen(
                         viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
                     },
                     onReviewRegisterClicked = {
+                        viewModel.setEvent(ReviewEvent.PostReview(
+                            reviewValue = viewState.reviewValue,
+                            imageUri = viewState.imageUri,
+                            restaurantType = viewState.restaurantType,
+                            restaurantName = viewState.restaurantName,
+                            starRatingCount = viewState.starRatingStateList.count { it.value }
+                        ))
                         Toast.makeText(
                             context,
                             context.getString(R.string.register_review),

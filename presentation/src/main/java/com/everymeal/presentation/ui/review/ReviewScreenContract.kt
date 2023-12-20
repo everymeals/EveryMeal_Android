@@ -33,6 +33,14 @@ sealed class ReviewEvent : ViewEvent {
     data class OnImageSelected(
         val imageUri: List<Uri>
     ) : ReviewEvent()
+
+    data class PostReview(
+        val reviewValue: String,
+        val imageUri: List<Uri>,
+        val restaurantType: String,
+        val restaurantName: String,
+        val starRatingCount: Int,
+    ) : ReviewEvent()
 }
 
 sealed class ReviewEffect : ViewSideEffect {

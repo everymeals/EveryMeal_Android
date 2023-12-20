@@ -1,4 +1,4 @@
-package com.everymeal.data.repository
+package com.everymeal.data.repository.auth
 
 import com.everymeal.data.datasource.auth.AuthRemoteDataSource
 import com.everymeal.domain.model.auth.Email
