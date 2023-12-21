@@ -10,18 +10,26 @@ class SchoolContract {
         val schoolAuthScreenType: SchoolAuthScreenType = SchoolAuthScreenType.POST_EMAIL,
         val isShowConditionBottomSheet: Boolean = false,
         val isEmailError: Boolean = false,
-        val emailLink: String = "",
+        val emailText: String = "",
+        val emailAuthValue: String = "",
         val emailAuthToken: String = ""
     ) : ViewState
 
     sealed class Event : ViewEvent {
         data class OnEmailTextChanged(val emailLink: String) : Event()
-        object OnNextButtonClicked : Event()
+        data class OnTokenTextChanged(val authValue: String) : Event()
+        object OnEmailNextButtonClicked : Event()
+        object OnTokenNextButtonClicked : Event()
         object OnPostEmail : Event()
         object FailEmailVerification : Event()
     }
 
     sealed class Effect : ViewSideEffect {
-        data class Error(val code: Int) : Effect()
+        data class Error(
+            val code: Int? = null,
+            val message: String? = null
+        ) : Effect()
+
+        object SuccessEmailVerification : Effect()
     }
 }
