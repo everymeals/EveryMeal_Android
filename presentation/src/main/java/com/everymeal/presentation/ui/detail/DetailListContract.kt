@@ -58,6 +58,14 @@ fun DetailSortCategoryType.title(): String {
     }
 }
 
+fun DetailSortCategoryType.sort(): String {
+    return when (this) {
+        DetailSortCategoryType.POPULARITY -> "grade"
+        DetailSortCategoryType.DISTANCE -> "distance"
+        DetailSortCategoryType.RECENT -> "registDate"
+    }
+}
+
 enum class ReportCategoryType {
     IRRELAVANT,
     SLANG,

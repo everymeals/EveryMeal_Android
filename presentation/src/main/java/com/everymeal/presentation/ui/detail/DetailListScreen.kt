@@ -123,12 +123,15 @@ fun DetailListScreen(
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 20.dp),
+            modifier = Modifier.padding(innerPadding)
         ) {
             item {
-                Row {
+                Spacer(modifier = Modifier.padding(8.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp)
+                ) {
                     DetailScreenChip(
                         title = detailListViewState.detailSortCategoryType.title(),
                         isCategory = true,
@@ -152,6 +155,7 @@ fun DetailListScreen(
                         }
                     )
                 }
+                Spacer(modifier = Modifier.padding(8.dp))
             }
 
             items(pagingRestaurantList.itemCount) { index ->
@@ -160,6 +164,7 @@ fun DetailListScreen(
                     EveryMealRestaurantItem(
                         restaurant = it,
                     )
+                    Spacer(modifier = Modifier.padding(16.dp))
                 }
             }
         }

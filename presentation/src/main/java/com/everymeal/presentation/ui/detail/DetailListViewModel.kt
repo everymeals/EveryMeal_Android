@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.usecase.local.GetUniversityIndexUseCase
 import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
@@ -13,12 +14,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailListViewModel @Inject constructor(
-    private val getUnivRestaurantUseCase: GetUnivRestaurantUseCase
+    private val getUnivRestaurantUseCase: GetUnivRestaurantUseCase,
+    private val getUniversityIndexUseCase: GetUniversityIndexUseCase
 ): BaseViewModel<DetailState, DetailEffect, DetailEvent>(
     DetailState()
 ) {
@@ -34,6 +37,7 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     detailSortCategoryType = event.detailSortCategoryType
                 )
+                getRestaurantList()
             }
             is DetailEvent.SortBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -75,11 +79,15 @@ class DetailListViewModel @Inject constructor(
 
     private fun getRestaurantList() {
         viewModelScope.launch {
-            getUnivRestaurantUseCase(1, "name", null, null)
-                .cachedIn(viewModelScope)
-                .collect {
-                    _restaurantItems.emit(it)
-                }
+            getUnivRestaurantUseCase(
+                campusIdx = getUniversityIndexUseCase().first().toInt(),
+                order = viewState.value.detailSortCategoryType.sort(),
+                group = null,
+                grade = null
+            ).cachedIn(viewModelScope)
+             .collect {
+                _restaurantItems.emit(it)
+             }
         }
     }
 

@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +33,6 @@ import coil.compose.AsyncImage
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.HomeScreen
-import com.everymeal.presentation.ui.home.Restaurant
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
@@ -83,6 +81,7 @@ fun RestaurantTitle(
             color = Color.Black,
             fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold,
+            maxLines = 1
         )
         Text(
             modifier = Modifier
@@ -90,7 +89,7 @@ fun RestaurantTitle(
                 .clip(RoundedCornerShape(4.dp))
                 .background(color = Gray300)
                 .padding(vertical = 3.dp, horizontal = 6.dp),
-            text = restaurant.name,
+            text = restaurant.categoryDetail,
             color = Gray600,
             fontSize = 12.sp
         )
@@ -245,7 +244,7 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                             modifier = Modifier
                                 .matchParentSize()
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color.Black.copy(alpha = 0.5f)),
+                                .background(Color.Black.copy(alpha = 0.2f)),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
