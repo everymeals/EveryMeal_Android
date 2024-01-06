@@ -16,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -27,10 +28,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealDetailReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
+import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
@@ -44,6 +49,12 @@ fun DetailListScreen(
     navigateToPreviousScreen: () -> Unit,
 ) {
     val detailListViewState by detailListViewModel.viewState.collectAsState()
+
+    val pagingRestaurantList : LazyPagingItems<RestaurantDataEntity> = detailListViewModel.restaurantItems.collectAsLazyPagingItems()
+
+    LaunchedEffect(Unit) {
+        detailListViewModel.setEvent(DetailContract.DetailEvent.InitDetailScreen)
+    }
 
     if(detailListViewState.sortBottomSheetState) {
         EveryMealSortCategoryBottomSheetDialog(
@@ -139,6 +150,15 @@ fun DetailListScreen(
                         onChipClicked = {
                             detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(true))
                         }
+                    )
+                }
+            }
+
+            items(pagingRestaurantList.itemCount) { index ->
+                val item = pagingRestaurantList[index]
+                item?.let {
+                    EveryMealRestaurantItem(
+                        restaurant = it,
                     )
                 }
             }

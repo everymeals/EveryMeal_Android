@@ -6,7 +6,7 @@ import com.everymeal.domain.repository.restaurant.RestaurantRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetUnivRestaurant @Inject constructor(
+class GetUnivRestaurantUseCase @Inject constructor(
     private val restaurantRepository: RestaurantRepository
 ) {
     suspend operator fun invoke(

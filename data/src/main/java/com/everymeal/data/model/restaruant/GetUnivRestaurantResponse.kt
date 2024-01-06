@@ -26,7 +26,7 @@ data class RestaurantResponse(
     val phoneNumber: String,
     val categoryDetail: String,
     val distance: Int,
-    val grade: Int,
+    val grade: Float,
     val reviewCount: Int,
     val recommendedCount: Int,
     val images: List<String>?,

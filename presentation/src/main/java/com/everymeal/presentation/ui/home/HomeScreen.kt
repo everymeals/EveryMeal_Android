@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
@@ -59,28 +60,41 @@ fun HomeScreen(
     onDetailRestaurantClick : () -> Unit,
 ) {
     val items = listOf(
-        Restaurant(
-            name = "슈니",
-            category = "한식",
-            image = listOf(
-                R.drawable.food_ex_1,
+        RestaurantDataEntity(
+            idx = 386,
+            name = "히포 브런치하우스",
+            address = "서울 마포구 연남동 487-34",
+            phoneNumber = "010-3796-3176",
+            categoryDetail = "카페",
+            distance = 1721,
+            grade = 0.0F,
+            reviewCount = 5,
+            recommendedCount = 5,
+            images = listOf(
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
             ),
-            rating = 4.5,
-            reviewCount = 100,
-            loveCount = 100,
+            isLiked = false,
         ),
-        Restaurant(
-            name = "왕가주방",
-            category = "중식",
-            image = listOf(
-                R.drawable.food_ex_1,
-                R.drawable.food_ex_2,
-                R.drawable.food_ex_3,
-                R.drawable.food_ex_3,
+        RestaurantDataEntity(
+            idx = 386,
+            name = "히포 브런치하우스",
+            address = "서울 마포구 연남동 487-34",
+            phoneNumber = "010-3796-3176",
+            categoryDetail = "카페",
+            distance = 1721,
+            grade = 0.0F,
+            reviewCount = 5,
+            recommendedCount = 5,
+            images = listOf(
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
+                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
             ),
-            rating = 4.5,
-            reviewCount = 100,
-            loveCount = 100,
+            isLiked = false,
         ),
     )
 

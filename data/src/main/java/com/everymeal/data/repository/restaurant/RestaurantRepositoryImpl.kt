@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import androidx.paging.map
 import com.everymeal.data.model.restaruant.toEntity
+import javax.inject.Inject
 
-class RestaurantRepositoryImpl(
+class RestaurantRepositoryImpl @Inject constructor(
     private val restaurantDataSource: RestaurantDataSource
 ) : RestaurantRepository {
     override suspend fun getUnivRestaurant(

@@ -30,6 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.home.Restaurant
@@ -41,9 +43,9 @@ import com.everymeal.presentation.ui.theme.Gray700
 
 @Composable
 fun EveryMealRestaurantItem(
-    restaurant: Restaurant,
-    onLoveClick: () -> Unit,
-    onDetailClick: () -> Unit,
+    restaurant: RestaurantDataEntity,
+    onLoveClick: () -> Unit = {},
+    onDetailClick: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -69,7 +71,7 @@ fun EveryMealRestaurantItem(
 @Composable
 fun RestaurantTitle(
     modifier: Modifier = Modifier,
-    restaurant: Restaurant,
+    restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit,
 ) {
     Row(
@@ -88,7 +90,7 @@ fun RestaurantTitle(
                 .clip(RoundedCornerShape(4.dp))
                 .background(color = Gray300)
                 .padding(vertical = 3.dp, horizontal = 6.dp),
-            text = restaurant.category,
+            text = restaurant.name,
             color = Gray600,
             fontSize = 12.sp
         )
@@ -99,7 +101,7 @@ fun RestaurantTitle(
 
 @Composable
 fun RestaurantLoveCount(
-    restaurant: Restaurant,
+    restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit,
 ) {
     Column(
@@ -115,7 +117,7 @@ fun RestaurantLoveCount(
             contentDescription = stringResource(R.string.icon_star),
         )
         Text(
-            text = "${restaurant.loveCount}",
+            text = "${restaurant.recommendedCount}",
             color = Gray500,
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
@@ -124,7 +126,7 @@ fun RestaurantLoveCount(
 }
 
 @Composable
-fun RestaurantRating(restaurant: Restaurant) {
+fun RestaurantRating(restaurant: RestaurantDataEntity) {
     Row(
         modifier = Modifier
             .width(100.dp),
@@ -136,7 +138,7 @@ fun RestaurantRating(restaurant: Restaurant) {
         )
         Text(
             modifier = Modifier.padding(start = 2.dp),
-            text = restaurant.rating.toString(),
+            text = restaurant.grade.toString(),
             color = Gray700,
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
@@ -153,103 +155,105 @@ fun RestaurantRating(restaurant: Restaurant) {
 }
 
 @Composable
-fun RestaurantImage(restaurant: Restaurant) {
+fun RestaurantImage(restaurant: RestaurantDataEntity) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        when {
-            restaurant.image.size == 3 -> {
-                restaurant.image.forEachIndexed { index, image ->
-                    Image(
+        restaurant.images?.let {
+            when {
+                restaurant.images?.size == 3 -> {
+                    restaurant.images?.forEachIndexed { index, image ->
+                        AsyncImage(
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .clip(RoundedCornerShape(8.dp)),
+                            model = image,
+                            contentDescription = null
+                        )
+                        if(index != 2) {
+                            Spacer(modifier = Modifier.padding(end = 6.dp))
+                        }
+                    }
+                }
+
+                restaurant.images?.size == 2 -> {
+                    restaurant.images?.forEachIndexed { index, image ->
+                        AsyncImage(
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .clip(RoundedCornerShape(8.dp)),
+                            model = image,
+                            contentDescription = null
+                        )
+                        if(index != 1) {
+                            Spacer(modifier = Modifier.padding(end = 6.dp))
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+
+                restaurant.images?.size == 1 -> {
+                    AsyncImage(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp)),
-                        painter = painterResource(id = image),
+                        model = restaurant.images!![0],
                         contentDescription = null
                     )
-                    if(index != 2) {
-                        Spacer(modifier = Modifier.padding(end = 6.dp))
-                    }
+                    Spacer(modifier = Modifier
+                        .weight(2f)
+                        .padding(end = 6.dp)
+                    )
                 }
-            }
 
-            restaurant.image.size == 2 -> {
-                restaurant.image.forEachIndexed { index, image ->
-                    Image(
+                restaurant.images?.size!! > 3 -> {
+                    AsyncImage(
                         modifier = Modifier
                             .weight(1f)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp)),
-                        painter = painterResource(id = image),
+                        model = restaurant.images!![0],
                         contentDescription = null
                     )
-                    if(index != 1) {
-                        Spacer(modifier = Modifier.padding(end = 6.dp))
-                    }
-                }
-                Spacer(modifier = Modifier.weight(1f))
-            }
-
-            restaurant.image.size == 1 -> {
-                Image(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp)),
-                    painter = painterResource(id = restaurant.image[0]),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier
-                    .weight(2f)
-                    .padding(end = 6.dp)
-                )
-            }
-
-            restaurant.image.size > 3 -> {
-                Image(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp)),
-                    painter = painterResource(restaurant.image[0]),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.padding(end = 6.dp))
-                Image(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f)
-                        .clip(RoundedCornerShape(8.dp)),
-                    painter = painterResource(restaurant.image[1]),
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.padding(end = 6.dp))
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .aspectRatio(1f)
-                ) {
-                    Image(
+                    Spacer(modifier = Modifier.padding(end = 6.dp))
+                    AsyncImage(
                         modifier = Modifier
+                            .weight(1f)
                             .aspectRatio(1f)
-                            .fillMaxSize(),
-                        painter = painterResource(id = restaurant.image[2]),
+                            .clip(RoundedCornerShape(8.dp)),
+                        model = restaurant.images!![0],
                         contentDescription = null
                     )
+                    Spacer(modifier = Modifier.padding(end = 6.dp))
                     Box(
                         modifier = Modifier
-                            .matchParentSize()
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Black.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
+                            .weight(1f)
+                            .aspectRatio(1f)
                     ) {
-                        Text(
-                            text = "+${restaurant.image.size - 2}",
-                            color = Color.White,
-                            fontSize = 14.sp
+                        AsyncImage(
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .fillMaxSize(),
+                            model = restaurant.images!![0],
+                            contentDescription = null
                         )
+                        Box(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.5f)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "+${restaurant.reviewCount - 2}",
+                                color = Color.White,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             }

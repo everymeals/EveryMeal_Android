@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface RestaurantApi {
 
-    @GET("/api/v1/store/{campusIdx}")
+    @GET("/api/v1/stores/{campusIdx}")
     suspend fun getUnivRestaurant(
         @Path("campusIdx") campusIdx: Int,
         @Query("offset") offset: Int,

@@ -1,19 +1,35 @@
 package com.everymeal.presentation.ui.detail
 
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
 import com.everymeal.presentation.ui.detail.DetailContract.DetailState
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEffect
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class DetailListViewModel @Inject constructor(
-
+    private val getUnivRestaurantUseCase: GetUnivRestaurantUseCase
 ): BaseViewModel<DetailState, DetailEffect, DetailEvent>(
     DetailState()
 ) {
+    private val _restaurantItems : MutableStateFlow<PagingData<RestaurantDataEntity>> = MutableStateFlow(value = PagingData.empty())
+    val restaurantItems : StateFlow<PagingData<RestaurantDataEntity>> = _restaurantItems.asStateFlow()
 
     override fun handleEvents(event: DetailEvent) {
         when (event) {
+            is DetailEvent.InitDetailScreen -> {
+                getRestaurantList()
+            }
             is DetailEvent.OnClickDetailListCategoryType -> {
                 reflectUpdateState(
                     detailSortCategoryType = event.detailSortCategoryType
@@ -54,6 +70,16 @@ class DetailListViewModel @Inject constructor(
                     restaurantCategoryType = event.restaurantCategoryType
                 )
             }
+        }
+    }
+
+    private fun getRestaurantList() {
+        viewModelScope.launch {
+            getUnivRestaurantUseCase(1, "name", null, null)
+                .cachedIn(viewModelScope)
+                .collect {
+                    _restaurantItems.emit(it)
+                }
         }
     }
 
