@@ -152,6 +152,17 @@ fun DetailListScreen(
                         },
                         detailListViewState = detailListViewState
                     )
+                    if(detailListViewState.restaurantCategoryType.title().isNotEmpty()) {
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        DetailScreenChip(
+                            title = detailListViewState.restaurantCategoryType.title(),
+                            isCategory = false,
+                            onChipClicked = {
+                                detailListViewModel.setEvent(DetailContract.DetailEvent.OnDeleteClickRestaurantCategoryType)
+                            },
+                            detailListViewState = detailListViewState
+                        )
+                    }
 //                    DetailScreenChip(
 //                        title = "TEST신고버튼",
 //                        isCategory = true,

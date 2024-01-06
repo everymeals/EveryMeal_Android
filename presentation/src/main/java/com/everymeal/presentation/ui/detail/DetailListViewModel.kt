@@ -75,6 +75,12 @@ class DetailListViewModel @Inject constructor(
                     restaurantCategoryType = event.restaurantCategoryType
                 )
             }
+            is DetailEvent.OnDeleteClickRestaurantCategoryType -> {
+                reflectUpdateState(
+                    restaurantCategoryType = RestaurantCategoryType.NONE
+                )
+                getRestaurantList()
+            }
         }
     }
 
