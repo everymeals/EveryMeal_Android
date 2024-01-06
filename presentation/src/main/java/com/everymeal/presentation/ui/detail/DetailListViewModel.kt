@@ -48,6 +48,7 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     mealRatingBottomSheetState = event.mealRatingBottomSheetState
                 )
+                getRestaurantList()
             }
             is DetailEvent.ReportBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -82,8 +83,8 @@ class DetailListViewModel @Inject constructor(
             getUnivRestaurantUseCase(
                 campusIdx = getUniversityIndexUseCase().first().toInt(),
                 order = viewState.value.detailSortCategoryType.sort(),
-                group = null,
-                grade = null
+                group = viewState.value.restaurantCategoryType.sort(),
+                grade = if(viewState.value.rating == 0) null else viewState.value.rating.toString()
             ).cachedIn(viewModelScope)
              .collect {
                 _restaurantItems.emit(it)

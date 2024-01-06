@@ -118,3 +118,13 @@ fun RestaurantCategoryType.title(): String {
         RestaurantCategoryType.NONE -> ""
     }
 }
+
+fun RestaurantCategoryType.sort() : String {
+    return when (this) {
+        RestaurantCategoryType.RECOMMEND -> "recommend"
+        RestaurantCategoryType.RICE -> "restaurant"
+        RestaurantCategoryType.CAFE -> "cafe"
+        RestaurantCategoryType.DRINK -> "bar"
+        RestaurantCategoryType.NONE -> "all"
+    }
+}

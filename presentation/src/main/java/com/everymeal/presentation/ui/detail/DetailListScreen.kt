@@ -147,13 +147,13 @@ fun DetailListScreen(
                             detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(true))
                         }
                     )
-                    DetailScreenChip(
-                        title = "TEST신고버튼",
-                        isCategory = true,
-                        onChipClicked = {
-                            detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(true))
-                        }
-                    )
+//                    DetailScreenChip(
+//                        title = "TEST신고버튼",
+//                        isCategory = true,
+//                        onChipClicked = {
+//                            detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(true))
+//                        }
+//                    )
                 }
                 Spacer(modifier = Modifier.padding(8.dp))
             }
