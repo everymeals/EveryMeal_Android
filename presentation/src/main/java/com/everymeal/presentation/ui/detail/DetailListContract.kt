@@ -19,6 +19,7 @@ class DetailContract {
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
+        object InitDetailScreen : DetailEvent()
         data class SortBottomSheetStateChange(val sortBottomSheetState: Boolean) : DetailEvent()
         data class MealRatingBottomSheetStateChange(val mealRatingBottomSheetState: Boolean) : DetailEvent()
         data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()
@@ -27,6 +28,8 @@ class DetailContract {
         data class OnClickReportCategoryType(val reportCategoryType: ReportCategoryType) : DetailEvent()
         data class OnClickRestaurantCategoryType(val restaurantCategoryType: RestaurantCategoryType) : DetailEvent()
         data class OnClickRating(val rating: Int) : DetailEvent()
+        object OnDeleteClickRestaurantCategoryType : DetailEvent()
+        object OnDeleteClickRating : DetailEvent()
     }
 
     sealed class DetailEffect : ViewSideEffect {
@@ -54,6 +57,14 @@ fun DetailSortCategoryType.title(): String {
         DetailSortCategoryType.POPULARITY -> "인기순"
         DetailSortCategoryType.DISTANCE -> "거리순"
         DetailSortCategoryType.RECENT -> "최신순"
+    }
+}
+
+fun DetailSortCategoryType.sort(): String {
+    return when (this) {
+        DetailSortCategoryType.POPULARITY -> "grade"
+        DetailSortCategoryType.DISTANCE -> "distance"
+        DetailSortCategoryType.RECENT -> "registDate"
     }
 }
 
@@ -107,5 +118,15 @@ fun RestaurantCategoryType.title(): String {
         RestaurantCategoryType.CAFE -> "카페"
         RestaurantCategoryType.DRINK -> "술집"
         RestaurantCategoryType.NONE -> ""
+    }
+}
+
+fun RestaurantCategoryType.sort() : String {
+    return when (this) {
+        RestaurantCategoryType.RECOMMEND -> "recommend"
+        RestaurantCategoryType.RICE -> "restaurant"
+        RestaurantCategoryType.CAFE -> "cafe"
+        RestaurantCategoryType.DRINK -> "bar"
+        RestaurantCategoryType.NONE -> "all"
     }
 }

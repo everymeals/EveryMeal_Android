@@ -1,23 +1,43 @@
 package com.everymeal.presentation.ui.detail
 
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.usecase.local.GetUniversityIndexUseCase
+import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
 import com.everymeal.presentation.ui.detail.DetailContract.DetailState
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEffect
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class DetailListViewModel @Inject constructor(
-
+    private val getUnivRestaurantUseCase: GetUnivRestaurantUseCase,
+    private val getUniversityIndexUseCase: GetUniversityIndexUseCase
 ): BaseViewModel<DetailState, DetailEffect, DetailEvent>(
     DetailState()
 ) {
+    private val _restaurantItems : MutableStateFlow<PagingData<RestaurantDataEntity>> = MutableStateFlow(value = PagingData.empty())
+    val restaurantItems : StateFlow<PagingData<RestaurantDataEntity>> = _restaurantItems.asStateFlow()
 
     override fun handleEvents(event: DetailEvent) {
         when (event) {
+            is DetailEvent.InitDetailScreen -> {
+                getRestaurantList()
+            }
             is DetailEvent.OnClickDetailListCategoryType -> {
                 reflectUpdateState(
                     detailSortCategoryType = event.detailSortCategoryType
                 )
+                getRestaurantList()
             }
             is DetailEvent.SortBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -28,6 +48,7 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     mealRatingBottomSheetState = event.mealRatingBottomSheetState
                 )
+                getRestaurantList()
             }
             is DetailEvent.ReportBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -54,6 +75,32 @@ class DetailListViewModel @Inject constructor(
                     restaurantCategoryType = event.restaurantCategoryType
                 )
             }
+            is DetailEvent.OnDeleteClickRestaurantCategoryType -> {
+                reflectUpdateState(
+                    restaurantCategoryType = RestaurantCategoryType.NONE
+                )
+                getRestaurantList()
+            }
+            is DetailEvent.OnDeleteClickRating -> {
+                reflectUpdateState(
+                    rating = 0
+                )
+                getRestaurantList()
+            }
+        }
+    }
+
+    private fun getRestaurantList() {
+        viewModelScope.launch {
+            getUnivRestaurantUseCase(
+                campusIdx = getUniversityIndexUseCase().first().toInt(),
+                order = viewState.value.detailSortCategoryType.sort(),
+                group = viewState.value.restaurantCategoryType.sort(),
+                grade = if(viewState.value.rating == 0) null else viewState.value.rating.toString()
+            ).cachedIn(viewModelScope)
+             .collect {
+                _restaurantItems.emit(it)
+             }
         }
     }
 

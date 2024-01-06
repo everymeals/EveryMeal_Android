@@ -6,12 +6,17 @@ import com.everymeal.data.datasource.local.LocalDataSource
 import com.everymeal.data.datasource.local.LocalDataSourceImpl
 import com.everymeal.data.datasource.onboarding.OnboardingDataSource
 import com.everymeal.data.datasource.onboarding.OnboardingDataSourceImpl
+import com.everymeal.data.datasource.restaurant.RestaurantDataSource
+import com.everymeal.data.datasource.restaurant.RestaurantDataSourceImpl
 import com.everymeal.data.repository.local.LocalRepositoryImpl
 import com.everymeal.data.repository.DefaultAuthRepository
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
+import com.everymeal.data.repository.restaurant.RestaurantRepositoryImpl
 import com.everymeal.domain.repository.local.LocalRepository
 import com.everymeal.domain.repository.auth.AuthRepository
 import com.everymeal.domain.repository.onboarding.OnboardingRepository
+import com.everymeal.domain.repository.restaurant.RestaurantRepository
+import com.everymeal.presentation.ui.home.Restaurant
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -57,4 +62,16 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         defaultAuthRepository: DefaultAuthRepository
     ): AuthRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindRestaurantDataSource(
+        restaurantDataSourceImpl: RestaurantDataSourceImpl
+    ): RestaurantDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindRestaurantRepository(
+        restaurantRepositoryImpl: RestaurantRepositoryImpl
+    ): RestaurantRepository
 }
