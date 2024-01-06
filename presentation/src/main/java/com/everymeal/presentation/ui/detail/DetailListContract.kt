@@ -29,6 +29,7 @@ class DetailContract {
         data class OnClickRestaurantCategoryType(val restaurantCategoryType: RestaurantCategoryType) : DetailEvent()
         data class OnClickRating(val rating: Int) : DetailEvent()
         object OnDeleteClickRestaurantCategoryType : DetailEvent()
+        object OnDeleteClickRating : DetailEvent()
     }
 
     sealed class DetailEffect : ViewSideEffect {

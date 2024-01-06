@@ -29,6 +29,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -138,7 +139,6 @@ fun DetailListScreen(
                 ) {
                     DetailScreenChip(
                         title = detailListViewState.detailSortCategoryType.title(),
-                        isCategory = true,
                         onChipClicked = {
                             detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(true))
                         }
@@ -146,7 +146,6 @@ fun DetailListScreen(
                     Spacer(modifier = Modifier.padding(4.dp))
                     DetailScreenChip(
                         title = "필터",
-                        isCategory = true,
                         onChipClicked = {
                             detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(true))
                         },
@@ -159,6 +158,18 @@ fun DetailListScreen(
                             isCategory = false,
                             onChipClicked = {
                                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnDeleteClickRestaurantCategoryType)
+                            },
+                            detailListViewState = detailListViewState
+                        )
+                    }
+                    if(detailListViewState.rating != 0) {
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        DetailScreenChip(
+                            title = "${detailListViewState.rating}",
+                            isCategory = false,
+                            isRating = true,
+                            onChipClicked = {
+                                detailListViewModel.setEvent(DetailContract.DetailEvent.OnDeleteClickRating)
                             },
                             detailListViewState = detailListViewState
                         )
@@ -190,7 +201,8 @@ fun DetailListScreen(
 @Composable
 fun DetailScreenChip(
     title: String,
-    isCategory: Boolean,
+    isCategory: Boolean = true,
+    isRating: Boolean = false,
     onChipClicked: () -> Unit,
     detailListViewState: DetailContract.DetailState? = null
 ) {
@@ -213,6 +225,16 @@ fun DetailScreenChip(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
+            if(isRating) {
+                Image(
+                    modifier = Modifier
+                        .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
+                        .size(16.dp),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.icon_gray_star_mono),
+                    contentDescription = "gray_star",
+                    colorFilter = ColorFilter.tint(Main100)
+                )
+            }
             Text(
                 text = title,
                 color = when {
@@ -220,9 +242,9 @@ fun DetailScreenChip(
                     isRatingOrCategory -> Main100
                     else -> Grey7
                 },
-                style = Typography.bodySmall,
-                modifier = Modifier.padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
-                fontWeight = FontWeight.Bold
+                fontSize = 14.sp,
+                modifier = Modifier.padding(start = if(!isRating) 12.dp else 4.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
+                fontWeight = FontWeight.SemiBold
             )
             if(isCategory) {
                 Image(

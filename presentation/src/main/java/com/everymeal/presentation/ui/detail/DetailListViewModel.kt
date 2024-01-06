@@ -81,6 +81,12 @@ class DetailListViewModel @Inject constructor(
                 )
                 getRestaurantList()
             }
+            is DetailEvent.OnDeleteClickRating -> {
+                reflectUpdateState(
+                    rating = 0
+                )
+                getRestaurantList()
+            }
         }
     }
 
