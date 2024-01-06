@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -103,23 +104,19 @@ fun DetailListScreen(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.White),
-    ) {
-        Scaffold(
-            topBar = {
-                SaveTopBar(title = title) {
-                    navigateToPreviousScreen()
-                }
+    Scaffold(
+        topBar = {
+            SaveTopBar(title = title) {
+                navigateToPreviousScreen()
             }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .padding(horizontal = 20.dp),
-            ) {
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 20.dp),
+        ) {
+            item {
                 Row {
                     DetailScreenChip(
                         title = detailListViewState.detailSortCategoryType.title(),
