@@ -14,4 +14,6 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlin.coroutines)
+
+    implementation("androidx.paging:paging-common:3.2.0-rc01")
 }
