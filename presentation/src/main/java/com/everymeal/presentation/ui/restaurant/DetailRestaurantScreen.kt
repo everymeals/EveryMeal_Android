@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.restaurant
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,10 +66,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DetailRestaurantScreen(
+    restaurantId: Int,
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
 ) {
     val viewState by detailRestaurantViewModel.viewState.collectAsState()
 
+    Log.d("gg1234", restaurantId.toString())
     Scaffold(
         topBar = {
             SaveTopBar(title = "")
@@ -477,7 +480,7 @@ fun DetailRestaurantReview() {
 @Preview
 @Composable
 fun PreviewDetailRestaurantScreen() {
-    DetailRestaurantScreen()
+    DetailRestaurantScreen(0)
 }
 
 @Preview

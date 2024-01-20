@@ -10,6 +10,7 @@ import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
 import com.everymeal.presentation.ui.detail.DetailContract.DetailState
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEffect
+import com.everymeal.presentation.ui.signup.UnivSelectContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -86,6 +87,9 @@ class DetailListViewModel @Inject constructor(
                     rating = 0
                 )
                 getRestaurantList()
+            }
+            is DetailEvent.OnRestaurantDetailClick -> {
+                sendEffect({ DetailEffect.OnRestaurantClickEffect(event.restaurantId) })
             }
         }
     }
