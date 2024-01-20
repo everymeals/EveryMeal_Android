@@ -11,4 +11,6 @@ interface RestaurantDataSource {
         group: String? = null,
         grade: String? = null,
     ): Flow<PagingData<RestaurantResponse>>
+
+    suspend fun getRestaurantDetail(index: Int): Result<RestaurantResponse>
 }
