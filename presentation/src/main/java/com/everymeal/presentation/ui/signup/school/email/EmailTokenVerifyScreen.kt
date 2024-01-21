@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.signup.school.email
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,10 +19,9 @@ import com.everymeal.presentation.ui.signup.school.SchoolContract
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray900
-import com.everymeal.presentation.ui.theme.Main100
 
 @Composable
-fun SchoolAuthPostEmailScreen(
+fun EmailTokenVerifyScreen(
     modifier: Modifier,
     state: SchoolContract.State,
     viewModel: SchoolAuthViewModel
@@ -30,38 +30,29 @@ fun SchoolAuthPostEmailScreen(
         modifier = modifier.padding(top = 48.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.school_auth_content),
+            text = stringResource(id = R.string.email_token_verify_title),
             style = EveryMealTypography.Heading1,
             color = Gray900
         )
         Spacer(modifier = Modifier.size(40.dp))
         Text(
-            text = stringResource(id = R.string.email),
+            text = stringResource(id = R.string.verify_token),
             style = EveryMealTypography.Body5,
             color = Gray100
         )
         Spacer(modifier = Modifier.size(6.dp))
         EveryMealTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = state.emailText,
+            value = state.emailAuthValue,
             onValueChange = {
-                viewModel.setEvent(SchoolContract.Event.OnEmailTextChanged(it))
+                viewModel.setEvent(SchoolContract.Event.OnTokenTextChanged(it))
             },
-            supportingText = {
-                if (state.isEmailError) {
-                    Text(
-                        text = stringResource(id = R.string.email_error),
-                        style = EveryMealTypography.Body5,
-                        color = Main100
-                    )
-                }
-            }
         )
         Spacer(modifier = Modifier.weight(1f))
         EveryMealMainButton(
             text = stringResource(id = R.string.next),
             onClick = {
-                viewModel.setEvent(SchoolContract.Event.OnEmailNextButtonClicked)
+                viewModel.setEvent(SchoolContract.Event.OnTokenNextButtonClicked)
             },
         )
     }

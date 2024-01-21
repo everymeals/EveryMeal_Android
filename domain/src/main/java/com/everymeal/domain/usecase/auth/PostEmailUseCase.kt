@@ -1,6 +1,7 @@
 package com.everymeal.domain.usecase.auth
 
 import com.everymeal.domain.model.auth.Email
+import com.everymeal.domain.model.auth.EmailAuthToken
 import com.everymeal.domain.repository.auth.AuthRepository
 import javax.inject.Inject
 
@@ -9,7 +10,7 @@ class PostEmailUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         email: Email
-    ): Result<String> {
+    ): Result<EmailAuthToken> {
         return authRepository.postEmail(email)
     }
 }

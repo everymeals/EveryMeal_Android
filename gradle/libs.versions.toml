@@ -22,6 +22,9 @@ accompanist = "0.33.0-alpha"
 data-store = "1.0.0"
 kotlin-coroutines = "1.7.3"
 
+paging-compose = "3.2.0-rc01"
+paging-runtime = "3.1.0"
+
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
@@ -77,6 +80,11 @@ data-store = { module = "androidx.datastore:datastore-preferences", version.ref 
 
 #kotlin-coroutines
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+
+#Paging
+paging-runtime = { module = "androidx.paging:paging-runtime", version = "paging-runtime" }
+paging-compose = { module = "androidx.paging:paging-compose", version = "paging-compose" }
+paging-common = { module = "androidx.paging:paging-common", version = "paging-compose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
