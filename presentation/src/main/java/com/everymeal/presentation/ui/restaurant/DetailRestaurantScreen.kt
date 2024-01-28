@@ -49,8 +49,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
+import com.everymeal.presentation.base.LoadState
+import com.everymeal.presentation.components.EveryMealDialog
+import com.everymeal.presentation.components.EveryMealLoadingDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
+import com.everymeal.presentation.ui.signup.UnivSelectContract
 import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -65,108 +70,152 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DetailRestaurantScreen(
+    restaurantId: Int,
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
+    onNetWorkErrorCancelClick: () -> Unit = {}
 ) {
     val viewState by detailRestaurantViewModel.viewState.collectAsState()
 
-    Scaffold(
-        topBar = {
-            SaveTopBar(title = "")
-        },
-        floatingActionButton = {
-            Row(
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .clip(RoundedCornerShape(100.dp))
-                    .background(if (viewState.isFabClicked) Gray100 else Main100)
-                    .padding(12.dp)
-                    .clickable {
-                        detailRestaurantViewModel.setEvent(
-                            DetailRestaurantEvent.OnFloatingButtonClick(
-                                !viewState.isFabClicked
-                            )
+    val restaurantInfo = viewState.restaurantInfo
+
+    LaunchedEffect(Unit) {
+        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.InitDetailRestaurantScreen(restaurantId))
+    }
+
+    when(viewState.getDetailRestaurantState) {
+        LoadState.LOADING -> {
+            EveryMealLoadingDialog()
+        }
+        LoadState.SUCCESS -> {
+            Scaffold(
+                topBar = {
+                    SaveTopBar(title = "")
+                },
+                floatingActionButton = {
+                    Row(
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                            .clip(RoundedCornerShape(100.dp))
+                            .background(if (viewState.isFabClicked) Gray100 else Main100)
+                            .padding(12.dp)
+                            .clickable {
+                                detailRestaurantViewModel.setEvent(
+                                    DetailRestaurantEvent.OnFloatingButtonClick(
+                                        !viewState.isFabClicked
+                                    )
+                                )
+                            },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Image(
+                            imageVector =
+                            if(viewState.isFabClicked)
+                                ImageVector.vectorResource(R.drawable.icon_x_mono)
+                            else
+                                ImageVector.vectorResource(R.drawable.icon_pencil_mono),
+                            contentDescription = "floating",
+                            colorFilter = ColorFilter.tint(if(viewState.isFabClicked) Gray800 else Color.White),
                         )
-                    },
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    imageVector =
-                    if(viewState.isFabClicked)
-                        ImageVector.vectorResource(R.drawable.icon_x_mono)
-                    else
-                        ImageVector.vectorResource(R.drawable.icon_pencil_mono),
-                    contentDescription = "floating",
-                    colorFilter = ColorFilter.tint(if(viewState.isFabClicked) Gray800 else Color.White),
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-    ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding),
-        ) {
-            item {
-                DetailRestaurantImage()
-            }
-            item {
-                DetailRestaurantMainInfo()
-            }
-            item {
-                DetailRestaurantTabLayout(detailRestaurantViewModel)
+                    }
+                },
+                floatingActionButtonPosition = FabPosition.End,
+            ) { innerPadding ->
+                LazyColumn(
+                    modifier = Modifier.padding(innerPadding),
+                ) {
+                    // Todo Test 필요
+                    if(!restaurantInfo.images.isNullOrEmpty()) {
+                        item {
+                            DetailRestaurantImage()
+                        }
+                    }
+                    item {
+                        DetailRestaurantMainInfo(
+                            restaurantInfo = restaurantInfo
+                        )
+                    }
+                    item {
+                        DetailRestaurantTabLayout(
+                            restaurantInfo = restaurantInfo,
+                            viewModel = detailRestaurantViewModel
+                        )
+                    }
+                }
+                if (viewState.isFabClicked) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.5f))
+                            .clickable {
+                                detailRestaurantViewModel.setEvent(
+                                    DetailRestaurantEvent.OnFloatingButtonClick(
+                                        false
+                                    )
+                                )
+                            },
+                        contentAlignment=Alignment.BottomEnd
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(end = 20.dp, bottom = 160.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(color = Gray100)
+                                .padding(vertical = 7.dp, horizontal = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Image(
+                                imageVector = ImageVector.vectorResource(R.drawable.icon_camera_mono),
+                                contentDescription = "camera",
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 2.dp),
+                                text = stringResource(R.string.restaurant_only_picture),
+                                color = Gray900,
+                                style = EveryMealTypo.bodySmall
+                            )
+                        }
+                        Row(
+                            modifier = Modifier
+                                .padding(end = 20.dp, bottom = 100.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(color = Gray100)
+                                .padding(vertical = 7.dp, horizontal = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Image(
+                                imageVector = ImageVector.vectorResource(R.drawable.icon_document_mono),
+                                contentDescription = "review",
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 2.dp),
+                                text = stringResource(R.string.restaurant_review),
+                                color = Gray900,
+                                style = EveryMealTypo.bodySmall
+                            )
+                        }
+                    }
+                }
             }
         }
-        if (viewState.isFabClicked) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-                    .clickable {
-                        detailRestaurantViewModel.setEvent(
-                            DetailRestaurantEvent.OnFloatingButtonClick(
-                                false
-                            )
-                        )
+        LoadState.ERROR -> {
+            if(viewState.networkErrorDialog) {
+                EveryMealDialog(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = stringResource(R.string.error_dialog_title),
+                    message = stringResource(R.string.error_dialog_content),
+                    confirmButtonText = stringResource(R.string.retry),
+                    dismissButtonText = stringResource(R.string.cancel),
+                    onDismissRequest = { },
+                    onConfirmClick = {
+                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(false))
+                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.InitDetailRestaurantScreen(restaurantId))
+                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(true))
                     },
-                contentAlignment=Alignment.BottomEnd
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(end = 20.dp, bottom = 160.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(color = Gray100)
-                        .padding(vertical = 7.dp, horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.icon_camera_mono),
-                        contentDescription = "camera",
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 2.dp),
-                        text = stringResource(R.string.restaurant_only_picture),
-                        color = Gray900,
-                        style = EveryMealTypo.bodySmall
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(end = 20.dp, bottom = 100.dp)
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(color = Gray100)
-                        .padding(vertical = 7.dp, horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.icon_document_mono),
-                        contentDescription = "review",
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 2.dp),
-                        text = stringResource(R.string.restaurant_review),
-                        color = Gray900,
-                        style = EveryMealTypo.bodySmall
-                    )
-                }
+                    onDisMissClicked = {
+                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(false))
+                        onNetWorkErrorCancelClick()
+                    }
+                )
             }
         }
     }
@@ -204,7 +253,7 @@ fun DetailRestaurantImage(
 
 @Composable
 fun DetailRestaurantMainInfo(
-
+    restaurantInfo : RestaurantDataEntity
 ) {
     Column(
         modifier = Modifier
@@ -218,14 +267,14 @@ fun DetailRestaurantMainInfo(
                 .clip(RoundedCornerShape(4.dp))
                 .background(color = Gray300)
                 .padding(vertical = 3.dp, horizontal = 6.dp),
-            text = "술집",
+            text = restaurantInfo.categoryDetail,
             color = Gray600,
             fontSize = 12.sp,
             style = EveryMealTypo.labelSmall,
         )
         Text(
             modifier = Modifier.padding(top = 6.dp),
-            text = "스타벅스 서울대 입구점",
+            text = restaurantInfo.name,
             color = Color.Black,
             fontSize = 22.sp,
             style = EveryMealTypo.titleMedium,
@@ -240,14 +289,14 @@ fun DetailRestaurantMainInfo(
             )
             Text(
                 modifier = Modifier.padding(start = 2.dp),
-                text = "5.0",
+                text = restaurantInfo.grade.toString(),
                 color = Gray700,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
             )
             Text(
                 modifier = Modifier.padding(start = 2.dp),
-                text = "(100)",
+                text = "(${restaurantInfo.reviewCount})",
                 color = Gray700,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
@@ -281,7 +330,7 @@ fun DetailRestaurantMainInfo(
                 )
                 Text(
                     modifier = Modifier.padding(start = 4.dp),
-                    text = "89",
+                    text = restaurantInfo.recommendedCount.toString(),
                     color = Gray500,
                     fontSize = 15.sp,
                     style = EveryMealTypo.displaySmall
@@ -316,11 +365,12 @@ fun DetailRestaurantMainInfo(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantTabLayout(
+    restaurantInfo : RestaurantDataEntity,
     viewModel : DetailRestaurantViewModel
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    val pages = listOf("정보", "사진", "리뷰(0)")
+    val pages = listOf("정보", "사진", "리뷰(${restaurantInfo.reviewCount})")
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -365,7 +415,10 @@ fun DetailRestaurantTabLayout(
 
     HorizontalPager(state = pagerState) { page ->
         when (page) {
-            0 -> DetailRestaurantTabInfo(Modifier.padding(horizontal = 20.dp))
+            0 -> DetailRestaurantTabInfo(
+                restaurantInfo = restaurantInfo,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
             1 -> DetailRestaurantTabImage()
             2 -> DetailRestaurantReview()
         }
@@ -374,6 +427,7 @@ fun DetailRestaurantTabLayout(
 
 @Composable
 fun DetailRestaurantTabInfo(
+    restaurantInfo : RestaurantDataEntity,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -390,7 +444,7 @@ fun DetailRestaurantTabInfo(
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = "서울특별시 관악구 관악로 1",
+                text = restaurantInfo.address,
                 color = Gray800,
                 fontSize = 14.sp,
                 style = EveryMealTypo.bodySmall
@@ -406,7 +460,7 @@ fun DetailRestaurantTabInfo(
             )
             Text(
                 modifier = Modifier.padding(start = 4.dp),
-                text = "1533-2233",
+                text = restaurantInfo.phoneNumber,
                 color = Gray800,
                 fontSize = 14.sp,
                 style = EveryMealTypo.bodySmall
@@ -420,13 +474,14 @@ fun DetailRestaurantTabInfo(
                 imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
                 contentDescription = "link",
             )
-            Text(
-                modifier = Modifier.padding(start = 4.dp),
-                text = "카카오맵 이동하기",
-                color = Gray800,
-                fontSize = 14.sp,
-                style = EveryMealTypo.bodySmall
-            )
+//            Version2 KakaoMap
+//            Text(
+//                modifier = Modifier.padding(start = 4.dp),
+//                text = "카카오맵 이동하기",
+//                color = Gray800,
+//                fontSize = 14.sp,
+//                style = EveryMealTypo.bodySmall
+//            )
         }
         Spacer(modifier = Modifier.padding(18.dp))
     }
@@ -477,7 +532,7 @@ fun DetailRestaurantReview() {
 @Preview
 @Composable
 fun PreviewDetailRestaurantScreen() {
-    DetailRestaurantScreen()
+    DetailRestaurantScreen(0)
 }
 
 @Preview

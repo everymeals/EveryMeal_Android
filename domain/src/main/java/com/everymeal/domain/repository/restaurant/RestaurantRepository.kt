@@ -12,4 +12,8 @@ interface RestaurantRepository {
         group: String? = null,
         grade: String? = null,
     ) : Flow<PagingData<RestaurantDataEntity>>
+
+    suspend fun getRestaurantDetail(
+        index: Int
+    ) : Result<RestaurantDataEntity>
 }

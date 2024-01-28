@@ -43,7 +43,7 @@ import com.everymeal.presentation.ui.theme.Gray700
 fun EveryMealRestaurantItem(
     restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit = {},
-    onDetailClick: () -> Unit = {},
+    onDetailClick: (Int) -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun EveryMealRestaurantItem(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) {
-                onDetailClick()
+                onDetailClick(restaurant.idx)
             }
             .padding(horizontal = 20.dp)
             .background(color = Color.White)

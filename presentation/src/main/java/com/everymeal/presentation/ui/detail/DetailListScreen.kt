@@ -41,6 +41,7 @@ import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
+import com.everymeal.presentation.ui.signup.UnivSelectContract
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.Main100
@@ -52,6 +53,7 @@ fun DetailListScreen(
     detailListViewModel: DetailListViewModel = hiltViewModel(),
     title: String,
     navigateToPreviousScreen: () -> Unit,
+    onDetailRestaurantClick: (Int) -> Unit = {}
 ) {
     val detailListViewState by detailListViewModel.viewState.collectAsState()
 
@@ -59,6 +61,16 @@ fun DetailListScreen(
 
     LaunchedEffect(Unit) {
         detailListViewModel.setEvent(DetailContract.DetailEvent.InitDetailScreen)
+    }
+
+    LaunchedEffect(key1 = detailListViewModel.effect) {
+        detailListViewModel.effect.collect { effect ->
+            when(effect) {
+                is DetailContract.DetailEffect.OnRestaurantClickEffect -> {
+                    onDetailRestaurantClick(effect.restaurantId)
+                }
+            }
+        }
     }
 
     if(detailListViewState.sortBottomSheetState) {
@@ -190,6 +202,9 @@ fun DetailListScreen(
                 item?.let {
                     EveryMealRestaurantItem(
                         restaurant = it,
+                        onDetailClick = { restaurantIdx ->
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.OnRestaurantDetailClick(restaurantIdx))
+                        }
                     )
                     Spacer(modifier = Modifier.padding(16.dp))
                 }
@@ -275,7 +290,12 @@ fun DetailScreenChip(
 @Preview
 @Composable
 fun PreviewDetailListScreen() {
-    DetailListScreen(title = "맛집") {
+    DetailListScreen(
+        title = "맛집",
+        navigateToPreviousScreen = {
+
+        },
+    ) {
 
     }
 }
