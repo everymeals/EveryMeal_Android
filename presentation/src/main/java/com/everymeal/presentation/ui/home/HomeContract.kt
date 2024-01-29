@@ -1,5 +1,7 @@
 package com.everymeal.presentation.ui.home
 
+import com.everymeal.domain.model.restaurant.GetUnivRestaurantEntity
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
@@ -7,12 +9,14 @@ import com.everymeal.presentation.base.ViewState
 
 class HomeContract {
     data class HomeState(
-        val uiState: LoadState = LoadState.SUCCESS,
+        val uiState: LoadState = LoadState.LOADING,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
-        val bottomSheetState: Boolean = false
+        val bottomSheetState: Boolean = false,
+        val restaurantData: List<RestaurantDataEntity>? = null
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {
+        object InitHomeScreen : HomeEvent()
         data class OnClickDetailList(val detailListScreenType: DetailListScreenType) : HomeEvent()
         data class BottomSheetStateChange(val bottomSheetState: Boolean) : HomeEvent()
     }

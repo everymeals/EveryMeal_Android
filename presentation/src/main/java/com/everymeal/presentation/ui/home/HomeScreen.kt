@@ -59,6 +59,11 @@ fun HomeScreen(
     onDetailScreenClickType : (String) -> Unit,
     onDetailRestaurantClick : () -> Unit,
 ) {
+
+    LaunchedEffect(Unit) {
+        homeViewModel.setEvent(HomeContract.HomeEvent.InitHomeScreen)
+    }
+
     val items = listOf(
         RestaurantDataEntity(
             idx = 386,
@@ -418,7 +423,8 @@ fun CategoryItem(
                         restaurantCategoryType == stringResource(categoryText) -> Gray100
                         else -> Color.White
                     },
-                    RoundedCornerShape(12.dp))
+                    RoundedCornerShape(12.dp)
+                )
                 .padding(horizontal = 17.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

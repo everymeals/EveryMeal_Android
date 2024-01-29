@@ -1,5 +1,6 @@
 package com.everymeal.data.model.restaruant
 
+import com.everymeal.domain.model.restaurant.GetUnivRestaurantEntity
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import kotlinx.serialization.Serializable
 
@@ -63,5 +64,11 @@ fun RestaurantResponse.toEntity(): RestaurantDataEntity {
         recommendedCount = this.recommendedCount,
         images = this.images,
         isLiked = this.isLiked
+    )
+}
+
+fun GetUnivRestaurantResponse.toEntity(): GetUnivRestaurantEntity {
+    return GetUnivRestaurantEntity(
+        data = this.content.map { it.toEntity() }
     )
 }
