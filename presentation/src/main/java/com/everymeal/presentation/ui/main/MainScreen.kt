@@ -61,8 +61,8 @@ fun MainScreen(
                     onDetailScreenClickType = { detailScreenType ->
                         navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
                     },
-                    onDetailRestaurantClick = {
-                        navController.navigate(EveryMealRoute.SCHOOL_AUTH.route)
+                    onDetailRestaurantClick = { detailRestaurantIdx ->
+                        navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
                     }
                 )
             }

@@ -57,6 +57,9 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
+            is HomeEvent.OnClickDetailRestaurant -> {
+                sendEffect({ HomeEffect.NavigateToDetailRestaurant(event.restaurantId) })
+            }
         }
     }
 

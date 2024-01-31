@@ -12,17 +12,19 @@ class HomeContract {
         val uiState: LoadState = LoadState.LOADING,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
         val bottomSheetState: Boolean = false,
-        val restaurantData: List<RestaurantDataEntity>? = null
+        val restaurantData: List<RestaurantDataEntity> = emptyList()
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {
         object InitHomeScreen : HomeEvent()
         data class OnClickDetailList(val detailListScreenType: DetailListScreenType) : HomeEvent()
         data class BottomSheetStateChange(val bottomSheetState: Boolean) : HomeEvent()
+        data class OnClickDetailRestaurant(val restaurantId: Int) : HomeEvent()
     }
 
     sealed class HomeEffect : ViewSideEffect {
         data class NavigateToDetailListScreen(val detailListScreenType: DetailListScreenType) : HomeEffect()
+        data class NavigateToDetailRestaurant(val restaurantId: Int) : HomeEffect()
     }
 }
 
