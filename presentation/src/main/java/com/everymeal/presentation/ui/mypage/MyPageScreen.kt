@@ -45,18 +45,12 @@ import com.everymeal.presentation.ui.theme.Gray900
 fun MyPageScreen(
 
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                )
-            )
-        }
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(Color.White)
+                .padding(top = 20.dp),
         ) {
             item(key = "My Information") {
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -195,7 +189,7 @@ fun MySettings(
             onClick = { }
         )
         MyTabMenu(
-            menuTitle = "오픈소스 라이센스",
+            menuTitle = "버전 정보",
             isAppVersion = true,
             onClick = { }
         )
