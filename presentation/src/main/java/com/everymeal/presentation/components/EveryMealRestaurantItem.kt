@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
-import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
@@ -50,12 +49,12 @@ fun EveryMealRestaurantItem(
             .fillMaxSize()
             .clickable(
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() }
+                interactionSource = remember { MutableInteractionSource() },
             ) {
                 onDetailClick()
             }
             .padding(horizontal = 20.dp)
-            .background(color = Color.White)
+            .background(color = Color.White),
     ) {
         RestaurantTitle(Modifier.fillMaxWidth(), restaurant) {
             onLoveClick()
@@ -81,7 +80,7 @@ fun RestaurantTitle(
             color = Color.Black,
             fontSize = 17.sp,
             fontWeight = FontWeight.SemiBold,
-            maxLines = 1
+            maxLines = 1,
         )
         Text(
             modifier = Modifier
@@ -91,7 +90,7 @@ fun RestaurantTitle(
                 .padding(vertical = 3.dp, horizontal = 6.dp),
             text = restaurant.categoryDetail,
             color = Gray600,
-            fontSize = 12.sp
+            fontSize = 12.sp,
         )
         Spacer(modifier = Modifier.weight(1f))
         RestaurantLoveCount(restaurant, onLoveClick)
@@ -106,7 +105,7 @@ fun RestaurantLoveCount(
     Column(
         modifier = Modifier.clickable(
             indication = null,
-            interactionSource = remember { MutableInteractionSource() }
+            interactionSource = remember { MutableInteractionSource() },
         ) { onLoveClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -157,7 +156,7 @@ fun RestaurantRating(restaurant: RestaurantDataEntity) {
 fun RestaurantImage(restaurant: RestaurantDataEntity) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         restaurant.images?.let {
             when {
@@ -169,9 +168,9 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                                 .aspectRatio(1f)
                                 .clip(RoundedCornerShape(8.dp)),
                             model = image,
-                            contentDescription = null
+                            contentDescription = null,
                         )
-                        if(index != 2) {
+                        if (index != 2) {
                             Spacer(modifier = Modifier.padding(end = 6.dp))
                         }
                     }
@@ -185,9 +184,9 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                                 .aspectRatio(1f)
                                 .clip(RoundedCornerShape(8.dp)),
                             model = image,
-                            contentDescription = null
+                            contentDescription = null,
                         )
-                        if(index != 1) {
+                        if (index != 1) {
                             Spacer(modifier = Modifier.padding(end = 6.dp))
                         }
                     }
@@ -201,11 +200,12 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp)),
                         model = restaurant.images!![0],
-                        contentDescription = null
+                        contentDescription = null,
                     )
-                    Spacer(modifier = Modifier
-                        .weight(2f)
-                        .padding(end = 6.dp)
+                    Spacer(
+                        modifier = Modifier
+                            .weight(2f)
+                            .padding(end = 6.dp),
                     )
                 }
 
@@ -216,7 +216,7 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp)),
                         model = restaurant.images!![0],
-                        contentDescription = null
+                        contentDescription = null,
                     )
                     Spacer(modifier = Modifier.padding(end = 6.dp))
                     AsyncImage(
@@ -225,32 +225,32 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp)),
                         model = restaurant.images!![0],
-                        contentDescription = null
+                        contentDescription = null,
                     )
                     Spacer(modifier = Modifier.padding(end = 6.dp))
                     Box(
                         modifier = Modifier
                             .weight(1f)
-                            .aspectRatio(1f)
+                            .aspectRatio(1f),
                     ) {
                         AsyncImage(
                             modifier = Modifier
                                 .aspectRatio(1f)
                                 .fillMaxSize(),
                             model = restaurant.images!![0],
-                            contentDescription = null
+                            contentDescription = null,
                         )
                         Box(
                             modifier = Modifier
                                 .matchParentSize()
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Color.Black.copy(alpha = 0.2f)),
-                            contentAlignment = Alignment.Center
+                            contentAlignment = Alignment.Center,
                         ) {
                             Text(
                                 text = "+${restaurant.reviewCount - 2}",
                                 color = Color.White,
-                                fontSize = 14.sp
+                                fontSize = 14.sp,
                             )
                         }
                     }
@@ -264,9 +264,5 @@ fun RestaurantImage(restaurant: RestaurantDataEntity) {
 @Composable
 fun HomeScreenPreview() {
     EveryMeal_AndroidTheme {
-        HomeScreen(
-            onDetailScreenClickType = {},
-            onDetailRestaurantClick = {},
-        )
     }
 }

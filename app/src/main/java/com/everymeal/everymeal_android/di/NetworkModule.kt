@@ -3,7 +3,7 @@ package com.everymeal.everymeal_android.di
 import com.everymeal.data.service.auth.AuthApi
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.everymeal.data.service.restaurant.RestaurantApi
-import com.everymeal.data.service.review.ReviewApi
+import com.everymeal.data.service.review.StoreReviewApi
 import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -67,7 +67,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideReviewApi(retrofit: Retrofit): ReviewApi {
-        return retrofit.create(ReviewApi::class.java)
+    fun provideReviewApi(retrofit: Retrofit): StoreReviewApi {
+        return retrofit.create(StoreReviewApi::class.java)
     }
 }

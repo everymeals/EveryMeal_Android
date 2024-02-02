@@ -17,17 +17,16 @@ import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealTextField
 
 @Composable
-fun TopBar(
+fun SearchTopBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     changeQuery: (String) -> Unit,
     onBackClick: () -> Unit,
-    setShowHistory: (Boolean) -> Unit,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 14.dp)
+            .padding(top = 14.dp),
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
@@ -37,12 +36,11 @@ fun TopBar(
                 .padding(12.dp)
                 .clickable {
                     onBackClick()
-                }
+                },
         )
         SearchBar(
             searchQuery = searchQuery,
             changeQuery = changeQuery,
-            setShowHistory = setShowHistory,
         )
     }
 }
@@ -52,7 +50,6 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     changeQuery: (String) -> Unit,
-    setShowHistory: (Boolean) -> Unit
 ) {
     Box(modifier = modifier) {
         EveryMealTextField(
@@ -62,13 +59,12 @@ fun SearchBar(
             value = searchQuery,
             onValueChange = {
                 changeQuery(it)
-                setShowHistory(it.isEmpty())
             },
             placeholderText = stringResource(R.string.placeholder_search),
             leadingIcon = {
                 Image(
                     painter = painterResource(id = R.drawable.icon_search_mono),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             },
         )

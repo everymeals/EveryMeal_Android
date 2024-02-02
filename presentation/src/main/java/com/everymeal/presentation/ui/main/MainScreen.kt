@@ -21,6 +21,8 @@ import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
+import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
+import com.everymeal.presentation.ui.search.SearchScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
@@ -45,10 +47,10 @@ fun MainScreen(
                             navController = navController,
                             navigationItem = navigationItem,
                         )
-                    }
+                    },
                 )
             }
-        }
+        },
     ) { padding ->
         NavHost(
             modifier = Modifier.padding(padding),
@@ -62,7 +64,10 @@ fun MainScreen(
                     },
                     onDetailRestaurantClick = {
                         navController.navigate(EveryMealRoute.SCHOOL_AUTH.route)
-                    }
+                    },
+                    onReviewBottomSheetClick = {
+                        navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+                    },
                 )
             }
             composable(route = EveryMealRoute.UNIV_FOOD.route) {
@@ -78,7 +83,7 @@ fun MainScreen(
                 val detailScreenType = it.arguments?.getString(DETAIL_SCREEN_TYPE) ?: ""
                 DetailListScreen(
                     title = detailScreenType,
-                    navigateToPreviousScreen = { navController.popBackStack() }
+                    navigateToPreviousScreen = { navController.popBackStack() },
                 )
             }
             composable(route = EveryMealRoute.DETAIL_RESTAURANT.route) {
@@ -88,8 +93,14 @@ fun MainScreen(
                 SchoolAuthScreen(
                     onSuccessEmailVerification = {
                         navController.popBackStack()
-                    }
+                    },
                 )
+            }
+            composable(route = EveryMealRoute.REVIEW_SEARCH.route) {
+                ReviewSearchScreen(navController = navController)
+            }
+            composable(route = EveryMealRoute.SEARCH.route) {
+                SearchScreen(navController = navController)
             }
         }
     }

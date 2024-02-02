@@ -11,5 +11,5 @@ interface RestaurantRepository {
         order: String,
         group: String? = null,
         grade: String? = null,
-    ) : Flow<PagingData<RestaurantDataEntity>>
+    ): Flow<PagingData<RestaurantDataEntity>>
 }

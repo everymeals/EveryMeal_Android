@@ -9,7 +9,7 @@ class HomeContract {
     data class HomeState(
         val uiState: LoadState = LoadState.SUCCESS,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
-        val bottomSheetState: Boolean = false
+        val bottomSheetState: Boolean = false,
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {
@@ -18,7 +18,8 @@ class HomeContract {
     }
 
     sealed class HomeEffect : ViewSideEffect {
-        data class NavigateToDetailListScreen(val detailListScreenType: DetailListScreenType) : HomeEffect()
+        data class NavigateToDetailListScreen(val detailListScreenType: DetailListScreenType) :
+            HomeEffect()
     }
 }
 
@@ -26,7 +27,7 @@ enum class DetailListScreenType {
     RECOMMEND,
     RESTAURANT,
     CAFE,
-    DRINK
+    DRINK,
 }
 
 fun String.DetailListScreenType(): DetailListScreenType {

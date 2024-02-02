@@ -1,9 +1,6 @@
 package com.everymeal.presentation.ui.review.detail
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +42,7 @@ fun ReviewDetailScreen() {
             mutableStateOf(true),
             mutableStateOf(true),
             mutableStateOf(true),
-            mutableStateOf(true)
+            mutableStateOf(true),
         )
     }
     Scaffold(
@@ -53,26 +50,25 @@ fun ReviewDetailScreen() {
             ReviewTopBar(
                 title = stringResource(R.string.review_title),
                 onBackClicked = {
-
                 },
             )
-        }
+        },
     ) { innerPadding ->
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState),
         ) {
             UserProfileAppbar(
                 userName = "햄식이",
-                ratingList = mockRatingList
+                ratingList = mockRatingList,
             )
             FoodImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .padding(top = 24.dp)
+                    .padding(top = 24.dp),
             )
             ReviewText(
                 modifier = Modifier.padding(
@@ -88,13 +84,13 @@ fun ReviewDetailScreen() {
 private fun UserProfileAppbar(
     userName: String,
     userProfileUrl: String? = null,
-    ratingList: List<MutableState<Boolean>>
+    ratingList: List<MutableState<Boolean>>,
 ) {
     Row {
         Image(
             modifier = Modifier.size(40.dp),
             painter = painterResource(id = R.drawable.profile_ex_image),
-            contentDescription = "profile"
+            contentDescription = "profile",
         )
         Column(modifier = Modifier.padding(start = 12.dp)) {
             Text(
@@ -104,12 +100,12 @@ private fun UserProfileAppbar(
                 color = Gray800,
             )
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 StarRating(
                     modifier = Modifier.padding(horizontal = 1.dp),
                     ratingStateList = ratingList,
-                    starSize = 14.dp
+                    starSize = 14.dp,
                 )
                 // TODO 시간 계산 필요
                 Text(
@@ -127,64 +123,64 @@ private fun UserProfileAppbar(
                 .size(24.dp)
                 .padding(end = 20.dp),
             painter = painterResource(id = R.drawable.icon_dots_mono),
-            contentDescription = "more"
+            contentDescription = "more",
         )
     }
 }
 
 @Composable
 private fun FoodImage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.food_ex_2),
-            contentDescription = "more"
+            contentDescription = "more",
         )
         LocationButton(
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .padding(
                     start = 16.dp,
-                    bottom = 16.dp
-                )
+                    bottom = 16.dp,
+                ),
         )
         PageInfo(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(
                     end = 16.dp,
-                    bottom = 16.dp
-                )
+                    bottom = 16.dp,
+                ),
         )
     }
 }
 
 @Composable
 private fun LocationButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier,
         color = Color(0x99000000),
-        shape = RoundedCornerShape(size = 6.dp)
+        shape = RoundedCornerShape(size = 6.dp),
     ) {
         Row(
             modifier = Modifier.padding(
                 horizontal = 6.dp,
-                vertical = 4.dp
+                vertical = 4.dp,
             ),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(
-                    id = R.drawable.icon_pin_location_mono
+                    id = R.drawable.icon_pin_location_mono,
                 ),
-                contentDescription = "location"
+                contentDescription = "location",
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
@@ -196,7 +192,7 @@ private fun LocationButton(
             Image(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(id = R.drawable.icon_arrow_right),
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
@@ -204,17 +200,17 @@ private fun LocationButton(
 
 @Composable
 private fun PageInfo(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         modifier = modifier,
         color = Color(0x99000000),
-        shape = RoundedCornerShape(size = 20.dp)
+        shape = RoundedCornerShape(size = 20.dp),
     ) {
         Text(
             modifier = Modifier.padding(
                 horizontal = 8.dp,
-                vertical = 2.dp
+                vertical = 2.dp,
             ),
             text = "1/3",
             fontSize = 14.sp,
@@ -226,7 +222,7 @@ private fun PageInfo(
 
 @Composable
 fun ReviewText(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         modifier = modifier,

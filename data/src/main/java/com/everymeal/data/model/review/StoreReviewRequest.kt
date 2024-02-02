@@ -5,31 +5,31 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ReviewRequest(
-    @SerialName("mealIdx")
-    val mealIdx: Int,
+data class StoreReviewRequest(
+    @SerialName("idx")
+    val idx: Int,
     @SerialName("grade")
     val grade: Int,
     @SerialName("content")
     val content: String,
     @SerialName("imageList")
-    val imageList: List<String>
+    val imageList: List<String>,
 ) {
     fun toUserReview(): UserReview {
         return UserReview(
-            mealIdx = mealIdx,
+            idx = idx,
             grade = grade,
             content = content,
-            imageList = imageList
+            imageList = imageList,
         )
     }
 }
 
-fun UserReview.toReviewRequest(): ReviewRequest {
-    return ReviewRequest(
-        mealIdx = mealIdx,
+fun UserReview.toReviewRequest(): StoreReviewRequest {
+    return StoreReviewRequest(
+        idx = idx,
         grade = grade,
         content = content,
-        imageList = imageList
+        imageList = imageList,
     )
 }

@@ -33,10 +33,12 @@ enum class BottomNavigation(
 
 enum class EveryMealRoute(val route: String) {
     HOME("home"),
+    SEARCH("search"),
     UNIV_FOOD("univ-food"),
     WHAT_FOOD("what-food"),
     MY_PAGE("my-page"),
     DETAIL_LIST("detail-list"),
     DETAIL_RESTAURANT("detail-restaurant"),
     SCHOOL_AUTH("school-auth"),
+    REVIEW_SEARCH("review-search"),
 }

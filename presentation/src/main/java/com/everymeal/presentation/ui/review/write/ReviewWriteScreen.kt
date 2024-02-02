@@ -49,29 +49,29 @@ fun ReviewWriteScreen(
     starRatingClicked: (Int) -> Unit,
     reviewTextChanged: (String) -> Unit,
     onReviewRegisterClicked: () -> Unit,
-    onAddPhotoClicked: () -> Unit
+    onAddPhotoClicked: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(color = Color.White)
             .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
         RestaurantType(
-            viewState = viewState
+            viewState = viewState,
         )
         RestaurantName(
             modifier = Modifier
                 .padding(top = 12.dp),
-            viewState = viewState
+            viewState = viewState,
         )
         StarRating(
             modifier = modifier.padding(top = 16.dp),
             ratingStateList = viewState.starRatingStateList,
             starRatingClicked = starRatingClicked,
-            starSize = 20.dp
+            starSize = 20.dp,
         )
         Spacer(modifier = Modifier.height(60.dp))
         EveryMealTextField(
@@ -85,11 +85,11 @@ fun ReviewWriteScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.Start,
         ) {
             AddReviewPhoto(
                 viewState = viewState,
-                addPhotoClicked = onAddPhotoClicked
+                addPhotoClicked = onAddPhotoClicked,
             )
             LazyRow {
                 items(viewState.imageUri) {
@@ -100,7 +100,7 @@ fun ReviewWriteScreen(
                             .clip(RoundedCornerShape(10.dp)),
                         model = it,
                         contentScale = ContentScale.Crop,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }
@@ -110,7 +110,7 @@ fun ReviewWriteScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(54.dp),
-            onReviewRegisterClicked = onReviewRegisterClicked
+            onReviewRegisterClicked = onReviewRegisterClicked,
         )
         Spacer(modifier = Modifier.height(20.dp))
     }
@@ -128,20 +128,20 @@ private fun AddReviewPhoto(
             .clickable { addPhotoClicked() },
         border = BorderStroke(
             width = 1.dp,
-            color = Gray200
+            color = Gray200,
         ),
         shape = RoundedCornerShape(10.dp),
-        color = Color.White
+        color = Color.White,
     ) {
         Column(
             modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Image(
                 modifier = Modifier.size(24.dp),
                 painter = painterResource(id = R.drawable.icon_picture_mono),
-                contentDescription = null
+                contentDescription = null,
             )
             Text(
                 modifier = Modifier.padding(top = 2.dp),
@@ -160,7 +160,7 @@ private fun AddReviewPhoto(
 @Composable
 private fun ReviewRegisterButton(
     modifier: Modifier = Modifier,
-    onReviewRegisterClicked: () -> Unit
+    onReviewRegisterClicked: () -> Unit,
 ) {
     Button(
         modifier = modifier,
@@ -181,8 +181,8 @@ private fun ReviewRegisterButton(
                     fontSize = 16.sp,
                     fontWeight = FontWeight(500),
                     color = Color.White,
-                )
+                ),
             )
-        }
+        },
     )
 }

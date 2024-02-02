@@ -1,7 +1,9 @@
 package com.everymeal.presentation.ui.search
 
+import androidx.lifecycle.viewModelScope
 import com.everymeal.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,15 +17,12 @@ class SearchViewModel @Inject constructor() :
 
     override fun handleEvents(event: SearchEvent) {
         when (event) {
-            is SearchEvent.SetShowSearchHistory -> {
-                updateState {
-                    copy(searchIsShowHistory = event.show)
-                }
-            }
-
             is SearchEvent.SearchQueryChanged -> {
                 updateState {
-                    copy(searchQuery = event.query)
+                    copy(
+                        searchQuery = event.query,
+                        searchIsShowHistory = event.query.isEmpty(),
+                    )
                 }
             }
 
@@ -32,6 +31,22 @@ class SearchViewModel @Inject constructor() :
                     copy(searchHistoryItems = event.historyItems)
                 }
             }
+            is SearchEvent.SearchResultLoaded -> {
+
+                updateState {
+                    copy(
+                        searchResultList = event.searchResultList,
+                        searchIsShowHistory = false,
+                    )
+                }
+            }
+        }
+    }
+
+    private fun search() {
+        viewModelScope.launch {
+//            val result = repository.getUnivRestaurant(1, "test")
+//            setEvent(SearchEvent.SearchResultLoaded(result))
         }
     }
 }

@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReviewScreenViewModel @Inject constructor(
-    private val postReviewUseCase: PostReviewUseCase
+    private val postReviewUseCase: PostReviewUseCase,
 ) : BaseViewModel<ReviewState, ReviewEffect, ReviewEvent>(ReviewState()) {
     override fun handleEvents(event: ReviewEvent) {
         when (event) {
@@ -21,7 +21,7 @@ class ReviewScreenViewModel @Inject constructor(
                         mutableStateOf(index <= event.starIndex)
                     }
                     copy(
-                        starRatingStateList = newStarRatingStateList
+                        starRatingStateList = newStarRatingStateList,
                     )
                 }
             }
@@ -29,7 +29,7 @@ class ReviewScreenViewModel @Inject constructor(
             is ReviewEvent.OnReviewTextChanged -> {
                 updateState {
                     copy(
-                        reviewValue = event.reviewValue
+                        reviewValue = event.reviewValue,
                     )
                 }
             }
@@ -37,7 +37,7 @@ class ReviewScreenViewModel @Inject constructor(
             is ReviewEvent.OnImageSelected -> {
                 updateState {
                     copy(
-                        imageUri = event.imageUri
+                        imageUri = event.imageUri,
                     )
                 }
             }
@@ -45,14 +45,13 @@ class ReviewScreenViewModel @Inject constructor(
             is ReviewEvent.PostReview -> {
                 viewModelScope.launch {
                     val userReview = UserReview(
-                        mealIdx = event.mealIdx,
+                        idx = event.mealIdx,
                         grade = event.starRatingCount,
                         content = event.reviewValue,
-                        imageList = event.imageUri.map { it.toString() }
+                        imageList = event.imageUri.map { it.toString() },
                     )
                     postReviewUseCase(userReview)
                 }
-
             }
         }
     }

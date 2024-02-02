@@ -55,9 +55,10 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 @Composable
 fun HomeScreen(
-    homeViewModel : HomeViewModel = hiltViewModel(),
-    onDetailScreenClickType : (String) -> Unit,
-    onDetailRestaurantClick : () -> Unit,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    onDetailScreenClickType: (String) -> Unit,
+    onDetailRestaurantClick: () -> Unit,
+    onReviewBottomSheetClick: () -> Unit,
 ) {
     val items = listOf(
         RestaurantDataEntity(
@@ -105,11 +106,11 @@ fun HomeScreen(
             title = stringResource(id = R.string.univ_admin_review_title),
             content = stringResource(id = R.string.univ_admin_review_content),
             onClick = {
-
+                onReviewBottomSheetClick()
             },
             onDismiss = {
                 homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
-            }
+            },
         )
     }
 
@@ -172,11 +173,10 @@ fun HomeScreen(
                 EveryMealRestaurantItem(
                     item,
                     onLoveClick = {
-
                     },
                     onDetailClick = {
                         onDetailRestaurantClick()
-                    }
+                    },
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
                 if (index != items.size - 1) {
@@ -192,7 +192,6 @@ fun HomeScreen(
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_button_text),
                     onClick = {
-
                     },
                 )
             }
@@ -208,7 +207,6 @@ fun HomeScreen(
             items(reviewTestItem.size) { index ->
                 val item = reviewTestItem[index]
                 EveryMealReviewItem(item) {
-
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
                 if (index != reviewTestItem.size - 1) {
@@ -224,7 +222,6 @@ fun HomeScreen(
                 EveryMealLineButton(
                     text = stringResource(R.string.home_restaurant_review_button_text),
                     onClick = {
-
                     },
                 )
             }
@@ -256,7 +253,6 @@ fun HomeTopAppBar() {
         actions = {
             IconButton(
                 onClick = {
-
                 },
             ) {
                 Icon(
@@ -266,7 +262,6 @@ fun HomeTopAppBar() {
             }
             IconButton(
                 onClick = {
-
                 },
             ) {
                 Icon(
@@ -292,7 +287,7 @@ fun HomeMainTopLayout(
             .background(Gray300, RoundedCornerShape(12.dp))
             .clickable(
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() }
+                interactionSource = remember { MutableInteractionSource() },
             ) {
                 onClick()
             }
@@ -310,29 +305,29 @@ fun HomeMainTopLayout(
                 text = stringResource(id = R.string.home_top_category_title, "슈니"),
                 fontSize = 15.sp,
                 style = EveryMealTypo.displaySmall,
-                color = Gray800
+                color = Gray800,
             )
             Text(
                 text = stringResource(R.string.home_top_category_sub_title),
                 style = EveryMealTypo.labelSmall,
                 fontSize = 14.sp,
-                color = Gray500
+                color = Gray500,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.icon_arrow_right),
             contentDescription = stringResource(R.string.icon_arrow_right),
-            tint = Gray500
+            tint = Gray500,
         )
     }
 }
 
 @Composable
 fun HomeCategoryList(
-    isBottomSheet : Boolean = false,
+    isBottomSheet: Boolean = false,
     restaurantCategoryType: String = "",
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
 ) {
     val horizotalDp = if (isBottomSheet) 0.dp else 20.dp
 
@@ -340,13 +335,13 @@ fun HomeCategoryList(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = horizotalDp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         CategoryItem(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_recommend,
-            R.string.home_top_category_recommend
+            R.string.home_top_category_recommend,
         ) {
             onClick("추천")
         }
@@ -354,7 +349,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_bap,
-            R.string.home_top_category_rice
+            R.string.home_top_category_rice,
         ) {
             onClick("밥집")
         }
@@ -362,7 +357,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_cake,
-            R.string.home_top_category_cafe
+            R.string.home_top_category_cafe,
         ) {
             onClick("카페")
         }
@@ -370,7 +365,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_beer,
-            R.string.home_top_category_drink
+            R.string.home_top_category_drink,
         ) {
             onClick("술집")
         }
@@ -383,7 +378,7 @@ fun HomeDivider() {
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Gray100)
-            .height(12.dp)
+            .height(12.dp),
     )
 }
 
@@ -418,7 +413,8 @@ fun CategoryItem(
                         restaurantCategoryType == stringResource(categoryText) -> Gray100
                         else -> Color.White
                     },
-                    RoundedCornerShape(12.dp))
+                    RoundedCornerShape(12.dp),
+                )
                 .padding(horizontal = 17.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -429,7 +425,7 @@ fun CategoryItem(
             Text(
                 text = stringResource(categoryText),
                 fontSize = 12.sp,
-                color = Color.Black
+                color = Color.Black,
             )
         }
     }
@@ -442,6 +438,7 @@ fun HomeScreenPreview() {
         HomeScreen(
             onDetailScreenClickType = {},
             onDetailRestaurantClick = {},
+            onReviewBottomSheetClick = {},
         )
     }
 }
