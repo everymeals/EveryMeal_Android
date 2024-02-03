@@ -178,7 +178,7 @@ fun HomeScreen(
                         EveryMealLineButton(
                             text = stringResource(R.string.home_restaurant_button_text),
                             onClick = {
-
+                                homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList("추천".DetailListScreenType()))
                             },
                         )
                     }

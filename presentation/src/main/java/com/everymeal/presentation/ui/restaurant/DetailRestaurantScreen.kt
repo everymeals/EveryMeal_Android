@@ -49,6 +49,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
@@ -129,7 +131,9 @@ fun DetailRestaurantScreen(
                     // Todo Test 필요
                     if(!restaurantInfo.images.isNullOrEmpty()) {
                         item {
-                            DetailRestaurantImage()
+                            DetailRestaurantImage(
+                                restaurantInfo = restaurantInfo
+                            )
                         }
                     }
                     item {
@@ -224,32 +228,47 @@ fun DetailRestaurantScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantImage(
-
+    restaurantInfo : RestaurantDataEntity
 ) {
+    val images = restaurantInfo.images ?: listOf()
+
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        images.size
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(9f / 7f)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.test_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier.fillMaxSize()
-        )
+        ) { page ->
+            AsyncImage(
+                model = images[page],
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
         Text(
+            text = "${pagerState.currentPage + 1}/${images.size}",
             modifier = Modifier
+                .align(Alignment.BottomEnd)
                 .padding(10.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .align(Alignment.BottomStart)
                 .background(Color.Black.copy(alpha = 0.6f))
                 .padding(horizontal = 8.dp, vertical = 2.dp),
-            text = "1/6",
-            style = EveryMealTypo.bodySmall,
-            fontSize = 14.sp,
             color = Color.White,
+            fontSize = 14.sp,
         )
     }
 }
@@ -473,10 +492,10 @@ fun DetailRestaurantTabInfo(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
-                contentDescription = "link",
-            )
+//            Image(
+//                imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
+//                contentDescription = "link",
+//            )
 //            Version2 KakaoMap
 //            Text(
 //                modifier = Modifier.padding(start = 4.dp),
@@ -536,10 +555,4 @@ fun DetailRestaurantReview() {
 @Composable
 fun PreviewDetailRestaurantScreen() {
     DetailRestaurantScreen(0)
-}
-
-@Preview
-@Composable
-fun PreviewDetailRestaurantImage() {
-    DetailRestaurantImage()
 }
