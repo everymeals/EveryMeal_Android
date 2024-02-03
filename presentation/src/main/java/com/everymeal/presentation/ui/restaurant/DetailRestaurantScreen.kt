@@ -72,7 +72,8 @@ import kotlinx.coroutines.launch
 fun DetailRestaurantScreen(
     restaurantId: Int,
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
-    onNetWorkErrorCancelClick: () -> Unit = {}
+    onNetWorkErrorCancelClick: () -> Unit = {},
+    backButtonClick: () -> Unit = {},
 ) {
     val viewState by detailRestaurantViewModel.viewState.collectAsState()
 
@@ -89,7 +90,9 @@ fun DetailRestaurantScreen(
         LoadState.SUCCESS -> {
             Scaffold(
                 topBar = {
-                    SaveTopBar(title = "")
+                    SaveTopBar(title = "") {
+                        backButtonClick()
+                    }
                 },
                 floatingActionButton = {
                     Row(

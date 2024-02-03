@@ -87,9 +87,11 @@ fun MainScreen(
             }
             composable(route = EveryMealRoute.DETAIL_RESTAURANT.route.plus("/{$DETAIL_RESTAURANT_IDX}")) {
                 val detailRestaurantIdx = it.arguments?.getString(DETAIL_RESTAURANT_IDX) ?: ""
-                DetailRestaurantScreen(detailRestaurantIdx.toInt()) {
-                    navController.popBackStack()
-                }
+                DetailRestaurantScreen(
+                    restaurantId = detailRestaurantIdx.toInt(),
+                    onNetWorkErrorCancelClick = { navController.popBackStack() },
+                    backButtonClick = { navController.popBackStack() }
+                )
             }
             composable(route = EveryMealRoute.SCHOOL_AUTH.route) {
                 SchoolAuthScreen(
