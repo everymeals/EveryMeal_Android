@@ -20,6 +20,7 @@ import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
+import com.everymeal.presentation.ui.mypage.WithDrawScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
@@ -61,8 +62,8 @@ fun MainScreen(
                     onDetailScreenClickType = { detailScreenType ->
                         navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
                     },
-                    onDetailRestaurantClick = {
-                        navController.navigate(EveryMealRoute.SCHOOL_AUTH.route)
+                    onDetailRestaurantClick = { detailRestaurantIdx ->
+                        navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
                     }
                 )
             }
@@ -73,7 +74,11 @@ fun MainScreen(
                 WhatFoodScreen()
             }
             composable(route = EveryMealRoute.MY_PAGE.route) {
-                MyPageScreen()
+                MyPageScreen(
+                    withDrawClick = {
+                        navController.navigate(EveryMealRoute.WITH_DRAW.route)
+                    }
+                )
             }
             composable(route = EveryMealRoute.DETAIL_LIST.route.plus("/{$DETAIL_SCREEN_TYPE}")) {
                 val detailScreenType = it.arguments?.getString(DETAIL_SCREEN_TYPE) ?: ""
@@ -87,9 +92,11 @@ fun MainScreen(
             }
             composable(route = EveryMealRoute.DETAIL_RESTAURANT.route.plus("/{$DETAIL_RESTAURANT_IDX}")) {
                 val detailRestaurantIdx = it.arguments?.getString(DETAIL_RESTAURANT_IDX) ?: ""
-                DetailRestaurantScreen(detailRestaurantIdx.toInt()) {
-                    navController.popBackStack()
-                }
+                DetailRestaurantScreen(
+                    restaurantId = detailRestaurantIdx.toInt(),
+                    onNetWorkErrorCancelClick = { navController.popBackStack() },
+                    backButtonClick = { navController.popBackStack() }
+                )
             }
             composable(route = EveryMealRoute.SCHOOL_AUTH.route) {
                 SchoolAuthScreen(
@@ -97,6 +104,9 @@ fun MainScreen(
                         navController.popBackStack()
                     }
                 )
+            }
+            composable(route = EveryMealRoute.WITH_DRAW.route) {
+                WithDrawScreen()
             }
         }
     }

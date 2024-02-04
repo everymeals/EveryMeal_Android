@@ -3,6 +3,7 @@ package com.everymeal.data.datasource.restaurant
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.everymeal.data.model.restaruant.GetUnivRestaurantResponse
 import com.everymeal.data.model.restaruant.RestaurantResponse
 import com.everymeal.data.model.unwrapData
 import com.everymeal.data.service.restaurant.RestaurantApi
@@ -34,5 +35,21 @@ class RestaurantDataSourceImpl @Inject constructor(
 
     override suspend fun getRestaurantDetail(index: Int): Result<RestaurantResponse> {
         return runCatching { restaurantApi.getRestaurantDetail(index) }.unwrapData()
+    }
+
+    override suspend fun getHomeRestaurant(
+        campusIdx: Int,
+        order: String,
+        group: String?,
+        grade: String?
+    ): Result<GetUnivRestaurantResponse> {
+        return runCatching { restaurantApi.getUnivRestaurant(
+            campusIdx = campusIdx,
+            order = order,
+            group = group,
+            grade = grade,
+            offset = 0,
+            limit = 3)
+        }.unwrapData()
     }
 }
