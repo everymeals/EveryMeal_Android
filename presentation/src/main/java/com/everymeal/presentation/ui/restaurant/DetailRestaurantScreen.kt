@@ -252,7 +252,7 @@ fun DetailRestaurantScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantImage(
-    restaurantInfo : RestaurantDataEntity
+    restaurantInfo : Restaurant
 ) {
     val images = restaurantInfo.images ?: listOf()
 
@@ -538,7 +538,7 @@ fun DetailRestaurantTabInfo(
 
 @Composable
 fun DetailRestaurantTabImage(
-    restaurantInfo : RestaurantDataEntity
+    restaurantInfo : Restaurant
 ) {
     Column {
         restaurantInfo.images?.let { images ->

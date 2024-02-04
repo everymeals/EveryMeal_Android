@@ -17,7 +17,6 @@ interface RestaurantRepository {
     suspend fun getRestaurantDetail(
         index: Int
     ): Result<Restaurant>
-    ) : Result<RestaurantDataEntity>
 
     suspend fun getHomeRestaurant(
         campusIdx: Int,

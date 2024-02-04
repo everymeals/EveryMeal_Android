@@ -1,8 +1,7 @@
 package com.everymeal.data.model.restaruant
 
-import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.domain.model.restaurant.GetUnivRestaurantEntity
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -52,7 +51,7 @@ data class Sort(
     val unsorted: Boolean,
 )
 
-fun RestaurantResponse.toEntity(): Restaurant {
+fun RestaurantResponse.toRestaurant(): Restaurant {
     return Restaurant(
         idx = this.idx,
         name = this.name,
@@ -68,8 +67,9 @@ fun RestaurantResponse.toEntity(): Restaurant {
     )
 }
 
-fun GetUnivRestaurantResponse.toEntity(): GetUnivRestaurantEntity {
+
+fun GetUnivRestaurantResponse.toGetUnivRestaurantEntity(): GetUnivRestaurantEntity {
     return GetUnivRestaurantEntity(
-        data = this.content.map { it.toEntity() }
+        data = this.content.map { it.toRestaurant() }
     )
 }
