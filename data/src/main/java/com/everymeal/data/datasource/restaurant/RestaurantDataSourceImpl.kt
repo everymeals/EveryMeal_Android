@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.everymeal.data.model.restaruant.RestaurantResponse
+import com.everymeal.data.model.unwrapData
 import com.everymeal.data.service.restaurant.RestaurantApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -29,5 +30,9 @@ class RestaurantDataSourceImpl @Inject constructor(
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow
+    }
+
+    override suspend fun getRestaurantDetail(index: Int): Result<RestaurantResponse> {
+        return runCatching { restaurantApi.getRestaurantDetail(index) }.unwrapData()
     }
 }

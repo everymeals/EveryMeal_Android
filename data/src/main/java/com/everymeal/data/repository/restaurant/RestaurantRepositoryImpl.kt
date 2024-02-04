@@ -24,4 +24,8 @@ class RestaurantRepositoryImpl @Inject constructor(
                 pagingData.map { it.toEntity() }
             }
     }
+
+    override suspend fun getRestaurantDetail(index: Int): Result<RestaurantDataEntity> {
+        return restaurantDataSource.getRestaurantDetail(index).map { it.toEntity() }
+    }
 }

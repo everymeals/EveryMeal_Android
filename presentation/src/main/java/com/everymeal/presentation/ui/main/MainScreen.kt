@@ -28,6 +28,7 @@ import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 
 const val DETAIL_SCREEN_TYPE = "detailScreenType"
+const val DETAIL_RESTAURANT_IDX = "detailRestaurantIdx"
 
 @Composable
 fun MainScreen(
@@ -84,10 +85,16 @@ fun MainScreen(
                 DetailListScreen(
                     title = detailScreenType,
                     navigateToPreviousScreen = { navController.popBackStack() },
+                    onDetailRestaurantClick = { detailRestaurantIdx ->
+                        navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
+                    }
                 )
             }
-            composable(route = EveryMealRoute.DETAIL_RESTAURANT.route) {
-                DetailRestaurantScreen()
+            composable(route = EveryMealRoute.DETAIL_RESTAURANT.route.plus("/{$DETAIL_RESTAURANT_IDX}")) {
+                val detailRestaurantIdx = it.arguments?.getString(DETAIL_RESTAURANT_IDX) ?: ""
+                DetailRestaurantScreen(detailRestaurantIdx.toInt()) {
+                    navController.popBackStack()
+                }
             }
             composable(route = EveryMealRoute.SCHOOL_AUTH.route) {
                 SchoolAuthScreen(
