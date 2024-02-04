@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -51,9 +50,7 @@ fun SearchBar(
 ) {
     Box(modifier = modifier) {
         EveryMealTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 56.dp),
+            modifier = Modifier.fillMaxWidth(),
             value = searchQuery,
             onValueChange = {
                 changeQuery(it)

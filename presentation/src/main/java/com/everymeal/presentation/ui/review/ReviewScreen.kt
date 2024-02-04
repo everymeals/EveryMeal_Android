@@ -43,7 +43,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealDialog
 import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
-import com.everymeal.presentation.ui.search.topbar.SearchBar
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey9

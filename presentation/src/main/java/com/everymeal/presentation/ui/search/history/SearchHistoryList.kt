@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.Gray500
+import com.everymeal.presentation.ui.theme.Gray900
 
 @Composable
 fun SearchHistoryList(
@@ -51,12 +52,17 @@ fun SearchHistoryList(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 16.dp),
+                            .padding(vertical = 16.dp)
+                            .clickable { onHistoryItemClicked(item) },
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
                             text = item,
-                            modifier = Modifier.clickable { onHistoryItemClicked(item) },
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight(400),
+                                color = Gray900
+                            )
                         )
                         Icon(
                             imageVector = Icons.Default.Close,

@@ -107,6 +107,7 @@ fun HomeScreen(
             content = stringResource(id = R.string.univ_admin_review_content),
             onClick = {
                 onReviewBottomSheetClick()
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
             },
             onDismiss = {
                 homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
