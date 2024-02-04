@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealDetailReportBottomSheetDialog
@@ -51,7 +51,7 @@ fun DetailListScreen(
 ) {
     val detailListViewState by detailListViewModel.viewState.collectAsState()
 
-    val pagingRestaurantList: LazyPagingItems<RestaurantDataEntity> =
+    val pagingRestaurantList: LazyPagingItems<Restaurant> =
         detailListViewModel.restaurantItems.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {

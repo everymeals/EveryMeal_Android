@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray300
@@ -40,7 +40,7 @@ import com.everymeal.presentation.ui.theme.Gray700
 
 @Composable
 fun EveryMealRestaurantItem(
-    restaurant: RestaurantDataEntity,
+    restaurant: Restaurant,
     onLoveClick: () -> Unit = {},
     onDetailClick: () -> Unit = {},
 ) {
@@ -68,7 +68,7 @@ fun EveryMealRestaurantItem(
 @Composable
 fun RestaurantTitle(
     modifier: Modifier = Modifier,
-    restaurant: RestaurantDataEntity,
+    restaurant: Restaurant,
     onLoveClick: () -> Unit,
 ) {
     Row(
@@ -99,7 +99,7 @@ fun RestaurantTitle(
 
 @Composable
 fun RestaurantLoveCount(
-    restaurant: RestaurantDataEntity,
+    restaurant: Restaurant,
     onLoveClick: () -> Unit,
 ) {
     Column(
@@ -124,7 +124,7 @@ fun RestaurantLoveCount(
 }
 
 @Composable
-fun RestaurantRating(restaurant: RestaurantDataEntity) {
+fun RestaurantRating(restaurant: Restaurant) {
     Row(
         modifier = Modifier
             .width(100.dp),
@@ -153,7 +153,7 @@ fun RestaurantRating(restaurant: RestaurantDataEntity) {
 }
 
 @Composable
-fun RestaurantImage(restaurant: RestaurantDataEntity) {
+fun RestaurantImage(restaurant: Restaurant) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,

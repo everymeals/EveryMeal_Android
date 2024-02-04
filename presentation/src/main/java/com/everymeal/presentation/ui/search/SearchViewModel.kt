@@ -1,13 +1,16 @@
 package com.everymeal.presentation.ui.search
 
 import androidx.lifecycle.viewModelScope
+import com.everymeal.domain.repository.search.SearchRepository
 import com.everymeal.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor() :
+class SearchViewModel @Inject constructor(
+    private val searchRepository: SearchRepository,
+) :
     BaseViewModel<SearchState, SearchEffect, SearchEvent>(SearchState()) {
     init {
         updateState {
@@ -31,22 +34,27 @@ class SearchViewModel @Inject constructor() :
                     copy(searchHistoryItems = event.historyItems)
                 }
             }
-            is SearchEvent.SearchResultLoaded -> {
 
-                updateState {
-                    copy(
-                        searchResultList = event.searchResultList,
-                        searchIsShowHistory = false,
-                    )
-                }
+            is SearchEvent.SearchRestaurant -> {
+                search()
             }
         }
     }
 
     private fun search() {
         viewModelScope.launch {
-//            val result = repository.getUnivRestaurant(1, "test")
-//            setEvent(SearchEvent.SearchResultLoaded(result))
+            val keyword = viewState.value.searchQuery
+            if (keyword.isEmpty()) {
+                return@launch
+            }
+            searchRepository.search(keyword).onSuccess { result ->
+                updateState {
+                    copy(
+                        searchResultList = result,
+                        searchIsShowHistory = false,
+                    )
+                }
+            }
         }
     }
 }

@@ -39,7 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealLineButton
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
@@ -61,7 +61,7 @@ fun HomeScreen(
     onReviewBottomSheetClick: () -> Unit,
 ) {
     val items = listOf(
-        RestaurantDataEntity(
+        Restaurant(
             idx = 386,
             name = "히포 브런치하우스",
             address = "서울 마포구 연남동 487-34",
@@ -79,7 +79,7 @@ fun HomeScreen(
             ),
             isLiked = false,
         ),
-        RestaurantDataEntity(
+        Restaurant(
             idx = 386,
             name = "히포 브런치하우스",
             address = "서울 마포구 연남동 487-34",

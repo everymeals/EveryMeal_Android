@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,19 +25,16 @@ fun SearchTopBar(
     onBackClick: () -> Unit,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 14.dp),
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            painter = painterResource(id = R.drawable.icon_arrow_back_mono),
             contentDescription = null,
-            modifier = modifier
+            modifier = Modifier
                 .size(48.dp)
                 .padding(12.dp)
-                .clickable {
-                    onBackClick()
-                },
+                .clickable(onClick = onBackClick),
         )
         SearchBar(
             searchQuery = searchQuery,

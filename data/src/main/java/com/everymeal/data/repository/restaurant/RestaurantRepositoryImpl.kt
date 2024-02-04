@@ -2,7 +2,7 @@ package com.everymeal.data.repository.restaurant
 
 import androidx.paging.PagingData
 import com.everymeal.data.datasource.restaurant.RestaurantDataSource
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.domain.repository.restaurant.RestaurantRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -18,7 +18,7 @@ class RestaurantRepositoryImpl @Inject constructor(
         order: String,
         group: String?,
         grade: String?
-    ) : Flow<PagingData<RestaurantDataEntity>> {
+    ) : Flow<PagingData<Restaurant>> {
         return restaurantDataSource.getUnivRestaurant(campusIdx, order, group, grade)
             .map { pagingData ->
                 pagingData.map { it.toEntity() }

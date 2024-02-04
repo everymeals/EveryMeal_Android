@@ -12,23 +12,23 @@ enum class BottomNavigation(
     HOME(
         route = EveryMealRoute.HOME.route,
         icon = R.drawable.icon_store,
-        title = R.string.bottom_nav_home
+        title = R.string.bottom_nav_home,
     ),
     UNIV_FOOD(
         route = EveryMealRoute.UNIV_FOOD.route,
         icon = R.drawable.icon_folk,
-        title = R.string.bottom_nav_univ_food
+        title = R.string.bottom_nav_univ_food,
     ),
     WHAT_FOOD(
         route = EveryMealRoute.WHAT_FOOD.route,
         icon = R.drawable.icon_chat_bubble,
-        title = R.string.bottom_nav_what_food
+        title = R.string.bottom_nav_what_food,
     ),
     MY_PAGE(
         route = EveryMealRoute.MY_PAGE.route,
         icon = R.drawable.icon_user,
-        title = R.string.bottom_nav_my_tab
-    )
+        title = R.string.bottom_nav_my_tab,
+    ),
 }
 
 enum class EveryMealRoute(val route: String) {
