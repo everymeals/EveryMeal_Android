@@ -75,6 +75,7 @@ fun RestaurantTitle(
 ) {
     Row(
         modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             modifier = Modifier.padding(top = 6.dp),
@@ -105,7 +106,9 @@ fun RestaurantLoveCount(
     onLoveClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.clickable(
+        modifier = Modifier
+            .padding(top = 6.dp)
+            .clickable(
             indication = null,
             interactionSource = remember { MutableInteractionSource() }
         ) { onLoveClick() },

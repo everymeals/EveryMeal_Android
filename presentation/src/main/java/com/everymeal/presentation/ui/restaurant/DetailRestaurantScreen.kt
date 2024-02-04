@@ -344,6 +344,7 @@ fun DetailRestaurantMainInfo(
                     .weight(1f)
                     .padding(vertical = 12.dp),
                 horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
                     modifier = Modifier.size(24.dp),
@@ -441,7 +442,9 @@ fun DetailRestaurantTabLayout(
                 restaurantInfo = restaurantInfo,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            1 -> DetailRestaurantTabImage()
+            1 -> DetailRestaurantTabImage(
+                restaurantInfo = restaurantInfo
+            )
             2 -> DetailRestaurantReview()
         }
     }
@@ -510,36 +513,37 @@ fun DetailRestaurantTabInfo(
 }
 
 @Composable
-fun DetailRestaurantTabImage() {
-    // Mock Data
-    val items = listOf(
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-    )
-
+fun DetailRestaurantTabImage(
+    restaurantInfo : RestaurantDataEntity
+) {
     Column {
-        for (rowItems in items.chunked(3)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 3.dp),
-            ) {
-                for (item in rowItems) {
-                    Image(
-                        painter = painterResource(id = item),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(end = if (rowItems.indexOf(item) != 2) 3.dp else 0.dp)
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
+        restaurantInfo.images?.let { images ->
+            for (rowItems in images.chunked(3)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 3.dp),
+                    horizontalArrangement = Arrangement.spacedBy(3.dp)
+                ) {
+                    rowItems.forEach { item ->
+                        AsyncImage(
+                            model = item,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    if (rowItems.size < 3) {
+                        repeat(3 - rowItems.size) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .aspectRatio(1f)
+                            )
+                        }
+                    }
                 }
             }
         }

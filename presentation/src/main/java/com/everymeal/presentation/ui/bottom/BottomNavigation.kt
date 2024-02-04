@@ -39,4 +39,5 @@ enum class EveryMealRoute(val route: String) {
     DETAIL_LIST("detail-list"),
     DETAIL_RESTAURANT("detail-restaurant"),
     SCHOOL_AUTH("school-auth"),
+    WITH_DRAW("with-draw")
 }

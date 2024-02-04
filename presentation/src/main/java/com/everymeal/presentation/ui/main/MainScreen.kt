@@ -20,6 +20,7 @@ import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
+import com.everymeal.presentation.ui.mypage.WithDrawScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
@@ -73,7 +74,11 @@ fun MainScreen(
                 WhatFoodScreen()
             }
             composable(route = EveryMealRoute.MY_PAGE.route) {
-                MyPageScreen()
+                MyPageScreen(
+                    withDrawClick = {
+                        navController.navigate(EveryMealRoute.WITH_DRAW.route)
+                    }
+                )
             }
             composable(route = EveryMealRoute.DETAIL_LIST.route.plus("/{$DETAIL_SCREEN_TYPE}")) {
                 val detailScreenType = it.arguments?.getString(DETAIL_SCREEN_TYPE) ?: ""
@@ -99,6 +104,9 @@ fun MainScreen(
                         navController.popBackStack()
                     }
                 )
+            }
+            composable(route = EveryMealRoute.WITH_DRAW.route) {
+                WithDrawScreen()
             }
         }
     }
