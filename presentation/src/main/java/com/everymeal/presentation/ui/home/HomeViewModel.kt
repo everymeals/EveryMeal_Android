@@ -7,8 +7,8 @@ import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.ui.home.HomeContract.HomeEffect
-import com.everymeal.presentation.ui.home.HomeContract.HomeState
 import com.everymeal.presentation.ui.home.HomeContract.HomeEvent
+import com.everymeal.presentation.ui.home.HomeContract.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ data class Review(
     val rating: Int,
     val reviewDate: String,
     val content: String,
-    val restaurantName: String
+    val restaurantName: String,
 )
 
 data class Restaurant(
@@ -50,10 +50,11 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnClickDetailList -> {
                 sendEffect({ HomeEffect.NavigateToDetailListScreen(event.detailListScreenType) })
             }
+
             is HomeEvent.BottomSheetStateChange -> {
                 updateState {
                     copy(
-                        bottomSheetState = event.bottomSheetState
+                        bottomSheetState = event.bottomSheetState,
                     )
                 }
             }

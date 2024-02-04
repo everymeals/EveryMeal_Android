@@ -3,6 +3,8 @@ package com.everymeal.everymeal_android.di
 import com.everymeal.data.service.auth.AuthApi
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.everymeal.data.service.restaurant.RestaurantApi
+import com.everymeal.data.service.review.StoreReviewApi
+import com.everymeal.data.service.search.SearchService
 import com.everymeal.everymeal_android.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -30,20 +32,20 @@ object NetworkModule {
     fun provideClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS)
-            .build()
+                .addInterceptor(interceptor)
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS)
+                .build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(json.asConverterFactory(contentType))
-            .client(client)
-            .build()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(json.asConverterFactory(contentType))
+                .client(client)
+                .build()
     }
 
     @Provides
@@ -62,5 +64,17 @@ object NetworkModule {
     @Singleton
     fun provideRestaurantApi(retrofit: Retrofit): RestaurantApi {
         return retrofit.create(RestaurantApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewApi(retrofit: Retrofit): StoreReviewApi {
+        return retrofit.create(StoreReviewApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchApi(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 }

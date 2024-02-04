@@ -1,6 +1,8 @@
 package com.everymeal.presentation.components
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -9,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.ui.theme.Gray300
@@ -23,6 +26,8 @@ fun EveryMealTextField(
     isError: Boolean = false,
     supportingText: (@Composable () -> Unit)? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
+    maxLines: Int = Int.MAX_VALUE,
+    onEnterPressed: (() -> Unit)? = null, // 'onSearch' 대신 'onEnterPressed' 사용
     otherCustomization: (@Composable () -> Unit)? = null
 ) {
     TextField(
@@ -42,6 +47,15 @@ fun EveryMealTextField(
                 )
             )
         },
+        maxLines = maxLines,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = if (onEnterPressed != null) ImeAction.Search else ImeAction.Default
+        ),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                onEnterPressed?.invoke()
+            }
+        ),
         shape = RoundedCornerShape(12.dp),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Gray300,
@@ -49,7 +63,7 @@ fun EveryMealTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
-        ),
+        )
     )
     otherCustomization?.invoke()
 }

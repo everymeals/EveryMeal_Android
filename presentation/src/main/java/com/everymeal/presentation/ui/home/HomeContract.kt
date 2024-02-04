@@ -1,6 +1,5 @@
 package com.everymeal.presentation.ui.home
 
-import com.everymeal.domain.model.restaurant.GetUnivRestaurantEntity
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
@@ -32,7 +31,7 @@ enum class DetailListScreenType {
     RECOMMEND,
     RESTAURANT,
     CAFE,
-    DRINK
+    DRINK,
 }
 
 fun String.DetailListScreenType(): DetailListScreenType {

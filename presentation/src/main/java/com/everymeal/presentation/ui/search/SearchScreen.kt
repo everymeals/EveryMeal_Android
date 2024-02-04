@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -25,30 +28,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
+import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.ui.search.history.SearchHistoryList
-import com.everymeal.presentation.ui.search.topbar.TopBar
+import com.everymeal.presentation.ui.search.topbar.SearchTopBar
 import com.everymeal.presentation.ui.theme.Gray800
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel()
+    navController: NavController,
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val viewState = viewModel.viewState.collectAsState()
+
     Scaffold(
         topBar = {
-            TopBar(
+            SearchTopBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 14.dp, end = 20.dp),
                 onBackClick = { },
-                setShowHistory = { viewModel.setEvent(SearchEvent.SetShowSearchHistory(it)) },
                 searchQuery = viewState.value.searchQuery,
                 changeQuery = { viewModel.setEvent(SearchEvent.SearchQueryChanged(it)) },
+                onSearchAction = { viewModel.setEvent(SearchEvent.SearchRestaurant) },
             )
         },
-        containerColor = Color.White
+        containerColor = Color.White,
     ) { innerPadding ->
-        SearchDetail(
-            modifier = Modifier.padding(innerPadding)
-        )
         if (viewState.value.searchIsShowHistory) {
             SearchHistoryList(
                 historyItems = viewState.value.searchHistoryItems,
@@ -62,36 +70,48 @@ fun SearchScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 20.dp),
             )
         } else {
-            EmptyView()
+            SearchDetail(
+                modifier = Modifier.padding(innerPadding),
+                searchResultList = viewState.value.searchResultList,
+            )
         }
     }
 }
 
 @Composable
 fun SearchDetail(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    searchResultList: List<RestaurantDataEntity>,
 ) {
-
+    LazyColumn(modifier = modifier) {
+        itemsIndexed(searchResultList) { index, restaurant ->
+            EveryMealRestaurantItem(
+                restaurant = restaurant,
+                onLoveClick = { },
+                onDetailClick = { },
+            )
+        }
+    }
 }
 
 @Composable
 fun EmptyView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_store),
                 contentDescription = null,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(40.dp),
             )
             Spacer(modifier = Modifier.heightIn(8.dp))
             Text(
@@ -99,8 +119,8 @@ fun EmptyView(
                 style = TextStyle(
                     color = Gray800,
                     fontWeight = FontWeight(500),
-                    fontSize = 15.sp
-                )
+                    fontSize = 15.sp,
+                ),
             )
         }
     }
@@ -109,7 +129,7 @@ fun EmptyView(
 private fun removeHistoryItem(
     viewState: State<SearchState>,
     removeItem: String,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
 ) {
     val historyItems = viewState.value.searchHistoryItems
     val removedHistoryItems = historyItems.filterNot { it == removeItem }
@@ -119,5 +139,7 @@ private fun removeHistoryItem(
 @Preview
 @Composable
 fun PreviewSearchScreen() {
-    SearchScreen()
+    SearchScreen(
+        navController = NavController(LocalContext.current),
+    )
 }

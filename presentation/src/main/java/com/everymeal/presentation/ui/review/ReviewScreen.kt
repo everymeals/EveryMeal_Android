@@ -43,19 +43,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealDialog
 import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
-import com.everymeal.presentation.ui.search.topbar.SearchBar
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey9
 import com.everymeal.presentation.ui.theme.Typography
 
-
 @Composable
 fun ReviewScreen(
-    viewModel: ReviewScreenViewModel = hiltViewModel()
+    viewModel: ReviewScreenViewModel = hiltViewModel(),
 ) {
     val pickMultipleMedia = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia(10)
+        ActivityResultContracts.PickMultipleVisualMedia(10),
     ) {
         viewModel.setEvent(ReviewEvent.OnImageSelected(it))
         Log.d("ReviewScreen", "ReviewScreen: $it")
@@ -66,12 +64,10 @@ fun ReviewScreen(
         topBar = {
             ReviewTopBar(
                 title = stringResource(R.string.review_write),
-                onBackClicked = {
-
-                },
+                onBackClicked = {},
             )
         },
-        containerColor = Color.White
+        containerColor = Color.White,
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column {
@@ -99,19 +95,29 @@ fun ReviewScreen(
                         viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
                     },
                     onReviewRegisterClicked = {
+                        viewModel.setEvent(
+                            ReviewEvent.PostReview(
+                                mealIdx = viewState.idx,
+                                reviewValue = viewState.reviewValue,
+                                imageUri = viewState.imageUri,
+                                restaurantType = viewState.restaurantType,
+                                restaurantName = viewState.restaurantName,
+                                starRatingCount = viewState.starRatingStateList.count { it.value },
+                            ),
+                        )
                         Toast.makeText(
                             context,
                             context.getString(R.string.register_review),
-                            Toast.LENGTH_SHORT
+                            Toast.LENGTH_SHORT,
                         ).show()
                     },
                     onAddPhotoClicked = {
                         pickMultipleMedia.launch(
                             PickVisualMediaRequest(
-                                ActivityResultContracts.PickVisualMedia.ImageOnly
-                            )
+                                ActivityResultContracts.PickVisualMedia.ImageOnly,
+                            ),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -127,7 +133,7 @@ fun ColumnScope.StarDetail(
     Column(
         modifier = modifier
             .align(Alignment.CenterHorizontally)
-            .padding(top = 133.dp)
+            .padding(top = 133.dp),
     ) {
         RestaurantType(
             viewState = viewState,
@@ -139,7 +145,7 @@ fun ColumnScope.StarDetail(
             modifier = Modifier
                 .padding(top = 50.dp),
             ratingStateList = viewState.starRatingStateList,
-            starRatingClicked = startRatingClicked
+            starRatingClicked = startRatingClicked,
         )
     }
 }
@@ -154,7 +160,7 @@ fun ColumnScope.RestaurantType(
             .align(Alignment.CenterHorizontally)
             .background(
                 color = Grey2,
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(4.dp),
             )
             .padding(horizontal = 6.dp, vertical = 3.dp),
         text = viewState.restaurantType,
@@ -170,7 +176,7 @@ fun ColumnScope.RestaurantType(
 @Composable
 fun RestaurantName(
     modifier: Modifier = Modifier,
-    viewState: ReviewState
+    viewState: ReviewState,
 ) {
     Text(
         modifier = modifier,
@@ -185,21 +191,6 @@ fun RestaurantName(
 }
 
 @Composable
-fun ReviewSearchBar(
-    modifier: Modifier = Modifier,
-    searchBarClicked: () -> Unit
-) {
-    SearchBar(
-        modifier = modifier.clickable {
-            searchBarClicked()
-        },
-        searchQuery = "",
-        changeQuery = {},
-        setShowHistory = {}
-    )
-}
-
-@Composable
 fun StarRating(
     modifier: Modifier = Modifier,
     ratingStateList: List<State<Boolean>>,
@@ -208,7 +199,7 @@ fun StarRating(
 ) {
     LazyRow(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         itemsIndexed(ratingStateList) { index, active ->
             Image(
@@ -220,29 +211,17 @@ fun StarRating(
                     },
                 painter = if (active.value) {
                     painterResource(
-                        id = R.drawable.icon_active_star_mono
+                        id = R.drawable.icon_active_star_mono,
                     )
                 } else {
                     painterResource(
-                        id = R.drawable.icon_unactive_star_mono
+                        id = R.drawable.icon_unactive_star_mono,
                     )
                 },
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
-}
-
-@Composable
-fun ReviewGuideHeader(
-    modifier: Modifier = Modifier
-) {
-    Text(
-        modifier = modifier
-            .padding(start = 24.dp, top = 48.dp),
-        text = stringResource(R.string.review_guide_header),
-        style = Typography.titleLarge,
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -250,14 +229,14 @@ fun ReviewGuideHeader(
 fun ReviewTopBar(
     modifier: Modifier = Modifier,
     title: String,
-    onBackClicked: () -> Unit
+    onBackClicked: () -> Unit,
 ) {
     TopAppBar(
         title = {
             Text(
                 text = title,
                 style = Typography.bodySmall,
-                color = Grey9
+                color = Grey9,
             )
         },
         actions = {
@@ -268,15 +247,15 @@ fun ReviewTopBar(
                     .padding(end = 4.dp)
                     .clickable(onClick = onBackClicked),
                 painter = painterResource(id = R.drawable.icon_x_mono),
-                contentDescription = null
+                contentDescription = null,
             )
-        }
+        },
     )
 }
 
 @Composable
 fun ReviewSaveDialog(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val showDialog = remember { mutableStateOf(true) }
     if (showDialog.value) {
@@ -292,7 +271,7 @@ fun ReviewSaveDialog(
             },
             onDisMissClicked = {
                 showDialog.value = false
-            }
+            },
         )
     }
 }

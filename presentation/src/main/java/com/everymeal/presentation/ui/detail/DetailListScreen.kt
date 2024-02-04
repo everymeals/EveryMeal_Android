@@ -1,10 +1,8 @@
 package com.everymeal.presentation.ui.detail
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -41,12 +38,10 @@ import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
-import com.everymeal.presentation.ui.signup.UnivSelectContract
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
 import com.everymeal.presentation.ui.theme.Main100
 import com.everymeal.presentation.ui.theme.SubMain100
-import com.everymeal.presentation.ui.theme.Typography
 
 @Composable
 fun DetailListScreen(
@@ -57,7 +52,8 @@ fun DetailListScreen(
 ) {
     val detailListViewState by detailListViewModel.viewState.collectAsState()
 
-    val pagingRestaurantList : LazyPagingItems<RestaurantDataEntity> = detailListViewModel.restaurantItems.collectAsLazyPagingItems()
+    val pagingRestaurantList: LazyPagingItems<RestaurantDataEntity> =
+        detailListViewModel.restaurantItems.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         detailListViewModel.setEvent(DetailContract.DetailEvent.InitDetailScreen)
@@ -77,59 +73,103 @@ fun DetailListScreen(
         EveryMealSortCategoryBottomSheetDialog(
             detailListViewState.detailSortCategoryType.title(),
             onClick = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickDetailListCategoryType(it.DetailSortCategoryType()))
-                detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(false))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.OnClickDetailListCategoryType(
+                        it.DetailSortCategoryType(),
+                    ),
+                )
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.SortBottomSheetStateChange(
+                        false,
+                    ),
+                )
             },
             onDismiss = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(false))
-            }
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.SortBottomSheetStateChange(
+                        false,
+                    ),
+                )
+            },
         )
     }
 
-    if(detailListViewState.mealRatingBottomSheetState) {
+    if (detailListViewState.mealRatingBottomSheetState) {
         EveryMealCategoryRatingBottomSheetDialog(
             title,
             detailListViewState.rating,
             detailListViewState.restaurantCategoryType.title(),
             onClick = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.MealRatingBottomSheetStateChange(
+                        false,
+                    ),
+                )
             },
             onDismiss = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(false))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.MealRatingBottomSheetStateChange(
+                        false,
+                    ),
+                )
             },
             onCategoryClick = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickRestaurantCategoryType(it.RestaurantCategoryType()))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.OnClickRestaurantCategoryType(
+                        it.RestaurantCategoryType(),
+                    ),
+                )
             },
             onRatingClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickRating(it))
-            }
+            },
         )
     }
 
-    if(detailListViewState.reportBottomSheetState) {
+    if (detailListViewState.reportBottomSheetState) {
         EveryMealReportBottomSheetDialog(
             onClick = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
-                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(true))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.ReportBottomSheetStateChange(
+                        false,
+                    ),
+                )
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.DetailReportBottomSheetStateChange(
+                        true,
+                    ),
+                )
             },
             onDismiss = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.ReportBottomSheetStateChange(false))
-            }
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.ReportBottomSheetStateChange(
+                        false,
+                    ),
+                )
+            },
         )
     }
 
-    if(detailListViewState.detailReportBottomSheetState) {
+    if (detailListViewState.detailReportBottomSheetState) {
         EveryMealDetailReportBottomSheetDialog(
             detailListViewState.reportCategoryType.title(),
             onClick = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.DetailReportBottomSheetStateChange(
+                        false,
+                    ),
+                )
             },
             onDismiss = {
-                detailListViewModel.setEvent(DetailContract.DetailEvent.DetailReportBottomSheetStateChange(false))
+                detailListViewModel.setEvent(
+                    DetailContract.DetailEvent.DetailReportBottomSheetStateChange(
+                        false,
+                    ),
+                )
             },
             onReportCategoryClick = {
                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnClickReportCategoryType(it.ReportCategoryType()))
-            }
+            },
         )
     }
 
@@ -138,33 +178,41 @@ fun DetailListScreen(
             SaveTopBar(title = title) {
                 navigateToPreviousScreen()
             }
-        }
+        },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         ) {
             item {
                 Spacer(modifier = Modifier.padding(8.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 20.dp)
+                        .padding(horizontal = 20.dp),
                 ) {
                     DetailScreenChip(
                         title = detailListViewState.detailSortCategoryType.title(),
                         onChipClicked = {
-                            detailListViewModel.setEvent(DetailContract.DetailEvent.SortBottomSheetStateChange(true))
-                        }
+                            detailListViewModel.setEvent(
+                                DetailContract.DetailEvent.SortBottomSheetStateChange(
+                                    true,
+                                ),
+                            )
+                        },
                     )
                     Spacer(modifier = Modifier.padding(4.dp))
                     DetailScreenChip(
                         title = "필터",
                         onChipClicked = {
-                            detailListViewModel.setEvent(DetailContract.DetailEvent.MealRatingBottomSheetStateChange(true))
+                            detailListViewModel.setEvent(
+                                DetailContract.DetailEvent.MealRatingBottomSheetStateChange(
+                                    true,
+                                ),
+                            )
                         },
-                        detailListViewState = detailListViewState
+                        detailListViewState = detailListViewState,
                     )
-                    if(detailListViewState.restaurantCategoryType.title().isNotEmpty()) {
+                    if (detailListViewState.restaurantCategoryType.title().isNotEmpty()) {
                         Spacer(modifier = Modifier.padding(4.dp))
                         DetailScreenChip(
                             title = detailListViewState.restaurantCategoryType.title(),
@@ -172,10 +220,10 @@ fun DetailListScreen(
                             onChipClicked = {
                                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnDeleteClickRestaurantCategoryType)
                             },
-                            detailListViewState = detailListViewState
+                            detailListViewState = detailListViewState,
                         )
                     }
-                    if(detailListViewState.rating != 0) {
+                    if (detailListViewState.rating != 0) {
                         Spacer(modifier = Modifier.padding(4.dp))
                         DetailScreenChip(
                             title = "${detailListViewState.rating}",
@@ -184,7 +232,7 @@ fun DetailListScreen(
                             onChipClicked = {
                                 detailListViewModel.setEvent(DetailContract.DetailEvent.OnDeleteClickRating)
                             },
-                            detailListViewState = detailListViewState
+                            detailListViewState = detailListViewState,
                         )
                     }
 //                    DetailScreenChip(
@@ -220,7 +268,7 @@ fun DetailScreenChip(
     isCategory: Boolean = true,
     isRating: Boolean = false,
     onChipClicked: () -> Unit,
-    detailListViewState: DetailContract.DetailState? = null
+    detailListViewState: DetailContract.DetailState? = null,
 ) {
     val isRatingOrCategory = detailListViewState?.let {
         it.rating != 0 || it.restaurantCategoryType.name != "NONE"
@@ -229,7 +277,7 @@ fun DetailScreenChip(
     Surface(
         modifier = Modifier.clickable(
             indication = null,
-            interactionSource = remember { MutableInteractionSource() }
+            interactionSource = remember { MutableInteractionSource() },
         ) { onChipClicked() },
         color = when {
             detailListViewState == null -> Grey2
@@ -239,16 +287,16 @@ fun DetailScreenChip(
         shape = RoundedCornerShape(100.dp),
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            if(isRating) {
+            if (isRating) {
                 Image(
                     modifier = Modifier
                         .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
                         .size(16.dp),
                     imageVector = ImageVector.vectorResource(id = R.drawable.icon_gray_star_mono),
                     contentDescription = "gray_star",
-                    colorFilter = ColorFilter.tint(Main100)
+                    colorFilter = ColorFilter.tint(Main100),
                 )
             }
             Text(
@@ -259,10 +307,15 @@ fun DetailScreenChip(
                     else -> Grey7
                 },
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = if(!isRating) 12.dp else 4.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
-                fontWeight = FontWeight.SemiBold
+                modifier = Modifier.padding(
+                    start = if (!isRating) 12.dp else 4.dp,
+                    end = 4.dp,
+                    top = 6.dp,
+                    bottom = 6.dp,
+                ),
+                fontWeight = FontWeight.SemiBold,
             )
-            if(isCategory) {
+            if (isCategory) {
                 Image(
                     modifier = Modifier
                         .padding(end = 12.dp)
@@ -273,7 +326,7 @@ fun DetailScreenChip(
                         detailListViewState == null -> ColorFilter.tint(Grey7)
                         isRatingOrCategory -> ColorFilter.tint(Main100)
                         else -> ColorFilter.tint(Grey7)
-                    }
+                    },
                 )
             } else {
                 Image(
@@ -281,7 +334,7 @@ fun DetailScreenChip(
                         .padding(end = 12.dp)
                         .size(12.dp),
                     imageVector = ImageVector.vectorResource(id = R.drawable.icon_x_mono_12),
-                    contentDescription = "close"
+                    contentDescription = "close",
                 )
             }
         }
@@ -308,7 +361,6 @@ fun PreviewDetailScreenChip() {
         title = "최신순",
         isCategory = true,
         onChipClicked = {
-
-        }
+        },
     )
 }

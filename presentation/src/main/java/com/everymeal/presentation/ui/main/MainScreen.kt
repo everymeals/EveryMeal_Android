@@ -22,6 +22,8 @@ import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
 import com.everymeal.presentation.ui.mypage.WithDrawScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
+import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
+import com.everymeal.presentation.ui.search.SearchScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
@@ -47,10 +49,10 @@ fun MainScreen(
                             navController = navController,
                             navigationItem = navigationItem,
                         )
-                    }
+                    },
                 )
             }
-        }
+        },
     ) { padding ->
         NavHost(
             modifier = Modifier.padding(padding),
@@ -64,7 +66,10 @@ fun MainScreen(
                     },
                     onDetailRestaurantClick = { detailRestaurantIdx ->
                         navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
-                    }
+                    },
+                    onReviewBottomSheetClick = {
+                        navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+                    },
                 )
             }
             composable(route = EveryMealRoute.UNIV_FOOD.route) {
@@ -102,11 +107,17 @@ fun MainScreen(
                 SchoolAuthScreen(
                     onSuccessEmailVerification = {
                         navController.popBackStack()
-                    }
+                    },
                 )
+            }
+            composable(route = EveryMealRoute.REVIEW_SEARCH.route) {
+                ReviewSearchScreen(navController = navController)
             }
             composable(route = EveryMealRoute.WITH_DRAW.route) {
                 WithDrawScreen()
+            }
+            composable(route = EveryMealRoute.SEARCH.route) {
+                SearchScreen(navController = navController)
             }
         }
     }

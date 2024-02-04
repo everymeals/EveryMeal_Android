@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.Gray500
+import com.everymeal.presentation.ui.theme.Gray900
 
 @Composable
 fun SearchHistoryList(
@@ -30,9 +30,8 @@ fun SearchHistoryList(
     isVisible: Boolean,
     onHistoryItemClicked: (String) -> Unit,
     removeHistoryItem: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     if (isVisible) {
         Column(modifier = modifier) {
             Text(
@@ -44,21 +43,26 @@ fun SearchHistoryList(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 30.dp, bottom = 10.dp)
+                    .padding(top = 30.dp, bottom = 10.dp),
             )
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 items(historyItems) { item ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .padding(vertical = 16.dp)
+                            .clickable { onHistoryItemClicked(item) },
+                        horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
                             text = item,
-                            modifier = Modifier.clickable { onHistoryItemClicked(item) }
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight(400),
+                                color = Gray900
+                            )
                         )
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -67,7 +71,7 @@ fun SearchHistoryList(
                                 .size(24.dp)
                                 .clickable {
                                     removeHistoryItem(item)
-                                }
+                                },
                         )
                     }
                 }

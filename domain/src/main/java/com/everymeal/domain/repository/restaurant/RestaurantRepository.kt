@@ -12,16 +12,16 @@ interface RestaurantRepository {
         order: String,
         group: String? = null,
         grade: String? = null,
-    ) : Flow<PagingData<RestaurantDataEntity>>
+    ): Flow<PagingData<RestaurantDataEntity>>
 
     suspend fun getRestaurantDetail(
         index: Int
-    ) : Result<RestaurantDataEntity>
+    ): Result<RestaurantDataEntity>
 
     suspend fun getHomeRestaurant(
         campusIdx: Int,
         order: String,
         group: String? = null,
         grade: String? = null,
-    ) : Result<GetUnivRestaurantEntity>
+    ): Result<GetUnivRestaurantEntity>
 }

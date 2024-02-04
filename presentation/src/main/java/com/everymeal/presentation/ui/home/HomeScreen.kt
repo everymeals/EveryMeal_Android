@@ -39,7 +39,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealLineButton
@@ -57,9 +56,10 @@ import com.everymeal.presentation.ui.theme.Paddings
 
 @Composable
 fun HomeScreen(
-    homeViewModel : HomeViewModel = hiltViewModel(),
-    onDetailScreenClickType : (String) -> Unit,
-    onDetailRestaurantClick : (String) -> Unit,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    onDetailScreenClickType: (String) -> Unit,
+    onDetailRestaurantClick: (String) -> Unit,
+    onReviewBottomSheetClick: () -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -72,6 +72,7 @@ fun HomeScreen(
                 is HomeContract.HomeEffect.NavigateToDetailListScreen -> {
                     onDetailScreenClickType(effect.detailListScreenType.title())
                 }
+
                 is HomeContract.HomeEffect.NavigateToDetailRestaurant -> {
                     onDetailRestaurantClick(effect.restaurantId.toString())
                 }
@@ -115,7 +116,8 @@ fun HomeScreen(
             title = stringResource(id = R.string.univ_admin_review_title),
             content = stringResource(id = R.string.univ_admin_review_content),
             onClick = {
-
+                onReviewBottomSheetClick()
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
             },
             onDismiss = {
                 homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
@@ -123,10 +125,11 @@ fun HomeScreen(
         )
     }
 
-    when(homeViewState.uiState) {
+    when (homeViewState.uiState) {
         LoadState.LOADING -> {
             EveryMealLoadingDialog()
         }
+
         LoadState.SUCCESS -> {
             Column(
                 modifier = Modifier
@@ -140,7 +143,11 @@ fun HomeScreen(
                 ) {
                     item {
                         HomeMainTopLayout {
-                            homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
+                            homeViewModel.setEvent(
+                                HomeContract.HomeEvent.BottomSheetStateChange(
+                                    true
+                                )
+                            )
                         }
                         HomeCategoryList {
                             homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
@@ -161,7 +168,11 @@ fun HomeScreen(
 
                             },
                             onDetailClick = {
-                                homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailRestaurant(it))
+                                homeViewModel.setEvent(
+                                    HomeContract.HomeEvent.OnClickDetailRestaurant(
+                                        it
+                                    )
+                                )
                             }
                         )
                         Spacer(modifier = Modifier.padding(10.dp))
@@ -217,6 +228,7 @@ fun HomeScreen(
                 }
             }
         }
+
         LoadState.ERROR -> {
 
         }
@@ -237,7 +249,6 @@ fun HomeTopAppBar() {
         actions = {
             IconButton(
                 onClick = {
-
                 },
             ) {
                 Icon(
@@ -247,7 +258,6 @@ fun HomeTopAppBar() {
             }
             IconButton(
                 onClick = {
-
                 },
             ) {
                 Icon(
@@ -273,7 +283,7 @@ fun HomeMainTopLayout(
             .background(Gray300, RoundedCornerShape(12.dp))
             .clickable(
                 indication = null,
-                interactionSource = remember { MutableInteractionSource() }
+                interactionSource = remember { MutableInteractionSource() },
             ) {
                 onClick()
             }
@@ -291,29 +301,29 @@ fun HomeMainTopLayout(
                 text = stringResource(id = R.string.home_top_category_title, "슈니"),
                 fontSize = 15.sp,
                 style = EveryMealTypo.displaySmall,
-                color = Gray800
+                color = Gray800,
             )
             Text(
                 text = stringResource(R.string.home_top_category_sub_title),
                 style = EveryMealTypo.labelSmall,
                 fontSize = 14.sp,
-                color = Gray500
+                color = Gray500,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.icon_arrow_right),
             contentDescription = stringResource(R.string.icon_arrow_right),
-            tint = Gray500
+            tint = Gray500,
         )
     }
 }
 
 @Composable
 fun HomeCategoryList(
-    isBottomSheet : Boolean = false,
+    isBottomSheet: Boolean = false,
     restaurantCategoryType: String = "",
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
 ) {
     val horizotalDp = if (isBottomSheet) 0.dp else 20.dp
 
@@ -321,13 +331,13 @@ fun HomeCategoryList(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = horizotalDp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         CategoryItem(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_recommend,
-            R.string.home_top_category_recommend
+            R.string.home_top_category_recommend,
         ) {
             onClick("추천")
         }
@@ -335,7 +345,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_bap,
-            R.string.home_top_category_rice
+            R.string.home_top_category_rice,
         ) {
             onClick("밥집")
         }
@@ -343,7 +353,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_cake,
-            R.string.home_top_category_cafe
+            R.string.home_top_category_cafe,
         ) {
             onClick("카페")
         }
@@ -351,7 +361,7 @@ fun HomeCategoryList(
             isBottomSheet,
             restaurantCategoryType,
             R.drawable.ic_homemenu_beer,
-            R.string.home_top_category_drink
+            R.string.home_top_category_drink,
         ) {
             onClick("술집")
         }
@@ -364,7 +374,7 @@ fun HomeDivider() {
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Gray100)
-            .height(12.dp)
+            .height(12.dp),
     )
 }
 
@@ -399,7 +409,7 @@ fun CategoryItem(
                         restaurantCategoryType == stringResource(categoryText) -> Gray100
                         else -> Color.White
                     },
-                    RoundedCornerShape(12.dp)
+                    RoundedCornerShape(12.dp),
                 )
                 .padding(horizontal = 17.dp, vertical = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -411,7 +421,7 @@ fun CategoryItem(
             Text(
                 text = stringResource(categoryText),
                 fontSize = 12.sp,
-                color = Color.Black
+                color = Color.Black,
             )
         }
     }
@@ -424,6 +434,7 @@ fun HomeScreenPreview() {
         HomeScreen(
             onDetailScreenClickType = {},
             onDetailRestaurantClick = {},
+            onReviewBottomSheetClick = {},
         )
     }
 }

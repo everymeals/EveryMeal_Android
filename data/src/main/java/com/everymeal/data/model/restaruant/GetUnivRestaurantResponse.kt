@@ -16,7 +16,7 @@ data class GetUnivRestaurantResponse(
     val sort: Sort,
     val numberOfElements: Int,
     val first: Boolean,
-    val empty: Boolean
+    val empty: Boolean,
 )
 
 @Serializable
@@ -31,7 +31,7 @@ data class RestaurantResponse(
     val reviewCount: Int,
     val recommendedCount: Int,
     val images: List<String>?,
-    val isLiked: Boolean
+    val isLiked: Boolean,
 )
 
 @Serializable
@@ -41,17 +41,17 @@ data class Pageable(
     val pageNumber: Int,
     val pageSize: Int,
     val paged: Boolean,
-    val unpaged: Boolean
+    val unpaged: Boolean,
 )
 
 @Serializable
 data class Sort(
     val empty: Boolean,
     val sorted: Boolean,
-    val unsorted: Boolean
+    val unsorted: Boolean,
 )
 
-fun RestaurantResponse.toEntity(): RestaurantDataEntity {
+fun RestaurantResponse.toRestaurant(): RestaurantDataEntity {
     return RestaurantDataEntity(
         idx = this.idx,
         name = this.name,
@@ -63,12 +63,13 @@ fun RestaurantResponse.toEntity(): RestaurantDataEntity {
         reviewCount = this.reviewCount,
         recommendedCount = this.recommendedCount,
         images = this.images,
-        isLiked = this.isLiked
+        isLiked = this.isLiked,
     )
 }
 
-fun GetUnivRestaurantResponse.toEntity(): GetUnivRestaurantEntity {
+
+fun GetUnivRestaurantResponse.toGetUnivRestaurantEntity(): GetUnivRestaurantEntity {
     return GetUnivRestaurantEntity(
-        data = this.content.map { it.toEntity() }
+        data = this.content.map { it.toRestaurant() }
     )
 }

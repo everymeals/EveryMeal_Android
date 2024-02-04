@@ -1,9 +1,9 @@
 package com.everymeal.presentation.ui.search
 
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
 import com.everymeal.presentation.base.ViewState
-
 
 /*
 대학교 불러오기 LoadState
@@ -13,24 +13,19 @@ data class SearchState(
     val searchQuery: String = "",
     val searchIsShowHistory: Boolean = true,
     val searchHistoryItems: List<String> = listOf(),
+    val searchResultList: List<RestaurantDataEntity> = listOf(),
 ) : ViewState
 
-
 sealed class SearchEvent : ViewEvent {
-    data class SetShowSearchHistory(
-        val show: Boolean
-    ) : SearchEvent()
-
     data class SearchQueryChanged(
-        val query: String
+        val query: String,
     ) : SearchEvent()
 
     data class UpdateSearchHistory(
-        val historyItems: List<String>
+        val historyItems: List<String>,
     ) : SearchEvent()
 
+    object SearchRestaurant : SearchEvent()
 }
 
-sealed class SearchEffect : ViewSideEffect {
-
-}
+sealed class SearchEffect : ViewSideEffect

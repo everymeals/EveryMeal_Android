@@ -9,7 +9,7 @@ class GetDetailRestaurantUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         restaurantIdx: Int,
-    ) : Result<RestaurantDataEntity> {
+    ): Result<RestaurantDataEntity> {
         return restaurantRepository.getRestaurantDetail(restaurantIdx)
     }
 }
