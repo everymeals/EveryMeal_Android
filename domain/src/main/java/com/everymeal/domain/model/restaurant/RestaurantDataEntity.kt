@@ -1,6 +1,6 @@
 package com.everymeal.domain.model.restaurant
 
-data class Restaurant(
+data class RestaurantDataEntity(
     val idx: Int,
     val name: String,
     val address: String,

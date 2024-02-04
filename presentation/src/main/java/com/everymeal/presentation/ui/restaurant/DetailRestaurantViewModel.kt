@@ -1,7 +1,7 @@
 package com.everymeal.presentation.ui.restaurant
 
 import androidx.lifecycle.viewModelScope
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.domain.usecase.restaurant.GetDetailRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.LoadState
@@ -56,7 +56,7 @@ class DetailRestaurantViewModel @Inject constructor(
     private fun reflectUpdateState(
         selectedTabIndex: Int = viewState.value.selectedTabIndex,
         isFabClicked: Boolean = viewState.value.isFabClicked,
-        restaurantInfo: Restaurant = viewState.value.restaurantInfo,
+        restaurantInfo: RestaurantDataEntity = viewState.value.restaurantInfo,
         getDetailRestaurantState: LoadState = viewState.value.getDetailRestaurantState,
         networkErrorDialog: Boolean = viewState.value.networkErrorDialog
     ) {

@@ -1,6 +1,6 @@
 package com.everymeal.presentation.ui.restaurant
 
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
@@ -12,7 +12,7 @@ data class DetailRestaurantState(
     val selectedTabIndex: Int = 0,
     val isFabClicked: Boolean = false,
     val getDetailRestaurantState: LoadState = LoadState.LOADING,
-    val restaurantInfo: Restaurant = Restaurant(
+    val restaurantInfo: RestaurantDataEntity = RestaurantDataEntity(
         idx = 0,
         name = "",
         address = "",

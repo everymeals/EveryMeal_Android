@@ -1,6 +1,6 @@
 package com.everymeal.presentation.ui.search
 
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
 import com.everymeal.presentation.base.ViewState
@@ -13,7 +13,7 @@ data class SearchState(
     val searchQuery: String = "",
     val searchIsShowHistory: Boolean = true,
     val searchHistoryItems: List<String> = listOf(),
-    val searchResultList: List<Restaurant> = listOf(),
+    val searchResultList: List<RestaurantDataEntity> = listOf(),
 ) : ViewState
 
 sealed class SearchEvent : ViewEvent {

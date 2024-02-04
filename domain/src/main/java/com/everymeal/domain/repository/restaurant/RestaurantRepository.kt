@@ -2,7 +2,7 @@ package com.everymeal.domain.repository.restaurant
 
 import androidx.paging.PagingData
 import com.everymeal.domain.model.restaurant.GetUnivRestaurantEntity
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import kotlinx.coroutines.flow.Flow
 
 interface RestaurantRepository {
@@ -12,11 +12,11 @@ interface RestaurantRepository {
         order: String,
         group: String? = null,
         grade: String? = null,
-    ): Flow<PagingData<Restaurant>>
+    ): Flow<PagingData<RestaurantDataEntity>>
 
     suspend fun getRestaurantDetail(
         index: Int
-    ): Result<Restaurant>
+    ): Result<RestaurantDataEntity>
 
     suspend fun getHomeRestaurant(
         campusIdx: Int,

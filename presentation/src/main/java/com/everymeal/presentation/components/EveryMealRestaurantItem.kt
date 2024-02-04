@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray300
@@ -41,7 +40,7 @@ import com.everymeal.presentation.ui.theme.Gray700
 
 @Composable
 fun EveryMealRestaurantItem(
-    restaurant: Restaurant,
+    restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit = {},
     onDetailClick: (Int) -> Unit = {},
 ) {
@@ -69,7 +68,7 @@ fun EveryMealRestaurantItem(
 @Composable
 fun RestaurantTitle(
     modifier: Modifier = Modifier,
-    restaurant: Restaurant,
+    restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit,
 ) {
     Row(
@@ -101,7 +100,7 @@ fun RestaurantTitle(
 
 @Composable
 fun RestaurantLoveCount(
-    restaurant: Restaurant,
+    restaurant: RestaurantDataEntity,
     onLoveClick: () -> Unit,
 ) {
     Column(
@@ -128,7 +127,7 @@ fun RestaurantLoveCount(
 }
 
 @Composable
-fun RestaurantRating(restaurant: Restaurant) {
+fun RestaurantRating(restaurant: RestaurantDataEntity) {
     Row(
         modifier = Modifier
             .width(100.dp),
@@ -157,7 +156,7 @@ fun RestaurantRating(restaurant: Restaurant) {
 }
 
 @Composable
-fun RestaurantImage(restaurant: Restaurant) {
+fun RestaurantImage(restaurant: RestaurantDataEntity) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(6.dp)

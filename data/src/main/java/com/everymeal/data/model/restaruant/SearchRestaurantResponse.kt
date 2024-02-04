@@ -1,6 +1,6 @@
 package com.everymeal.data.model.restaruant
 
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -103,10 +103,10 @@ data class SearchRestaurantResponse(
 }
 
 
-fun SearchRestaurantResponse.toRestaurants(): List<Restaurant> {
+fun SearchRestaurantResponse.toRestaurants(): List<RestaurantDataEntity> {
     return this.data?.content?.mapNotNull { content ->
         content?.let {
-            Restaurant(
+            RestaurantDataEntity(
                 idx = it.idx ?: 0,
                 name = it.name.orEmpty(),
                 address = it.address.orEmpty(),

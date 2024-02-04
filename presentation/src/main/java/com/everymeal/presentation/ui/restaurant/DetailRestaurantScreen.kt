@@ -41,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,9 +48,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealDialog
@@ -252,7 +250,7 @@ fun DetailRestaurantScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantImage(
-    restaurantInfo : Restaurant
+    restaurantInfo : RestaurantDataEntity
 ) {
     val images = restaurantInfo.images ?: listOf()
 
@@ -296,7 +294,7 @@ fun DetailRestaurantImage(
 
 @Composable
 fun DetailRestaurantMainInfo(
-    restaurantInfo: Restaurant
+    restaurantInfo: RestaurantDataEntity
 ) {
     Column(
         modifier = Modifier
@@ -409,7 +407,7 @@ fun DetailRestaurantMainInfo(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantTabLayout(
-    restaurantInfo: Restaurant,
+    restaurantInfo: RestaurantDataEntity,
     viewModel: DetailRestaurantViewModel
 ) {
     val viewState by viewModel.viewState.collectAsState()
@@ -476,7 +474,7 @@ fun DetailRestaurantTabLayout(
 
 @Composable
 fun DetailRestaurantTabInfo(
-    restaurantInfo: Restaurant,
+    restaurantInfo: RestaurantDataEntity,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -538,7 +536,7 @@ fun DetailRestaurantTabInfo(
 
 @Composable
 fun DetailRestaurantTabImage(
-    restaurantInfo : Restaurant
+    restaurantInfo : RestaurantDataEntity
 ) {
     Column {
         restaurantInfo.images?.let { images ->

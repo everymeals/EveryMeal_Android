@@ -1,7 +1,7 @@
 package com.everymeal.domain.usecase.restaurant
 
 import androidx.paging.PagingData
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.domain.repository.restaurant.RestaurantRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class GetUnivRestaurantUseCase @Inject constructor(
         order: String,
         group: String?,
         grade: String?
-    ) : Flow<PagingData<Restaurant>> {
+    ) : Flow<PagingData<RestaurantDataEntity>> {
         return restaurantRepository.getUnivRestaurant(campusIdx, order, group, grade)
     }
 }

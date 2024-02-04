@@ -1,6 +1,6 @@
 package com.everymeal.presentation.ui.home
 
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
@@ -11,7 +11,7 @@ class HomeContract {
         val uiState: LoadState = LoadState.LOADING,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
         val bottomSheetState: Boolean = false,
-        val restaurantData: List<Restaurant> = emptyList()
+        val restaurantData: List<RestaurantDataEntity> = emptyList()
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {

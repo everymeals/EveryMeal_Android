@@ -3,14 +3,13 @@ package com.everymeal.presentation.ui.detail
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.domain.usecase.local.GetUniversityIndexUseCase
 import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEvent
 import com.everymeal.presentation.ui.detail.DetailContract.DetailState
 import com.everymeal.presentation.ui.detail.DetailContract.DetailEffect
-import com.everymeal.presentation.ui.signup.UnivSelectContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,8 +25,8 @@ class DetailListViewModel @Inject constructor(
 ): BaseViewModel<DetailState, DetailEffect, DetailEvent>(
     DetailState()
 ) {
-    private val _restaurantItems : MutableStateFlow<PagingData<Restaurant>> = MutableStateFlow(value = PagingData.empty())
-    val restaurantItems : StateFlow<PagingData<Restaurant>> = _restaurantItems.asStateFlow()
+    private val _restaurantItems : MutableStateFlow<PagingData<RestaurantDataEntity>> = MutableStateFlow(value = PagingData.empty())
+    val restaurantItems : StateFlow<PagingData<RestaurantDataEntity>> = _restaurantItems.asStateFlow()
 
     override fun handleEvents(event: DetailEvent) {
         when (event) {

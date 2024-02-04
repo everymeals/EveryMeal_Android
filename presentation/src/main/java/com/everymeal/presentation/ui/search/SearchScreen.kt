@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.everymeal.domain.model.restaurant.Restaurant
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.ui.search.history.SearchHistoryList
@@ -84,7 +84,7 @@ fun SearchScreen(
 @Composable
 fun SearchDetail(
     modifier: Modifier = Modifier,
-    searchResultList: List<Restaurant>,
+    searchResultList: List<RestaurantDataEntity>,
 ) {
     LazyColumn(modifier = modifier) {
         itemsIndexed(searchResultList) { index, restaurant ->
