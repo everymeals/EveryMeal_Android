@@ -1,6 +1,6 @@
 package com.everymeal.domain.usecase.restaurant
 
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.domain.repository.restaurant.RestaurantRepository
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ class GetDetailRestaurantUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         restaurantIdx: Int,
-    ) : Result<RestaurantDataEntity> {
+    ): Result<Restaurant> {
         return restaurantRepository.getRestaurantDetail(restaurantIdx)
     }
 }

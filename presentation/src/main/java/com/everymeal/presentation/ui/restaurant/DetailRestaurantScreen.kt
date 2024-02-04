@@ -49,13 +49,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealDialog
 import com.everymeal.presentation.components.EveryMealLoadingDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
-import com.everymeal.presentation.ui.signup.UnivSelectContract
 import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
@@ -79,13 +78,18 @@ fun DetailRestaurantScreen(
     val restaurantInfo = viewState.restaurantInfo
 
     LaunchedEffect(Unit) {
-        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.InitDetailRestaurantScreen(restaurantId))
+        detailRestaurantViewModel.setEvent(
+            DetailRestaurantEvent.InitDetailRestaurantScreen(
+                restaurantId
+            )
+        )
     }
 
-    when(viewState.getDetailRestaurantState) {
+    when (viewState.getDetailRestaurantState) {
         LoadState.LOADING -> {
             EveryMealLoadingDialog()
         }
+
         LoadState.SUCCESS -> {
             Scaffold(
                 topBar = {
@@ -109,12 +113,12 @@ fun DetailRestaurantScreen(
                     ) {
                         Image(
                             imageVector =
-                            if(viewState.isFabClicked)
+                            if (viewState.isFabClicked)
                                 ImageVector.vectorResource(R.drawable.icon_x_mono)
                             else
                                 ImageVector.vectorResource(R.drawable.icon_pencil_mono),
                             contentDescription = "floating",
-                            colorFilter = ColorFilter.tint(if(viewState.isFabClicked) Gray800 else Color.White),
+                            colorFilter = ColorFilter.tint(if (viewState.isFabClicked) Gray800 else Color.White),
                         )
                     }
                 },
@@ -124,7 +128,7 @@ fun DetailRestaurantScreen(
                     modifier = Modifier.padding(innerPadding),
                 ) {
                     // Todo Test 필요
-                    if(!restaurantInfo.images.isNullOrEmpty()) {
+                    if (!restaurantInfo.images.isNullOrEmpty()) {
                         item {
                             DetailRestaurantImage()
                         }
@@ -153,7 +157,7 @@ fun DetailRestaurantScreen(
                                     )
                                 )
                             },
-                        contentAlignment=Alignment.BottomEnd
+                        contentAlignment = Alignment.BottomEnd
                     ) {
                         Row(
                             modifier = Modifier
@@ -197,8 +201,9 @@ fun DetailRestaurantScreen(
                 }
             }
         }
+
         LoadState.ERROR -> {
-            if(viewState.networkErrorDialog) {
+            if (viewState.networkErrorDialog) {
                 EveryMealDialog(
                     modifier = Modifier.fillMaxWidth(),
                     title = stringResource(R.string.error_dialog_title),
@@ -207,12 +212,28 @@ fun DetailRestaurantScreen(
                     dismissButtonText = stringResource(R.string.cancel),
                     onDismissRequest = { },
                     onConfirmClick = {
-                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(false))
-                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.InitDetailRestaurantScreen(restaurantId))
-                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(true))
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.NetworkErrorDialogClicked(
+                                false
+                            )
+                        )
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.InitDetailRestaurantScreen(
+                                restaurantId
+                            )
+                        )
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.NetworkErrorDialogClicked(
+                                true
+                            )
+                        )
                     },
                     onDisMissClicked = {
-                        detailRestaurantViewModel.setEvent(DetailRestaurantEvent.NetworkErrorDialogClicked(false))
+                        detailRestaurantViewModel.setEvent(
+                            DetailRestaurantEvent.NetworkErrorDialogClicked(
+                                false
+                            )
+                        )
                         onNetWorkErrorCancelClick()
                     }
                 )
@@ -253,7 +274,7 @@ fun DetailRestaurantImage(
 
 @Composable
 fun DetailRestaurantMainInfo(
-    restaurantInfo : RestaurantDataEntity
+    restaurantInfo: Restaurant
 ) {
     Column(
         modifier = Modifier
@@ -365,8 +386,8 @@ fun DetailRestaurantMainInfo(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantTabLayout(
-    restaurantInfo : RestaurantDataEntity,
-    viewModel : DetailRestaurantViewModel
+    restaurantInfo: Restaurant,
+    viewModel: DetailRestaurantViewModel
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
@@ -397,10 +418,12 @@ fun DetailRestaurantTabLayout(
     ) {
         pages.forEachIndexed { index, title ->
             Tab(
-                text = { Text(
-                    text = title,
-                    style = EveryMealTypo.labelSmall,
-                ) },
+                text = {
+                    Text(
+                        text = title,
+                        style = EveryMealTypo.labelSmall,
+                    )
+                },
                 selected = viewState.selectedTabIndex == index,
                 onClick = {
                     coroutineScope.launch {
@@ -419,6 +442,7 @@ fun DetailRestaurantTabLayout(
                 restaurantInfo = restaurantInfo,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
+
             1 -> DetailRestaurantTabImage()
             2 -> DetailRestaurantReview()
         }
@@ -427,7 +451,7 @@ fun DetailRestaurantTabLayout(
 
 @Composable
 fun DetailRestaurantTabInfo(
-    restaurantInfo : RestaurantDataEntity,
+    restaurantInfo: Restaurant,
     modifier: Modifier = Modifier,
 ) {
     Column(

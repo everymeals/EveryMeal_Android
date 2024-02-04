@@ -1,11 +1,10 @@
 package com.everymeal.presentation.ui.restaurant
 
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
 import com.everymeal.presentation.base.ViewState
-import com.everymeal.presentation.ui.signup.UnivSelectContract
 
 
 data class DetailRestaurantState(
@@ -13,7 +12,7 @@ data class DetailRestaurantState(
     val selectedTabIndex: Int = 0,
     val isFabClicked: Boolean = false,
     val getDetailRestaurantState: LoadState = LoadState.LOADING,
-    val restaurantInfo: RestaurantDataEntity = RestaurantDataEntity(
+    val restaurantInfo: Restaurant = Restaurant(
         idx = 0,
         name = "",
         address = "",
