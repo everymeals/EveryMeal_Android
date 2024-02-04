@@ -20,8 +20,9 @@ import com.everymeal.presentation.components.EveryMealTextField
 fun SearchTopBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
-    changeQuery: (String) -> Unit,
-    onBackClick: () -> Unit,
+    changeQuery: (String) -> Unit = {},
+    onBackClick: () -> Unit = {},
+    onSearchAction: () -> Unit = {}
 ) {
     Row(
         modifier = modifier,
@@ -38,6 +39,7 @@ fun SearchTopBar(
         SearchBar(
             searchQuery = searchQuery,
             changeQuery = changeQuery,
+            onSearchAction = onSearchAction
         )
     }
 }
@@ -47,6 +49,7 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     changeQuery: (String) -> Unit,
+    onSearchAction: () -> Unit = {},
 ) {
     Box(modifier = modifier) {
         EveryMealTextField(
@@ -62,6 +65,8 @@ fun SearchBar(
                     contentDescription = null,
                 )
             },
+            maxLines = 1,
+            onEnterPressed = onSearchAction,
         )
     }
 }

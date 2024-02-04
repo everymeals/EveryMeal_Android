@@ -52,6 +52,7 @@ fun SearchScreen(
                 onBackClick = { },
                 searchQuery = viewState.value.searchQuery,
                 changeQuery = { viewModel.setEvent(SearchEvent.SearchQueryChanged(it)) },
+                onSearchAction = { viewModel.setEvent(SearchEvent.SearchRestaurant) },
             )
         },
         containerColor = Color.White,
