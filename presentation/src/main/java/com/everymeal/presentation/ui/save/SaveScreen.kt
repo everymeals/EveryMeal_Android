@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.save.chip.ChipStyle
 import com.everymeal.presentation.ui.save.chip.Chips
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey7
@@ -86,10 +87,7 @@ fun SaveTopBar(
         title = {
             Text(
                 text = title,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                style = EveryMealTypography.Subtitle2
             )
         },
         navigationIcon = {

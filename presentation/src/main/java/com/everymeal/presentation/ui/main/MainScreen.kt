@@ -114,7 +114,11 @@ fun MainScreen(
                 ReviewSearchScreen(navController = navController)
             }
             composable(route = EveryMealRoute.WITH_DRAW.route) {
-                WithDrawScreen()
+                WithDrawScreen(
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(route = EveryMealRoute.SEARCH.route) {
                 SearchScreen(navController = navController)
