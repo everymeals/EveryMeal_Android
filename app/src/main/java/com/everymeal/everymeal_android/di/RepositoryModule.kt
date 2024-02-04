@@ -15,11 +15,13 @@ import com.everymeal.data.repository.local.LocalRepositoryImpl
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.data.repository.restaurant.RestaurantRepositoryImpl
 import com.everymeal.data.repository.review.DefaultReviewRepository
+import com.everymeal.data.repository.search.DefaultSearchRepository
 import com.everymeal.domain.repository.auth.AuthRepository
 import com.everymeal.domain.repository.local.LocalRepository
 import com.everymeal.domain.repository.onboarding.OnboardingRepository
 import com.everymeal.domain.repository.restaurant.RestaurantRepository
 import com.everymeal.domain.repository.review.ReviewRepository
+import com.everymeal.domain.repository.search.SearchRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -89,4 +91,10 @@ abstract class RepositoryModule {
     abstract fun bindReviewRepository(
         defaultReviewRepository: DefaultReviewRepository,
     ): ReviewRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindSearchRepository(
+        defaultSearchRepository: DefaultSearchRepository,
+    ): SearchRepository
 }
