@@ -50,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.domain.model.restaurant.Restaurant
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealDialog
@@ -71,7 +73,8 @@ import kotlinx.coroutines.launch
 fun DetailRestaurantScreen(
     restaurantId: Int,
     detailRestaurantViewModel: DetailRestaurantViewModel = hiltViewModel(),
-    onNetWorkErrorCancelClick: () -> Unit = {}
+    onNetWorkErrorCancelClick: () -> Unit = {},
+    backButtonClick: () -> Unit = {},
 ) {
     val viewState by detailRestaurantViewModel.viewState.collectAsState()
 
@@ -93,7 +96,9 @@ fun DetailRestaurantScreen(
         LoadState.SUCCESS -> {
             Scaffold(
                 topBar = {
-                    SaveTopBar(title = "")
+                    SaveTopBar(title = "") {
+                        backButtonClick()
+                    }
                 },
                 floatingActionButton = {
                     Row(
@@ -130,7 +135,9 @@ fun DetailRestaurantScreen(
                     // Todo Test 필요
                     if (!restaurantInfo.images.isNullOrEmpty()) {
                         item {
-                            DetailRestaurantImage()
+                            DetailRestaurantImage(
+                                restaurantInfo = restaurantInfo
+                            )
                         }
                     }
                     item {
@@ -242,32 +249,47 @@ fun DetailRestaurantScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailRestaurantImage(
-
+    restaurantInfo : RestaurantDataEntity
 ) {
+    val images = restaurantInfo.images ?: listOf()
+
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        images.size
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(9f / 7f)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.test_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier.fillMaxSize()
-        )
+        ) { page ->
+            AsyncImage(
+                model = images[page],
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
         Text(
+            text = "${pagerState.currentPage + 1}/${images.size}",
             modifier = Modifier
+                .align(Alignment.BottomEnd)
                 .padding(10.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .align(Alignment.BottomStart)
                 .background(Color.Black.copy(alpha = 0.6f))
                 .padding(horizontal = 8.dp, vertical = 2.dp),
-            text = "1/6",
-            style = EveryMealTypo.bodySmall,
-            fontSize = 14.sp,
             color = Color.White,
+            fontSize = 14.sp,
         )
     }
 }
@@ -343,6 +365,7 @@ fun DetailRestaurantMainInfo(
                     .weight(1f)
                     .padding(vertical = 12.dp),
                 horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
                     modifier = Modifier.size(24.dp),
@@ -442,8 +465,10 @@ fun DetailRestaurantTabLayout(
                 restaurantInfo = restaurantInfo,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
+            1 -> DetailRestaurantTabImage(
+                restaurantInfo = restaurantInfo
+            )
 
-            1 -> DetailRestaurantTabImage()
             2 -> DetailRestaurantReview()
         }
     }
@@ -494,10 +519,10 @@ fun DetailRestaurantTabInfo(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(
-                imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
-                contentDescription = "link",
-            )
+//            Image(
+//                imageVector = ImageVector.vectorResource(R.drawable.icon_link_mono),
+//                contentDescription = "link",
+//            )
 //            Version2 KakaoMap
 //            Text(
 //                modifier = Modifier.padding(start = 4.dp),
@@ -512,36 +537,37 @@ fun DetailRestaurantTabInfo(
 }
 
 @Composable
-fun DetailRestaurantTabImage() {
-    // Mock Data
-    val items = listOf(
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-        R.drawable.food_ex_1,
-        R.drawable.food_ex_2,
-        R.drawable.food_ex_3,
-    )
-
+fun DetailRestaurantTabImage(
+    restaurantInfo : RestaurantDataEntity
+) {
     Column {
-        for (rowItems in items.chunked(3)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 3.dp),
-            ) {
-                for (item in rowItems) {
-                    Image(
-                        painter = painterResource(id = item),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(end = if (rowItems.indexOf(item) != 2) 3.dp else 0.dp)
-                            .weight(1f)
-                            .aspectRatio(1f)
-                    )
+        restaurantInfo.images?.let { images ->
+            for (rowItems in images.chunked(3)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 3.dp),
+                    horizontalArrangement = Arrangement.spacedBy(3.dp)
+                ) {
+                    rowItems.forEach { item ->
+                        AsyncImage(
+                            model = item,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .weight(1f)
+                                .aspectRatio(1f),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    if (rowItems.size < 3) {
+                        repeat(3 - rowItems.size) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .aspectRatio(1f)
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -557,10 +583,4 @@ fun DetailRestaurantReview() {
 @Composable
 fun PreviewDetailRestaurantScreen() {
     DetailRestaurantScreen(0)
-}
-
-@Preview
-@Composable
-fun PreviewDetailRestaurantImage() {
-    DetailRestaurantImage()
 }

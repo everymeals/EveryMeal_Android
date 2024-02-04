@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.detail.ReportCategoryType
+import com.everymeal.presentation.ui.detail.RestaurantCategoryType
 import com.everymeal.presentation.ui.home.HomeCategoryList
 import com.everymeal.presentation.ui.theme.EveryMealTypo
 import com.everymeal.presentation.ui.theme.EveryMealTypography
@@ -165,6 +166,7 @@ fun SortCategoryItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
+    title : String = "",
     currentRating: Int,
     restaurantCategoryType: String,
     onClick: () -> Unit,
@@ -181,26 +183,30 @@ fun EveryMealCategoryRatingBottomSheetDialog(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 14.dp),
-                text = stringResource(R.string.meal_category),
-                fontSize = 17.sp,
-                color = Gray900,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Spacer(modifier = Modifier.padding(4.dp))
-            HomeCategoryList(
-                isBottomSheet = true,
-                restaurantCategoryType
-            ) {
-                onCategoryClick(it)
+            if(title.RestaurantCategoryType() != RestaurantCategoryType.CAFE
+                && title.RestaurantCategoryType() != RestaurantCategoryType.DRINK) {
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 14.dp),
+                    text = stringResource(R.string.meal_category),
+                    fontSize = 17.sp,
+                    color = Gray900,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                HomeCategoryList(
+                    isBottomSheet = true,
+                    restaurantCategoryType
+                ) {
+                    onCategoryClick(it)
+                }
+                Spacer(modifier = Modifier.padding(14.dp))
+                Divider(
+                    color = Gray200,
+                )
             }
-            Spacer(modifier = Modifier.padding(14.dp))
-            Divider(
-                color = Gray200,
-            )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
                 modifier = Modifier

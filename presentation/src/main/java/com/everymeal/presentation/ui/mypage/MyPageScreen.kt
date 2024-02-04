@@ -17,9 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray100
@@ -40,23 +38,17 @@ import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyPageScreen(
-
+    viewModel : MyPageViewModel = hiltViewModel(),
+    withDrawClick : () -> Unit = {}
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                )
-            )
-        }
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(Color.White)
+                .padding(top = 20.dp),
         ) {
             item(key = "My Information") {
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -69,7 +61,9 @@ fun MyPageScreen(
             }
 
             item(key = "My Activities") {
-                MyActivities(Modifier.padding(horizontal = 20.dp))
+                MyActivities(Modifier.padding(horizontal = 20.dp)) {
+
+                }
                 Spacer(modifier = Modifier.padding(24.dp))
                 Divider(
                     color = Gray100,
@@ -79,7 +73,25 @@ fun MyPageScreen(
             }
 
             item(key = "My Settings") {
-                MySettings(Modifier.padding(horizontal = 20.dp))
+                MySettings(Modifier.padding(horizontal = 20.dp)) {
+                    when(it) {
+                        MyPageSetting.INQUIRY.type -> {
+                            // TODO
+                        }
+                        MyPageSetting.SERVICE_TERMS.type -> {
+                            // TODO
+                        }
+                        MyPageSetting.OPEN_SOURCE_LICENSE.type -> {
+                            // TODO
+                        }
+                        MyPageSetting.VERSION_INFO.type -> {
+                            // TODO
+                        }
+                        MyPageSetting.WITHDRAWAL.type -> {
+                            withDrawClick()
+                        }
+                    }
+                }
                 Spacer(modifier = Modifier.padding(24.dp))
             }
         }
@@ -145,7 +157,8 @@ fun MyInformation(
 
 @Composable
 fun MyActivities(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
 ) {
     Column (
         modifier = modifier
@@ -172,7 +185,8 @@ fun MyActivities(
 
 @Composable
 fun MySettings(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
 ) {
     Column (
         modifier = modifier
@@ -183,25 +197,25 @@ fun MySettings(
             color = Gray900
         )
         MyTabMenu(
-            menuTitle = "문의하기",
-            onClick = { }
+            menuTitle = MyPageSetting.INQUIRY.type,
+            onClick = { onClick(MyPageSetting.INQUIRY.type) }
         )
         MyTabMenu(
-            menuTitle = "서비스 약관",
-            onClick = { }
+            menuTitle = MyPageSetting.SERVICE_TERMS.type,
+            onClick = { onClick(MyPageSetting.SERVICE_TERMS.type) }
         )
         MyTabMenu(
-            menuTitle = "오픈소스 라이센스",
-            onClick = { }
+            menuTitle = MyPageSetting.OPEN_SOURCE_LICENSE.type,
+            onClick = { onClick(MyPageSetting.OPEN_SOURCE_LICENSE.type) }
         )
         MyTabMenu(
-            menuTitle = "오픈소스 라이센스",
+            menuTitle = MyPageSetting.VERSION_INFO.type,
             isAppVersion = true,
-            onClick = { }
+            onClick = { onClick(MyPageSetting.VERSION_INFO.type) }
         )
         MyTabMenu(
-            menuTitle = "탈퇴하기",
-            onClick = { }
+            menuTitle = MyPageSetting.WITHDRAWAL.type,
+            onClick = { onClick(MyPageSetting.WITHDRAWAL.type) }
         )
     }
 }

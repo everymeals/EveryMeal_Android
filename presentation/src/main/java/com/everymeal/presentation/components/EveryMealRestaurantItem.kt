@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -73,6 +74,7 @@ fun RestaurantTitle(
 ) {
     Row(
         modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             modifier = Modifier.padding(top = 6.dp),
@@ -103,7 +105,9 @@ fun RestaurantLoveCount(
     onLoveClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.clickable(
+        modifier = Modifier
+            .padding(top = 6.dp)
+            .clickable(
             indication = null,
             interactionSource = remember { MutableInteractionSource() },
         ) { onLoveClick() },
@@ -156,23 +160,33 @@ fun RestaurantRating(restaurant: Restaurant) {
 fun RestaurantImage(restaurant: Restaurant) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
+//        restaurant.images?.take(3)?.forEachIndexed { index, image ->
+//            AsyncImage(
+//                model = image,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .aspectRatio(1f)
+//                    .padding(end = if (index < 2) 6.dp else 0.dp)
+//                    .clip(RoundedCornerShape(8.dp)),
+//                contentScale = ContentScale.Crop
+//            )
+//        }
         restaurant.images?.let {
             when {
-                restaurant.images?.size == 3 -> {
-                    restaurant.images?.forEachIndexed { index, image ->
+                restaurant.images?.size!! >= 3 -> {
+                    restaurant.images?.take(3)?.forEachIndexed { index, image ->
                         AsyncImage(
+                            model = image,
+                            contentDescription = null,
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
                                 .clip(RoundedCornerShape(8.dp)),
-                            model = image,
-                            contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
-                        if (index != 2) {
-                            Spacer(modifier = Modifier.padding(end = 6.dp))
-                        }
                     }
                 }
 
@@ -185,10 +199,11 @@ fun RestaurantImage(restaurant: Restaurant) {
                                 .clip(RoundedCornerShape(8.dp)),
                             model = image,
                             contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
-                        if (index != 1) {
-                            Spacer(modifier = Modifier.padding(end = 6.dp))
-                        }
+//                        if(index != 1) {
+//                            Spacer(modifier = Modifier.padding(end = 6.dp))
+//                        }
                     }
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -202,59 +217,58 @@ fun RestaurantImage(restaurant: Restaurant) {
                         model = restaurant.images!![0],
                         contentDescription = null,
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .weight(2f)
-                            .padding(end = 6.dp),
+                    Spacer(modifier = Modifier
+                        .weight(2f)
+//                        .padding(end = 6.dp)
                     )
                 }
 
-                restaurant.images?.size!! > 3 -> {
-                    AsyncImage(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp)),
-                        model = restaurant.images!![0],
-                        contentDescription = null,
-                    )
-                    Spacer(modifier = Modifier.padding(end = 6.dp))
-                    AsyncImage(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp)),
-                        model = restaurant.images!![0],
-                        contentDescription = null,
-                    )
-                    Spacer(modifier = Modifier.padding(end = 6.dp))
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f),
-                    ) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .aspectRatio(1f)
-                                .fillMaxSize(),
-                            model = restaurant.images!![0],
-                            contentDescription = null,
-                        )
-                        Box(
-                            modifier = Modifier
-                                .matchParentSize()
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(Color.Black.copy(alpha = 0.2f)),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Text(
-                                text = "+${restaurant.reviewCount - 2}",
-                                color = Color.White,
-                                fontSize = 14.sp,
-                            )
-                        }
-                    }
-                }
+//                restaurant.images?.size!! > 3 -> {
+//                    AsyncImage(
+//                        modifier = Modifier
+//                            .weight(1f)
+//                            .aspectRatio(1f)
+//                            .clip(RoundedCornerShape(8.dp)),
+//                        model = restaurant.images!![0],
+//                        contentDescription = null
+//                    )
+//                    Spacer(modifier = Modifier.padding(end = 6.dp))
+//                    AsyncImage(
+//                        modifier = Modifier
+//                            .weight(1f)
+//                            .aspectRatio(1f)
+//                            .clip(RoundedCornerShape(8.dp)),
+//                        model = restaurant.images!![0],
+//                        contentDescription = null
+//                    )
+//                    Spacer(modifier = Modifier.padding(end = 6.dp))
+//                    Box(
+//                        modifier = Modifier
+//                            .weight(1f)
+//                            .aspectRatio(1f)
+//                    ) {
+//                        AsyncImage(
+//                            modifier = Modifier
+//                                .aspectRatio(1f)
+//                                .fillMaxSize(),
+//                            model = restaurant.images!![0],
+//                            contentDescription = null
+//                        )
+//                        Box(
+//                            modifier = Modifier
+//                                .matchParentSize()
+//                                .clip(RoundedCornerShape(8.dp))
+//                                .background(Color.Black.copy(alpha = 0.2f)),
+//                            contentAlignment = Alignment.Center
+//                        ) {
+//                            Text(
+//                                text = "+${restaurant.reviewCount - 2}",
+//                                color = Color.White,
+//                                fontSize = 14.sp
+//                            )
+//                        }
+//                    }
+//                }
             }
         }
     }

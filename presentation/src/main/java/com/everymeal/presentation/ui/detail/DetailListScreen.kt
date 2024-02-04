@@ -97,6 +97,7 @@ fun DetailListScreen(
 
     if (detailListViewState.mealRatingBottomSheetState) {
         EveryMealCategoryRatingBottomSheetDialog(
+            title,
             detailListViewState.rating,
             detailListViewState.restaurantCategoryType.title(),
             onClick = {

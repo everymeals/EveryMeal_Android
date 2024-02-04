@@ -39,9 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.Restaurant
 import com.everymeal.presentation.R
+import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealLineButton
+import com.everymeal.presentation.components.EveryMealLoadingDialog
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
@@ -57,62 +58,26 @@ import com.everymeal.presentation.ui.theme.Paddings
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     onDetailScreenClickType: (String) -> Unit,
-    onDetailRestaurantClick: () -> Unit,
+    onDetailRestaurantClick: (String) -> Unit,
     onReviewBottomSheetClick: () -> Unit,
 ) {
-    val items = listOf(
-        Restaurant(
-            idx = 386,
-            name = "히포 브런치하우스",
-            address = "서울 마포구 연남동 487-34",
-            phoneNumber = "010-3796-3176",
-            categoryDetail = "카페",
-            distance = 1721,
-            grade = 0.0F,
-            reviewCount = 5,
-            recommendedCount = 5,
-            images = listOf(
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-            ),
-            isLiked = false,
-        ),
-        Restaurant(
-            idx = 386,
-            name = "히포 브런치하우스",
-            address = "서울 마포구 연남동 487-34",
-            phoneNumber = "010-3796-3176",
-            categoryDetail = "카페",
-            distance = 1721,
-            grade = 0.0F,
-            reviewCount = 5,
-            recommendedCount = 5,
-            images = listOf(
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-                "store/ea9be6e1-c5cb-4772-a5a8-15bb89b604a0",
-            ),
-            isLiked = false,
-        ),
-    )
 
-    val homeViewState by homeViewModel.viewState.collectAsState()
+    LaunchedEffect(Unit) {
+        homeViewModel.setEvent(HomeContract.HomeEvent.InitHomeScreen)
+    }
 
-    if (homeViewState.bottomSheetState) {
-        EveryMealMainBottomSheetDialog(
-            title = stringResource(id = R.string.univ_admin_review_title),
-            content = stringResource(id = R.string.univ_admin_review_content),
-            onClick = {
-                onReviewBottomSheetClick()
-                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
-            },
-            onDismiss = {
-                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
-            },
-        )
+    LaunchedEffect(key1 = homeViewModel.effect) {
+        homeViewModel.effect.collect { effect ->
+            when (effect) {
+                is HomeContract.HomeEffect.NavigateToDetailListScreen -> {
+                    onDetailScreenClickType(effect.detailListScreenType.title())
+                }
+
+                is HomeContract.HomeEffect.NavigateToDetailRestaurant -> {
+                    onDetailRestaurantClick(effect.restaurantId.toString())
+                }
+            }
+        }
     }
 
     val reviewTestItem = listOf(
@@ -144,98 +109,128 @@ fun HomeScreen(
         ),
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.White),
-    ) {
-        HomeTopAppBar()
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth(),
-        ) {
-            item {
-                HomeMainTopLayout {
-                    homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(true))
-                }
-                HomeCategoryList {
-                    homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
+    val homeViewState by homeViewModel.viewState.collectAsState()
 
-                HomeDivider()
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
-                Spacer(modifier = Modifier.padding(8.dp))
+    if (homeViewState.bottomSheetState) {
+        EveryMealMainBottomSheetDialog(
+            title = stringResource(id = R.string.univ_admin_review_title),
+            content = stringResource(id = R.string.univ_admin_review_content),
+            onClick = {
+                onReviewBottomSheetClick()
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
+            },
+            onDismiss = {
+                homeViewModel.setEvent(HomeContract.HomeEvent.BottomSheetStateChange(false))
             }
-            items(items.size) { index ->
-                val item = items[index]
-                EveryMealRestaurantItem(
-                    item,
-                    onLoveClick = {
-                    },
-                    onDetailClick = {
-                        onDetailRestaurantClick()
-                    },
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-                if (index != items.size - 1) {
-                    Divider(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp),
-                        color = Gray300,
-                    )
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-            }
-            item {
-                EveryMealLineButton(
-                    text = stringResource(R.string.home_restaurant_button_text),
-                    onClick = {
-                    },
-                )
-            }
-
-            item {
-                Spacer(modifier = Modifier.padding(2.dp))
-                HomeDivider()
-                Spacer(modifier = Modifier.padding(10.dp))
-
-                LazyColumnTitle(stringResource(R.string.home_top_good_review))
-                Spacer(modifier = Modifier.padding(8.dp))
-            }
-            items(reviewTestItem.size) { index ->
-                val item = reviewTestItem[index]
-                EveryMealReviewItem(item) {
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-                if (index != reviewTestItem.size - 1) {
-                    Divider(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp),
-                        color = Gray300,
-                    )
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-            }
-            item {
-                EveryMealLineButton(
-                    text = stringResource(R.string.home_restaurant_review_button_text),
-                    onClick = {
-                    },
-                )
-            }
-        }
+        )
     }
 
-    LaunchedEffect(key1 = homeViewModel.effect) {
-        homeViewModel.effect.collect { effect ->
-            when (effect) {
-                is HomeContract.HomeEffect.NavigateToDetailListScreen -> {
-                    onDetailScreenClickType(effect.detailListScreenType.title())
+    when (homeViewState.uiState) {
+        LoadState.LOADING -> {
+            EveryMealLoadingDialog()
+        }
+
+        LoadState.SUCCESS -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.White),
+            ) {
+                HomeTopAppBar()
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                ) {
+                    item {
+                        HomeMainTopLayout {
+                            homeViewModel.setEvent(
+                                HomeContract.HomeEvent.BottomSheetStateChange(
+                                    true
+                                )
+                            )
+                        }
+                        HomeCategoryList {
+                            homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
+                        }
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+                        HomeDivider()
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+                        LazyColumnTitle(stringResource(R.string.home_top_good_restaurant))
+                        Spacer(modifier = Modifier.padding(8.dp))
+                    }
+                    items(homeViewState.restaurantData.size) { index ->
+                        val item = homeViewState.restaurantData[index]
+                        EveryMealRestaurantItem(
+                            item,
+                            onLoveClick = {
+
+                            },
+                            onDetailClick = {
+                                homeViewModel.setEvent(
+                                    HomeContract.HomeEvent.OnClickDetailRestaurant(
+                                        it
+                                    )
+                                )
+                            }
+                        )
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        if (index != homeViewState.restaurantData.size - 1) {
+                            Divider(
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp),
+                                color = Gray300,
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(10.dp))
+                    }
+                    item {
+                        EveryMealLineButton(
+                            text = stringResource(R.string.home_restaurant_button_text),
+                            onClick = {
+                                homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList("추천".DetailListScreenType()))
+                            },
+                        )
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.padding(2.dp))
+                        HomeDivider()
+                        Spacer(modifier = Modifier.padding(10.dp))
+
+                        LazyColumnTitle(stringResource(R.string.home_top_good_review))
+                        Spacer(modifier = Modifier.padding(8.dp))
+                    }
+                    items(reviewTestItem.size) { index ->
+                        val item = reviewTestItem[index]
+                        EveryMealReviewItem(item) {
+
+                        }
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        if (index != reviewTestItem.size - 1) {
+                            Divider(
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp),
+                                color = Gray300,
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(10.dp))
+                    }
+                    item {
+                        EveryMealLineButton(
+                            text = stringResource(R.string.home_restaurant_review_button_text),
+                            onClick = {
+
+                            },
+                        )
+                    }
                 }
             }
+        }
+
+        LoadState.ERROR -> {
+
         }
     }
 }
