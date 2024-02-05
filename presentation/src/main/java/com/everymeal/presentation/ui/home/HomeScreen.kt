@@ -80,35 +80,6 @@ fun HomeScreen(
         }
     }
 
-    val reviewTestItem = listOf(
-        Review(
-            name = "슈니",
-            profileImage = R.drawable.profile_ex_image,
-            loveCount = 100,
-            image = listOf(
-                R.drawable.review_ex_1,
-                R.drawable.review_ex_1,
-            ),
-            rating = 5,
-            reviewDate = "2023-08-29T09:58:47.604732",
-            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
-            restaurantName = "왕가주방",
-        ),
-        Review(
-            name = "슈니",
-            profileImage = R.drawable.profile_ex_image,
-            loveCount = 100,
-            image = listOf(
-                R.drawable.review_ex_1,
-                R.drawable.review_ex_1,
-            ),
-            rating = 5,
-            reviewDate = "2023-08-20T09:58:47.604732",
-            content = "맛있어요",
-            restaurantName = "왕가주방",
-        ),
-    )
-
     val homeViewState by homeViewModel.viewState.collectAsState()
 
     if (homeViewState.bottomSheetState) {
@@ -202,13 +173,17 @@ fun HomeScreen(
                         LazyColumnTitle(stringResource(R.string.home_top_good_review))
                         Spacer(modifier = Modifier.padding(8.dp))
                     }
-                    items(reviewTestItem.size) { index ->
-                        val item = reviewTestItem[index]
+                    items(homeViewState.reviewData.size) { index ->
+                        val item = homeViewState.reviewData[index]
                         EveryMealReviewItem(item) {
-
+                            homeViewModel.setEvent(
+                                HomeContract.HomeEvent.OnClickDetailRestaurant(
+                                    it
+                                )
+                            )
                         }
                         Spacer(modifier = Modifier.padding(10.dp))
-                        if (index != reviewTestItem.size - 1) {
+                        if (index != homeViewState.reviewData.size - 1) {
                             Divider(
                                 modifier = Modifier
                                     .padding(horizontal = 20.dp),

@@ -9,19 +9,21 @@ import javax.inject.Inject
 class ReviewDataSourceImpl @Inject constructor(
     private val storeReviewApi: StoreReviewApi,
 ) : ReviewDataSource {
-
-    override suspend fun getReviewList(
-        cursorIdx: Int,
-        mealIdx: Int,
-        pageSize: Int,
-    ): Result<ReviewListResponse> =
-        unwrapRunCatching {
-            storeReviewApi.getStoreReviewsWithId(
-                cursorIdx,
-                mealIdx,
-                pageSize,
-            )
-        }
+    override suspend fun getStoreReviews(
+        offset: Int,
+        limit: Int,
+        order: String?,
+        group: String?,
+        grade: Int?
+    ): Result<ReviewListResponse> {
+        return unwrapRunCatching { storeReviewApi.getStoresReviews(
+            offset = 0,
+            limit = 3,
+            order = order,
+            group = group,
+            grade = grade,
+        ) }
+    }
 
     override suspend fun postReview(
         storeReviewRequest: StoreReviewRequest,

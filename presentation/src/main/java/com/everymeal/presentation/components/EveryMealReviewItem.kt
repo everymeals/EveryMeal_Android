@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import com.everymeal.domain.model.review.StoreReviewEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.ui.home.Review
 import com.everymeal.presentation.ui.theme.Gray300
@@ -37,8 +39,8 @@ import com.everymeal.presentation.util.Utils
 
 @Composable
 fun EveryMealReviewItem(
-    review: Review,
-    onDetailRestaurantClick: () -> Unit,
+    review: StoreReviewEntity,
+    onDetailRestaurantClick: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -57,15 +59,15 @@ fun EveryMealReviewItem(
 }
 
 @Composable
-fun ReviewTitle(review: Review) {
+fun ReviewTitle(review: StoreReviewEntity) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .size(40.dp)
                 .align(alignment = Alignment.CenterVertically),
-            painter = painterResource(id = review.profileImage),
+            model = review.profileImageUrl,
             contentDescription = stringResource(id = R.string.home_review_profile_image_description)
         )
         Spacer(modifier = Modifier.padding(end = 8.dp))
@@ -75,7 +77,7 @@ fun ReviewTitle(review: Review) {
                 .align(alignment = Alignment.CenterVertically)
         ) {
             Text(
-                text = review.name,
+                text = review.nickName,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Gray800,
@@ -86,7 +88,7 @@ fun ReviewTitle(review: Review) {
                     .padding(top = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(review.rating) {
+                items(review.grade) {
                     Image(
                         modifier = Modifier
                             .size(12.dp)
@@ -98,7 +100,7 @@ fun ReviewTitle(review: Review) {
                 item {
                     Spacer(modifier = Modifier.padding(end = 4.dp))
                     Text(
-                        text = Utils.getTimeAgo(review.reviewDate),
+                        text = Utils.getTimeAgo(review.createdAt),
                         fontSize = 12.sp,
                         color = Gray600,
                     )
@@ -116,7 +118,7 @@ fun ReviewTitle(review: Review) {
 }
 
 @Composable
-fun ReviewContent(review: Review) {
+fun ReviewContent(review: StoreReviewEntity) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -130,18 +132,20 @@ fun ReviewContent(review: Review) {
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.padding(end = 10.dp))
-        Image(
-            modifier = Modifier
-                .size(64.dp)
-                .align(alignment = Alignment.CenterVertically),
-            painter = painterResource(id = review.image[0]),
-            contentDescription = stringResource(id = R.string.home_review_image)
-        )
+        review.images?.let {
+            AsyncImage(
+                modifier = Modifier
+                    .size(64.dp)
+                    .align(alignment = Alignment.CenterVertically),
+                model = it[0],
+                contentDescription = stringResource(id = R.string.home_review_image)
+            )
+        }
     }
 }
 
 @Composable
-fun ReviewGoodCount(review: Review) {
+fun ReviewGoodCount(review: StoreReviewEntity) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -155,7 +159,7 @@ fun ReviewGoodCount(review: Review) {
         )
         Spacer(modifier = Modifier.padding(end = 2.dp))
         Text(
-            text = review.loveCount.toString(),
+            text = review.reviewMarksCnt.toString(),
             fontSize = 12.sp,
             color = Gray600,
         )
@@ -164,14 +168,14 @@ fun ReviewGoodCount(review: Review) {
 
 @Composable
 fun ReviewDetailRestaurant(
-    review: Review,
-    onDetailRestaurantClick: () -> Unit
+    review: StoreReviewEntity,
+    onDetailRestaurantClick: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
-            .clickable { onDetailRestaurantClick() }
+            .clickable { onDetailRestaurantClick(review.storeIdx) }
             .background(Gray300),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -185,7 +189,7 @@ fun ReviewDetailRestaurant(
         Text(
             modifier = Modifier
                 .weight(1f),
-            text = review.restaurantName,
+            text = review.storeName,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
             color = Gray700,
@@ -198,25 +202,4 @@ fun ReviewDetailRestaurant(
             contentDescription = stringResource(id = R.string.home_review_detail_restaurant)
         )
     }
-}
-
-@Preview
-@Composable
-fun ReviewDetailRestaurantPreview() {
-    ReviewDetailRestaurant(
-        review = Review(
-            name = "슈니",
-            profileImage = R.drawable.profile_ex_image,
-            loveCount = 100,
-            image = listOf(
-                0,
-                1,
-            ),
-            rating = 3,
-            reviewDate = "2023-08-29T09:58:47.604732",
-            content = "매장 안쪽으로 가면 너무 감성있는 곳이 나와요. 그리고 분위기도 너무 좋고 맛도 너무 완벽해요. 이런 카페는 정말 처음인 것 같아요. 알바생도 너무 아름답습니다.. 여기 계속 찾을 것 같아요. 정말 항상 감사드려요.",
-            restaurantName = "왕가주방",
-        ),
-        onDetailRestaurantClick = { },
-    )
 }
