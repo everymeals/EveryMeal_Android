@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -121,8 +123,7 @@ fun ReviewContent(review: StoreReviewEntity) {
         modifier = Modifier.fillMaxWidth(),
     ) {
         Text(
-            modifier = Modifier
-                .weight(1f),
+            modifier = Modifier.weight(1f),
             text = review.content,
             fontSize = 14.sp,
             color = Gray800,
@@ -134,8 +135,11 @@ fun ReviewContent(review: StoreReviewEntity) {
             AsyncImage(
                 modifier = Modifier
                     .size(64.dp)
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(8.dp))
                     .align(alignment = Alignment.CenterVertically),
                 model = it[0],
+                contentScale = Crop,
                 contentDescription = stringResource(id = R.string.home_review_image)
             )
         }
