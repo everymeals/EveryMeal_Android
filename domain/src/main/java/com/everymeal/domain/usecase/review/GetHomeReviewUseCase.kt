@@ -12,8 +12,9 @@ class GetHomeReviewUseCase @Inject constructor(
         limit: Int,
         order: String?,
         group: String?,
-        grade: Int?
+        grade: Int?,
+        campusIdx: Int
     ) : Result<GetStoreReviewEntity> {
-        return reviewRepository.getStoreReviews(offset, limit, order, group, grade)
+        return reviewRepository.getStoreReviews(offset, limit, order, group, grade, campusIdx)
     }
 }

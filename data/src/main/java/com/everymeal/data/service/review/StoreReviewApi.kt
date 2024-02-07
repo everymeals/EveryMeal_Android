@@ -23,6 +23,7 @@ interface StoreReviewApi {
         @Query("order") order: String?,
         @Query("group") group: String?,
         @Query("grade") grade: Int?,
+        @Query("campusIdx") campusIdx: Int,
     ): BaseResponse<ReviewListResponse>
 
     @POST("/api/v1/reviews/store")

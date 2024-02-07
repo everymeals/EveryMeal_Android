@@ -14,7 +14,8 @@ class ReviewDataSourceImpl @Inject constructor(
         limit: Int,
         order: String?,
         group: String?,
-        grade: Int?
+        grade: Int?,
+        campusIdx: Int
     ): Result<ReviewListResponse> {
         return unwrapRunCatching { storeReviewApi.getStoresReviews(
             offset = 0,
@@ -22,6 +23,7 @@ class ReviewDataSourceImpl @Inject constructor(
             order = order,
             group = group,
             grade = grade,
+            campusIdx = campusIdx
         ) }
     }
 

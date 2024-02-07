@@ -10,7 +10,8 @@ interface ReviewRepository {
         limit: Int,
         order: String?,
         group: String?,
-        grade: Int?
+        grade: Int?,
+        campusIdx: Int,
     ): Result<GetStoreReviewEntity>
     suspend fun postReview(userReview: UserReview): Result<Boolean>
 }

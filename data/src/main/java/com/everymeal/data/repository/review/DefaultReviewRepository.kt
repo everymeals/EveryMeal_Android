@@ -17,7 +17,8 @@ class DefaultReviewRepository @Inject constructor(
         limit: Int,
         order: String?,
         group: String?,
-        grade: Int?
+        grade: Int?,
+        campusIdx: Int,
     ): Result<GetStoreReviewEntity> {
         return reviewDataSource.getStoreReviews(
             offset,
@@ -25,6 +26,7 @@ class DefaultReviewRepository @Inject constructor(
             order,
             group,
             grade,
+            campusIdx
         ).map { it.toStoreReviewEntityList() }
     }
 

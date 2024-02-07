@@ -10,7 +10,8 @@ interface ReviewDataSource {
         limit: Int,
         order: String?,
         group: String?,
-        grade: Int?
+        grade: Int?,
+        campusIdx: Int,
     ): Result<ReviewListResponse>
 
     suspend fun postReview(storeReviewRequest: StoreReviewRequest): Result<Boolean>

@@ -16,26 +16,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class Review(
-    val name: String,
-    val profileImage: Int,
-    val loveCount: Int,
-    val image: List<Int>,
-    val rating: Int,
-    val reviewDate: String,
-    val content: String,
-    val restaurantName: String,
-)
-
-data class Restaurant(
-    val name: String,
-    val category: String,
-    val image: List<Int>,
-    val rating: Double,
-    val reviewCount: Int,
-    val loveCount: Int,
-)
-
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getHomeRestaurantUseCase: GetHomeRestaurantUseCase,
@@ -99,7 +79,8 @@ class HomeViewModel @Inject constructor(
                 limit = 3,
                 order = "name",
                 group = null,
-                grade = null
+                grade = null,
+                campusIdx = getUniversityIndexUseCase().first().toInt()
             ).onSuccess {
                 updateState {
                     copy(
