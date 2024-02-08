@@ -1,6 +1,9 @@
 package com.everymeal.data.datasource.review
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.everymeal.data.datasource.restaurant.PAGING_SIZE
 import com.everymeal.data.model.review.ReviewListResponse
 import com.everymeal.data.model.review.ReviewResponse
 import com.everymeal.data.model.review.StoreReviewRequest
@@ -20,7 +23,15 @@ class ReviewDataSourceImpl @Inject constructor(
         grade: Int?,
         campusIdx: Int
     ): Flow<PagingData<ReviewResponse>> {
-        throw NotImplementedError()
+        val pagingSourceFactory = { ReviewPagingSource(storeReviewApi, order, group, grade, campusIdx) }
+        return Pager(
+            config = PagingConfig(
+                initialLoadSize = PAGING_SIZE,
+                pageSize = PAGING_SIZE,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 
     override suspend fun getStoreReviews(
