@@ -1,5 +1,10 @@
 package com.everymeal.presentation.ui.restaurant
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -150,7 +155,11 @@ fun DetailRestaurantScreen(
                         )
                     }
                 }
-                if (viewState.isFabClicked) {
+                AnimatedVisibility(
+                    visible = viewState.isFabClicked,
+                    enter = fadeIn() + slideInHorizontally(),
+                    exit = fadeOut() + shrinkHorizontally()
+                ) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

@@ -31,11 +31,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.review.StoreReviewEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealCategoryRatingBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealDetailReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealReportBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
+import com.everymeal.presentation.components.EveryMealReviewItem
 import com.everymeal.presentation.components.EveryMealSortCategoryBottomSheetDialog
 import com.everymeal.presentation.ui.save.SaveTopBar
 import com.everymeal.presentation.ui.theme.Grey2
@@ -55,8 +57,11 @@ fun DetailListScreen(
     val pagingRestaurantList: LazyPagingItems<RestaurantDataEntity> =
         detailListViewModel.restaurantItems.collectAsLazyPagingItems()
 
+    val pagingReviewList: LazyPagingItems<StoreReviewEntity> =
+        detailListViewModel.restaurantReviews.collectAsLazyPagingItems()
+
     LaunchedEffect(Unit) {
-        detailListViewModel.setEvent(DetailContract.DetailEvent.InitDetailScreen)
+        detailListViewModel.setEvent(DetailContract.DetailEvent.InitDetailScreen(title == "리뷰"))
     }
 
     LaunchedEffect(key1 = detailListViewModel.effect) {
@@ -253,6 +258,19 @@ fun DetailListScreen(
                         restaurant = it,
                         onDetailClick = { restaurantIdx ->
                             detailListViewModel.setEvent(DetailContract.DetailEvent.OnRestaurantDetailClick(restaurantIdx))
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(16.dp))
+                }
+            }
+
+            items(pagingReviewList.itemCount) { index ->
+                val item = pagingReviewList[index]
+                item?.let {
+                    EveryMealReviewItem(
+                        review = it,
+                        onDetailRestaurantClick = { restaurantId ->
+                            detailListViewModel.setEvent(DetailContract.DetailEvent.OnRestaurantDetailClick(restaurantId))
                         }
                     )
                     Spacer(modifier = Modifier.padding(16.dp))

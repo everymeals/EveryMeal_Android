@@ -20,7 +20,7 @@ import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
-import com.everymeal.presentation.ui.mypage.WithDrawScreen
+import com.everymeal.presentation.ui.withdraw.WithDrawScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
 import com.everymeal.presentation.ui.search.SearchScreen
@@ -114,7 +114,11 @@ fun MainScreen(
                 ReviewSearchScreen(navController = navController)
             }
             composable(route = EveryMealRoute.WITH_DRAW.route) {
-                WithDrawScreen()
+                WithDrawScreen(
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
             }
             composable(route = EveryMealRoute.SEARCH.route) {
                 SearchScreen(navController = navController)

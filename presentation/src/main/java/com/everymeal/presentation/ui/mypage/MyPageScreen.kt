@@ -36,6 +36,7 @@ import com.everymeal.presentation.ui.theme.Gray400
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Gray800
 import com.everymeal.presentation.ui.theme.Gray900
+import com.everymeal.presentation.util.noRippleClickable
 
 
 @Composable
@@ -231,7 +232,7 @@ fun MyTabMenu(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 24.dp)
-            .clickable(onClick = onClick)
+            .noRippleClickable(onClick = onClick)
             .padding(vertical = 3.dp)
     ) {
         Row (

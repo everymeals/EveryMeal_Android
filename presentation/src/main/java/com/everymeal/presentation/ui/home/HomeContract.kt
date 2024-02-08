@@ -1,6 +1,7 @@
 package com.everymeal.presentation.ui.home
 
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.review.StoreReviewEntity
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
@@ -11,7 +12,8 @@ class HomeContract {
         val uiState: LoadState = LoadState.LOADING,
         val detailListScreenType: DetailListScreenType = DetailListScreenType.RECOMMEND,
         val bottomSheetState: Boolean = false,
-        val restaurantData: List<RestaurantDataEntity> = emptyList()
+        val restaurantData: List<RestaurantDataEntity> = emptyList(),
+        val reviewData: List<StoreReviewEntity> = emptyList()
     ) : ViewState
 
     sealed class HomeEvent : ViewEvent {
@@ -32,6 +34,7 @@ enum class DetailListScreenType {
     RESTAURANT,
     CAFE,
     DRINK,
+    REVIEW
 }
 
 fun String.DetailListScreenType(): DetailListScreenType {
@@ -40,6 +43,7 @@ fun String.DetailListScreenType(): DetailListScreenType {
         "밥집" -> DetailListScreenType.RESTAURANT
         "카페" -> DetailListScreenType.CAFE
         "술집" -> DetailListScreenType.DRINK
+        "리뷰" -> DetailListScreenType.REVIEW
         else -> DetailListScreenType.RECOMMEND
     }
 }
@@ -50,5 +54,6 @@ fun DetailListScreenType.title(): String {
         DetailListScreenType.RESTAURANT -> "밥집"
         DetailListScreenType.CAFE -> "카페"
         DetailListScreenType.DRINK -> "술집"
+        DetailListScreenType.REVIEW -> "리뷰"
     }
 }
