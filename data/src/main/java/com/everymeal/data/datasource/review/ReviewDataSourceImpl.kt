@@ -16,8 +16,6 @@ class ReviewDataSourceImpl @Inject constructor(
     private val storeReviewApi: StoreReviewApi,
 ) : ReviewDataSource {
     override suspend fun getPagingStoreReviews(
-        offset: Int,
-        limit: Int,
         order: String?,
         group: String?,
         grade: Int?,

@@ -34,6 +34,7 @@ enum class DetailListScreenType {
     RESTAURANT,
     CAFE,
     DRINK,
+    REVIEW
 }
 
 fun String.DetailListScreenType(): DetailListScreenType {
@@ -42,6 +43,7 @@ fun String.DetailListScreenType(): DetailListScreenType {
         "밥집" -> DetailListScreenType.RESTAURANT
         "카페" -> DetailListScreenType.CAFE
         "술집" -> DetailListScreenType.DRINK
+        "리뷰" -> DetailListScreenType.REVIEW
         else -> DetailListScreenType.RECOMMEND
     }
 }
@@ -52,5 +54,6 @@ fun DetailListScreenType.title(): String {
         DetailListScreenType.RESTAURANT -> "밥집"
         DetailListScreenType.CAFE -> "카페"
         DetailListScreenType.DRINK -> "술집"
+        DetailListScreenType.REVIEW -> "리뷰"
     }
 }

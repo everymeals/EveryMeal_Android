@@ -20,16 +20,12 @@ class DefaultReviewRepository @Inject constructor(
     private val reviewDataSource: ReviewDataSource,
 ) : ReviewRepository {
     override suspend fun getPagingStoreReviews(
-        offset: Int,
-        limit: Int,
         order: String?,
         group: String?,
         grade: Int?,
         campusIdx: Int
     ): Flow<PagingData<StoreReviewEntity>> {
         return reviewDataSource.getPagingStoreReviews(
-            offset,
-            limit,
             order,
             group,
             grade,

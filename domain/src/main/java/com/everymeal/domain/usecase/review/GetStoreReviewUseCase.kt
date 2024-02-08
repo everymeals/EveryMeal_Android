@@ -10,13 +10,11 @@ class GetStoreReviewUseCase @Inject constructor(
     private val reviewRepository: ReviewRepository
 ) {
     suspend operator fun invoke(
-        offset: Int,
-        limit: Int,
         order: String?,
         group: String?,
         grade: Int?,
         campusIdx: Int
     ) : Flow<PagingData<StoreReviewEntity>> {
-        return reviewRepository.getPagingStoreReviews(offset, limit, order, group, grade, campusIdx)
+        return reviewRepository.getPagingStoreReviews(order, group, grade, campusIdx)
     }
 }

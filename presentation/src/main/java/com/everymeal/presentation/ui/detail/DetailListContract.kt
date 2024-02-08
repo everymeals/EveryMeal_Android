@@ -16,10 +16,11 @@ class DetailContract {
         val reportCategoryType: ReportCategoryType = ReportCategoryType.NONE,
         val restaurantCategoryType: RestaurantCategoryType = RestaurantCategoryType.NONE,
         val rating: Int = 0,
+        val isReviewScreen: Boolean = false
     ) : ViewState
 
     sealed class DetailEvent : ViewEvent {
-        object InitDetailScreen : DetailEvent()
+        data class InitDetailScreen(val isReviewScreen: Boolean = false) : DetailEvent()
         data class SortBottomSheetStateChange(val sortBottomSheetState: Boolean) : DetailEvent()
         data class MealRatingBottomSheetStateChange(val mealRatingBottomSheetState: Boolean) : DetailEvent()
         data class ReportBottomSheetStateChange(val reportBottomSheetState: Boolean) : DetailEvent()

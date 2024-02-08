@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface ReviewDataSource {
 
     suspend fun getPagingStoreReviews(
-        offset: Int,
-        limit: Int,
         order: String?,
         group: String?,
         grade: Int?,
