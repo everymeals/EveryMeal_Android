@@ -10,12 +10,14 @@ import com.everymeal.data.datasource.restaurant.RestaurantDataSource
 import com.everymeal.data.datasource.restaurant.RestaurantDataSourceImpl
 import com.everymeal.data.datasource.review.ReviewDataSource
 import com.everymeal.data.datasource.review.ReviewDataSourceImpl
+import com.everymeal.data.preference.DefaultNetworkPreference
 import com.everymeal.data.repository.auth.DefaultAuthRepository
 import com.everymeal.data.repository.local.LocalRepositoryImpl
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.data.repository.restaurant.RestaurantRepositoryImpl
 import com.everymeal.data.repository.review.DefaultReviewRepository
 import com.everymeal.data.repository.search.DefaultSearchRepository
+import com.everymeal.domain.NetworkPreference
 import com.everymeal.domain.repository.auth.AuthRepository
 import com.everymeal.domain.repository.local.LocalRepository
 import com.everymeal.domain.repository.onboarding.OnboardingRepository
@@ -97,4 +99,8 @@ abstract class RepositoryModule {
     abstract fun bindSearchRepository(
         defaultSearchRepository: DefaultSearchRepository,
     ): SearchRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindAppPreferences(dataStore: DefaultNetworkPreference): NetworkPreference
 }

@@ -1,6 +1,7 @@
 package com.everymeal.everymeal_android.di
 
-import com.everymeal.data.service.auth.AuthApi
+import com.everymeal.data.intercepter.AuthInterceptor
+import com.everymeal.data.service.auth.UsersApi
 import com.everymeal.data.service.onboarding.OnboardingApi
 import com.everymeal.data.service.restaurant.RestaurantApi
 import com.everymeal.data.service.review.StoreReviewApi
@@ -29,24 +30,31 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideClient(): OkHttpClient {
+    fun provideClient(
+        authInterceptor: AuthInterceptor
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(100, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(interceptor)
+            .addInterceptor(authInterceptor)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(json.asConverterFactory(contentType))
-                .client(client)
-                .build()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .client(client)
+            .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(interceptor: AuthInterceptor): AuthInterceptor = interceptor
 
     @Provides
     @Singleton
@@ -56,8 +64,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): AuthApi {
-        return retrofit.create(AuthApi::class.java)
+    fun provideAuthApi(retrofit: Retrofit): UsersApi {
+        return retrofit.create(UsersApi::class.java)
     }
 
     @Provides
