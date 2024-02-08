@@ -40,21 +40,13 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     isReviewScreen = event.isReviewScreen
                 )
-                if(event.isReviewScreen) {
-                    getReviewList()
-                } else {
-                    getRestaurantList()
-                }
+                fetchListBasedOnType(event.isReviewScreen)
             }
             is DetailEvent.OnClickDetailListCategoryType -> {
                 reflectUpdateState(
                     detailSortCategoryType = event.detailSortCategoryType
                 )
-                if(viewState.value.isReviewScreen) {
-                    getReviewList()
-                } else {
-                    getRestaurantList()
-                }
+                fetchListBasedOnType(viewState.value.isReviewScreen)
             }
             is DetailEvent.SortBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -65,11 +57,7 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     mealRatingBottomSheetState = event.mealRatingBottomSheetState
                 )
-                if(viewState.value.isReviewScreen) {
-                    getReviewList()
-                } else {
-                    getRestaurantList()
-                }
+                fetchListBasedOnType(viewState.value.isReviewScreen)
             }
             is DetailEvent.ReportBottomSheetStateChange -> {
                 reflectUpdateState(
@@ -100,25 +88,25 @@ class DetailListViewModel @Inject constructor(
                 reflectUpdateState(
                     restaurantCategoryType = RestaurantCategoryType.NONE
                 )
-                if(viewState.value.isReviewScreen) {
-                    getReviewList()
-                } else {
-                    getRestaurantList()
-                }
+                fetchListBasedOnType(viewState.value.isReviewScreen)
             }
             is DetailEvent.OnDeleteClickRating -> {
                 reflectUpdateState(
                     rating = 0
                 )
-                if(viewState.value.isReviewScreen) {
-                    getReviewList()
-                } else {
-                    getRestaurantList()
-                }
+                fetchListBasedOnType(viewState.value.isReviewScreen)
             }
             is DetailEvent.OnRestaurantDetailClick -> {
                 sendEffect({ DetailEffect.OnRestaurantClickEffect(event.restaurantId) })
             }
+        }
+    }
+
+    private fun fetchListBasedOnType(isReviewScreen: Boolean) {
+        if(isReviewScreen) {
+            getReviewList()
+        } else {
+            getRestaurantList()
         }
     }
 
