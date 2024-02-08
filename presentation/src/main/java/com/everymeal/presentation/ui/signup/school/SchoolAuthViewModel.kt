@@ -83,6 +83,11 @@ class SchoolAuthViewModel @Inject constructor(
                     is HttpException -> sendEffect({ SchoolContract.Effect.Error(code = it.code()) })
                     else -> sendEffect({ SchoolContract.Effect.Error(message = it.message) })
                 }
+                updateState {
+                    copy(
+                        isShowConditionBottomSheet = false
+                    )
+                }
             }
         }
     }

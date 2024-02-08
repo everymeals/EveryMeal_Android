@@ -1,6 +1,5 @@
 package com.everymeal.presentation.ui.signup.school.email
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,7 @@ import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray900
 
 @Composable
-fun EmailTokenVerifyScreen(
+fun SchoolAuthEmailVerifyScreen(
     modifier: Modifier,
     state: SchoolContract.State,
     viewModel: SchoolAuthViewModel

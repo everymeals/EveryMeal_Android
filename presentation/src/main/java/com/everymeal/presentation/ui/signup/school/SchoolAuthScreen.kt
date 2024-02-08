@@ -1,6 +1,7 @@
 package com.everymeal.presentation.ui.signup.school
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialog
 import com.everymeal.presentation.components.EveryMealConditionAgreeDialogItem
-import com.everymeal.presentation.ui.signup.school.email.EmailTokenVerifyScreen
+import com.everymeal.presentation.ui.signup.school.email.SchoolAuthEmailVerifyScreen
 import com.everymeal.presentation.ui.signup.school.email.SchoolAuthPostEmailScreen
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 
@@ -38,6 +40,7 @@ fun SchoolAuthScreen(
     onSuccessEmailVerification: () -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
+    val context = LocalContext.current
     LaunchedEffect(key1 = viewModel.effect) {
         viewModel.effect.collect { effect ->
             when (effect) {
@@ -46,6 +49,7 @@ fun SchoolAuthScreen(
                         "SchoolAuthScreen",
                         "code: ${effect.code.toString()} message: ${effect.message}"
                     )
+                    Toast.makeText(context, "다시 시도해 주세요", Toast.LENGTH_SHORT).show()
                 }
 
                 is SchoolContract.Effect.SuccessEmailVerification -> {
@@ -146,7 +150,7 @@ fun SchoolAuthContent(
         }
 
         SchoolAuthScreenType.VERIFY_TOKEN -> {
-            EmailTokenVerifyScreen(
+            SchoolAuthEmailVerifyScreen(
                 modifier = modifier,
                 state = state,
                 viewModel = viewModel

@@ -14,19 +14,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.everymeal.domain.NetworkPreference
 import com.everymeal.presentation.ui.bottom.EveryMealBottomNavigation
 import com.everymeal.presentation.ui.bottom.EveryMealRoute
 import com.everymeal.presentation.ui.bottom.navigateBottomNavigationScreen
 import com.everymeal.presentation.ui.detail.DetailListScreen
 import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
-import com.everymeal.presentation.ui.withdraw.WithDrawScreen
+import com.everymeal.presentation.ui.profile.ProfileGenerateScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
 import com.everymeal.presentation.ui.search.SearchScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
+import com.everymeal.presentation.ui.signup.school.email.SchoolAuthEmailVerifyScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
+import com.everymeal.presentation.ui.withdraw.WithDrawScreen
 
 const val DETAIL_SCREEN_TYPE = "detailScreenType"
 const val DETAIL_RESTAURANT_IDX = "detailRestaurantIdx"
@@ -34,6 +37,7 @@ const val DETAIL_RESTAURANT_IDX = "detailRestaurantIdx"
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
+    networkPreference: NetworkPreference,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -68,7 +72,13 @@ fun MainScreen(
                         navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
                     },
                     onReviewBottomSheetClick = {
-                        navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+                        when {
+                            networkPreference.accessToken.isEmpty() -> navController.navigate(
+                                EveryMealRoute.SCHOOL_AUTH.route
+                            )
+
+                            else -> navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+                        }
                     },
                 )
             }
@@ -110,6 +120,11 @@ fun MainScreen(
                     },
                 )
             }
+
+            composable(route = EveryMealRoute.PROFILE_GENERATE.route) {
+                ProfileGenerateScreen(navController = navController)
+            }
+
             composable(route = EveryMealRoute.REVIEW_SEARCH.route) {
                 ReviewSearchScreen(navController = navController)
             }
@@ -138,5 +153,28 @@ fun MainScreen(
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    MainScreen(networkPreference = TestNetworkPreference())
+}
+
+class TestNetworkPreference : NetworkPreference {
+    override var accessToken: String
+        get() = ""
+        set(value) {}
+    override var refreshToken: String
+        get() = ""
+        set(value) {}
+    override var nickname: String
+        get() = ""
+        set(value) {}
+    override var universityIdx: Int
+        get() = 0
+        set(value) {}
+    override var autoLoginConfigured: Boolean
+        get() = false
+        set(value) {}
+    override var profileImgKey: String
+        get() = ""
+        set(value) {}
+
+    override fun clear() {}
 }
