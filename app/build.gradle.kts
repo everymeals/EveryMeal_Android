@@ -96,4 +96,5 @@ dependencies {
 
     //DataStore
     implementation(libs.data.store)
+    implementation(libs.security)
 }

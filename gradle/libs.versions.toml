@@ -19,7 +19,9 @@ serialization = "1.6.0"
 kotlin-serilization = "1.0.0"
 lottie = "6.1.0"
 compose-navigation = "2.7.4"
-accompanist = "0.33.0-alpha"
+accompanist-webview = "0.33.0-alpha"
+accompanist-insets = "0.18.0"
+security = "1.1.0-alpha06"
 
 data-store = "1.0.0"
 kotlin-coroutines = "1.7.3"
@@ -48,7 +50,9 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
-accompanist-webview = { group = "com.google.accompanist", name = "accompanist-webview", version.ref = "accompanist" }
+accompanist-webview = { group = "com.google.accompanist", name = "accompanist-webview", version.ref = "accompanist-webview" }
+accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist-insets" }
+security = { module = "androidx.security:security-crypto", version.ref = "security" }
 
 # Kotlin
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }

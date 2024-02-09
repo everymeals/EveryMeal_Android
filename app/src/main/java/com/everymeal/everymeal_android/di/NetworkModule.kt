@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,8 +31,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Secured
     fun provideClient(
-        authInterceptor: AuthInterceptor
+        @Auth authInterceptor: Interceptor
     ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
@@ -44,7 +46,35 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient): Retrofit {
+    @Unsecured
+    fun provideUnsecuredClient(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Secured
+    fun provideRetrofit(
+        @Secured client: OkHttpClient
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .client(client)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Unsecured
+    fun provideUnsecuredRetrofit(
+        @Unsecured client: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(json.asConverterFactory(contentType))
@@ -54,35 +84,36 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(interceptor: AuthInterceptor): AuthInterceptor = interceptor
+    @Auth
+    fun provideAuthInterceptor(interceptor: AuthInterceptor): Interceptor = interceptor
 
     @Provides
     @Singleton
-    fun provideOnboardingApi(retrofit: Retrofit): OnboardingApi {
+    fun provideOnboardingApi(@Unsecured retrofit: Retrofit): OnboardingApi {
         return retrofit.create(OnboardingApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): UsersApi {
+    fun provideAuthApi(@Unsecured retrofit: Retrofit): UsersApi {
         return retrofit.create(UsersApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRestaurantApi(retrofit: Retrofit): RestaurantApi {
+    fun provideRestaurantApi(@Unsecured retrofit: Retrofit): RestaurantApi {
         return retrofit.create(RestaurantApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideReviewApi(retrofit: Retrofit): StoreReviewApi {
+    fun provideReviewApi(@Secured retrofit: Retrofit): StoreReviewApi {
         return retrofit.create(StoreReviewApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideSearchApi(retrofit: Retrofit): SearchService {
+    fun provideSearchApi(@Unsecured retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
     }
 }

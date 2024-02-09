@@ -99,8 +99,4 @@ abstract class RepositoryModule {
     abstract fun bindSearchRepository(
         defaultSearchRepository: DefaultSearchRepository,
     ): SearchRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindAppPreferences(dataStore: DefaultNetworkPreference): NetworkPreference
 }
