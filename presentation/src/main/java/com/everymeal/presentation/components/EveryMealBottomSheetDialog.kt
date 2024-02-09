@@ -48,6 +48,8 @@ import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Main100
 import com.everymeal.presentation.ui.theme.SubMain100
 import com.everymeal.presentation.ui.theme.Typography
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,9 +60,13 @@ fun EveryMealMainBottomSheetDialog(
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
+        modifier = Modifier.padding(
+            rememberInsetsPaddingValues(insets = LocalWindowInsets.current.systemBars)
+        ),
         onDismissRequest = { onDismiss() },
         containerColor = Color.White,
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -166,7 +172,7 @@ fun SortCategoryItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EveryMealCategoryRatingBottomSheetDialog(
-    title : String = "",
+    title: String = "",
     currentRating: Int,
     restaurantCategoryType: String,
     onClick: () -> Unit,
@@ -183,8 +189,9 @@ fun EveryMealCategoryRatingBottomSheetDialog(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            if(title.RestaurantCategoryType() != RestaurantCategoryType.CAFE
-                && title.RestaurantCategoryType() != RestaurantCategoryType.DRINK) {
+            if (title.RestaurantCategoryType() != RestaurantCategoryType.CAFE
+                && title.RestaurantCategoryType() != RestaurantCategoryType.DRINK
+            ) {
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     modifier = Modifier
@@ -346,7 +353,7 @@ fun EveryMealConditionAgreeDialog(
             )
             Spacer(modifier = Modifier.size(13.dp))
             LazyColumn(content = {
-                itemsIndexed(conditionItems) {index, item ->
+                itemsIndexed(conditionItems) { index, item ->
                     Row(
                         modifier = Modifier
                             .clickable(onClick = {
