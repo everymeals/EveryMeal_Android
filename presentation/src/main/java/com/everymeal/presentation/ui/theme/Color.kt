@@ -24,6 +24,7 @@ val Gray900 = Color(0xFF333D4B)
 
 val Grey2 = Color(0xFFF2F4F6)
 val Grey7 = Color(0xFF6B7684)
+val Grey8 = Color(0XFF4E5968)
 val Grey9 = Color(0xFF333D4B)
 
 val RED_LIGHT = Color(0xFFFFEDED)

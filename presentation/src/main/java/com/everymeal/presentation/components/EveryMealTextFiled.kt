@@ -1,5 +1,6 @@
 package com.everymeal.presentation.components
 
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -7,15 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray300
-import com.everymeal.presentation.ui.theme.Gray500
 
 @Composable
 fun EveryMealTextField(
@@ -37,14 +37,13 @@ fun EveryMealTextField(
         leadingIcon = leadingIcon,
         isError = isError,
         supportingText = supportingText,
+        textStyle = EveryMealTypography.Body1,
         placeholder = {
             Text(
+                modifier = Modifier.wrapContentHeight(Alignment.CenterVertically),
                 text = placeholderText,
-                style = TextStyle(
-                    color = Gray500,
-                    fontWeight = FontWeight(400),
-                    fontSize = 16.sp
-                )
+                style = EveryMealTypography.Body1,
+                textAlign = TextAlign.Right
             )
         },
         maxLines = maxLines,

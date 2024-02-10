@@ -12,6 +12,7 @@
     <string name="verify_token">인증번호</string>
     <string name="email_error">잘못된 이메일 형식이에요</string>
     <string name="nickname">닉네임</string>
+    <string name="complete">완료</string>
 
     <!-- 로그인, 온보딩, 대학선택화면 -->
     <string name="univ_select_title">반가워요!\n대학을 선택해주세요</string>

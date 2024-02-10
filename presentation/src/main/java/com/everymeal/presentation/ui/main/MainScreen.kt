@@ -72,13 +72,14 @@ fun MainScreen(
                         navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
                     },
                     onReviewBottomSheetClick = {
-                        when {
-                            networkPreference.accessToken.isEmpty() -> navController.navigate(
-                                EveryMealRoute.SCHOOL_AUTH.route
-                            )
-
-                            else -> navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
-                        }
+                        navController.navigate(EveryMealRoute.PROFILE_GENERATE.route)
+//                        when {
+//                            networkPreference.accessToken.isEmpty() -> navController.navigate(
+//                                EveryMealRoute.SCHOOL_AUTH.route
+//                            )
+//
+//                            else -> navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+//                        }
                     },
                 )
             }
@@ -116,7 +117,11 @@ fun MainScreen(
             composable(route = EveryMealRoute.SCHOOL_AUTH.route) {
                 SchoolAuthScreen(
                     onSuccessEmailVerification = {
-                        navController.popBackStack()
+                        navController.navigate(EveryMealRoute.PROFILE_GENERATE.route) {
+                            popUpTo(EveryMealRoute.SCHOOL_AUTH.route) {
+                                inclusive = true
+                            }
+                        }
                     },
                 )
             }

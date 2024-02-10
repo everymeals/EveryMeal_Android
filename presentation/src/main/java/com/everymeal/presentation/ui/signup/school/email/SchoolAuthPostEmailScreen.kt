@@ -55,7 +55,8 @@ fun SchoolAuthPostEmailScreen(
                         color = Main100
                     )
                 }
-            }
+            },
+            maxLines = 1
         )
         Spacer(modifier = Modifier.weight(1f))
         EveryMealMainButton(
