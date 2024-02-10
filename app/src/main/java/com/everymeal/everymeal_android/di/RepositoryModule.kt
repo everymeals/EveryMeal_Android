@@ -1,7 +1,7 @@
 package com.everymeal.everymeal_android.di
 
-import com.everymeal.data.datasource.auth.AuthRemoteDataSource
-import com.everymeal.data.datasource.auth.AuthRemoteRemoteDataSourceImpl
+import com.everymeal.data.datasource.auth.UserRemoteDataSource
+import com.everymeal.data.datasource.auth.UsersRemoteDataSourceImpl
 import com.everymeal.data.datasource.local.LocalDataSource
 import com.everymeal.data.datasource.local.LocalDataSourceImpl
 import com.everymeal.data.datasource.onboarding.OnboardingDataSource
@@ -10,15 +10,13 @@ import com.everymeal.data.datasource.restaurant.RestaurantDataSource
 import com.everymeal.data.datasource.restaurant.RestaurantDataSourceImpl
 import com.everymeal.data.datasource.review.ReviewDataSource
 import com.everymeal.data.datasource.review.ReviewDataSourceImpl
-import com.everymeal.data.preference.DefaultNetworkPreference
-import com.everymeal.data.repository.auth.DefaultAuthRepository
+import com.everymeal.data.repository.auth.DefaultUsersRepository
 import com.everymeal.data.repository.local.LocalRepositoryImpl
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
 import com.everymeal.data.repository.restaurant.RestaurantRepositoryImpl
 import com.everymeal.data.repository.review.DefaultReviewRepository
 import com.everymeal.data.repository.search.DefaultSearchRepository
-import com.everymeal.domain.NetworkPreference
-import com.everymeal.domain.repository.auth.AuthRepository
+import com.everymeal.domain.repository.auth.UsersRepository
 import com.everymeal.domain.repository.local.LocalRepository
 import com.everymeal.domain.repository.onboarding.OnboardingRepository
 import com.everymeal.domain.repository.restaurant.RestaurantRepository
@@ -61,8 +59,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindAuthRemoteDataSource(
-        authRemoteDataSourceImpl: AuthRemoteRemoteDataSourceImpl,
-    ): AuthRemoteDataSource
+        authRemoteDataSourceImpl: UsersRemoteDataSourceImpl,
+    ): UserRemoteDataSource
 
     @Singleton
     @Binds
@@ -79,8 +77,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindAuthRepository(
-        defaultAuthRepository: DefaultAuthRepository,
-    ): AuthRepository
+        defaultUsersRepository: DefaultUsersRepository,
+    ): UsersRepository
 
     @Singleton
     @Binds

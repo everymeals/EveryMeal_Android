@@ -1,15 +1,20 @@
 package com.everymeal.presentation.ui.profile
 
+import androidx.lifecycle.viewModelScope
+import com.everymeal.domain.model.auth.UserSignUp
+import com.everymeal.domain.repository.auth.UsersRepository
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
 import com.everymeal.presentation.base.ViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 
 data class ProfileGenerateState(
     val nickname: String = "",
     val isNicknameValid: Boolean = false,
 
-) : ViewState
+    ) : ViewState
 
 sealed interface ProfileGenerateEvent : ViewEvent {
     data class OnNicknameChanged(
@@ -24,7 +29,10 @@ sealed interface ProfileGenerateEffect : ViewSideEffect {
 
 }
 
-class ProfileGenerateViewModel :
+@HiltViewModel
+class ProfileGenerateViewModel(
+    private val usersRepository: UsersRepository
+) :
     BaseViewModel<ProfileGenerateState, ProfileGenerateEffect, ProfileGenerateEvent>(
         ProfileGenerateState()
     ) {
@@ -44,7 +52,19 @@ class ProfileGenerateViewModel :
             }
         }
     }
-    private fun generateProfile() {
 
+    private fun generateProfile() {
+        val state = viewState.value
+        viewModelScope.launch {
+            usersRepository.signUp(
+                UserSignUp(
+                    emailAuthToken = "",
+                    emailAuthValue = "",
+                    nickname = state.nickname,
+                    profileImgKey = "",
+                    universityIdx = 0
+                )
+            )
+        }
     }
 }

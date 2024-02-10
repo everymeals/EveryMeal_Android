@@ -1,15 +1,15 @@
 package com.everymeal.domain.usecase.auth
 
-import com.everymeal.domain.repository.auth.AuthRepository
+import com.everymeal.domain.repository.auth.UsersRepository
 import javax.inject.Inject
 
 class VerifyTokenUseCase @Inject constructor(
-    private val authRepository: AuthRepository
+    private val usersRepository: UsersRepository
 ) {
     suspend operator fun invoke(
         emailAuthToken: String,
         emailAuthValue: String
     ): Result<Boolean> {
-        return authRepository.verifyToken(emailAuthToken, emailAuthValue)
+        return usersRepository.verifyToken(emailAuthToken, emailAuthValue)
     }
 }
