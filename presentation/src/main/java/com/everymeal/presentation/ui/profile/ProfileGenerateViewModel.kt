@@ -7,14 +7,16 @@ import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.ViewEvent
 import com.everymeal.presentation.base.ViewSideEffect
 import com.everymeal.presentation.base.ViewState
+import com.everymeal.presentation.util.toHttpErrorCode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class ProfileGenerateState(
     val nickname: String = "",
     val isNicknameValid: Boolean = false,
-
-    ) : ViewState
+    val isShowProfileChangeBottomSheet: Boolean = false
+) : ViewState
 
 sealed interface ProfileGenerateEvent : ViewEvent {
     data class OnNicknameChanged(
@@ -22,15 +24,19 @@ sealed interface ProfileGenerateEvent : ViewEvent {
     ) : ProfileGenerateEvent
 
     object OnCompleteButtonClicked : ProfileGenerateEvent
+    object ShowProfileChangeBottomSheet : ProfileGenerateEvent
+    object HideProfileChangeBottomSheet : ProfileGenerateEvent
 }
 
 
 sealed interface ProfileGenerateEffect : ViewSideEffect {
+    object SignUpSuccess : ProfileGenerateEffect
+    data class SignUpFailure(val errorCode: Int) : ProfileGenerateEffect
 
 }
 
 @HiltViewModel
-class ProfileGenerateViewModel(
+class ProfileGenerateViewModel @Inject constructor(
     private val usersRepository: UsersRepository
 ) :
     BaseViewModel<ProfileGenerateState, ProfileGenerateEffect, ProfileGenerateEvent>(
@@ -50,6 +56,18 @@ class ProfileGenerateViewModel(
             ProfileGenerateEvent.OnCompleteButtonClicked -> {
                 generateProfile()
             }
+
+            ProfileGenerateEvent.ShowProfileChangeBottomSheet -> {
+                updateState {
+                    copy(isShowProfileChangeBottomSheet = true)
+                }
+            }
+
+            ProfileGenerateEvent.HideProfileChangeBottomSheet -> {
+                updateState {
+                    copy(isShowProfileChangeBottomSheet = false)
+                }
+            }
         }
     }
 
@@ -64,7 +82,12 @@ class ProfileGenerateViewModel(
                     profileImgKey = "",
                     universityIdx = 0
                 )
-            )
+            ).onSuccess {
+                sendEffect({ ProfileGenerateEffect.SignUpSuccess })
+            }.onFailure {
+                val errorCode = it.toHttpErrorCode()
+                sendEffect({ ProfileGenerateEffect.SignUpFailure(errorCode) })
+            }
         }
     }
 }
