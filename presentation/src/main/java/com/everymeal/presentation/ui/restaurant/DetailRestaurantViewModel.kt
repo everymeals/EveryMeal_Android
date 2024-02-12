@@ -1,24 +1,36 @@
 package com.everymeal.presentation.ui.restaurant
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.review.StoreReviewEntity
 import com.everymeal.domain.usecase.restaurant.GetDetailRestaurantUseCase
+import com.everymeal.domain.usecase.review.GetStoreReviewUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.LoadState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailRestaurantViewModel @Inject constructor(
-    private val getDetailRestaurantUseCase: GetDetailRestaurantUseCase
+    private val getDetailRestaurantUseCase: GetDetailRestaurantUseCase,
+    private val getStoreReviewUseCase: GetStoreReviewUseCase
 ): BaseViewModel<DetailRestaurantState, DetailRestaurantEffect, DetailRestaurantEvent>(
     DetailRestaurantState()
 ) {
+    private val _restaurantReviews : MutableStateFlow<PagingData<StoreReviewEntity>> = MutableStateFlow(value = PagingData.empty())
+    val restaurantReviews : StateFlow<PagingData<StoreReviewEntity>> = _restaurantReviews.asStateFlow()
+
     override fun handleEvents(event: DetailRestaurantEvent) {
         when(event) {
             is DetailRestaurantEvent.InitDetailRestaurantScreen -> {
                 getDetailRestaurant(event.restaurantId)
+                getReviewList()
             }
             is DetailRestaurantEvent.OnTabSelectedChanged -> {
                 reflectUpdateState(
@@ -35,6 +47,20 @@ class DetailRestaurantViewModel @Inject constructor(
                     networkErrorDialog = event.dialogStateChange
                 )
             }
+        }
+    }
+
+    private fun getReviewList() {
+        viewModelScope.launch {
+            getStoreReviewUseCase(
+                order = "name",
+                group = null,
+                grade = null,
+                campusIdx = 2
+            ).cachedIn(viewModelScope)
+                .collect {
+                    _restaurantReviews.emit(it)
+                }
         }
     }
 

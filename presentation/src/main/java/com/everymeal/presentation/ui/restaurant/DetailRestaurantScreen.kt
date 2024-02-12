@@ -53,8 +53,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
+import com.everymeal.domain.model.restaurant.RestaurantDataEntity
+import com.everymeal.domain.model.review.StoreReviewEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealDialog
@@ -82,6 +85,9 @@ fun DetailRestaurantScreen(
     val viewState by detailRestaurantViewModel.viewState.collectAsState()
 
     val restaurantInfo = viewState.restaurantInfo
+
+    val pagingReviewList: LazyPagingItems<StoreReviewEntity> =
+        detailRestaurantViewModel.restaurantReviews.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         detailRestaurantViewModel.setEvent(
@@ -466,17 +472,24 @@ fun DetailRestaurantTabLayout(
         }
     }
 
-    HorizontalPager(state = pagerState) { page ->
+    HorizontalPager(
+        modifier = Modifier.fillMaxSize(),
+        state = pagerState
+    ) { page ->
         when (page) {
             0 -> DetailRestaurantTabInfo(
                 restaurantInfo = restaurantInfo,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-            1 -> DetailRestaurantTabImage(
-                restaurantInfo = restaurantInfo
-            )
+            1 -> {
+                DetailRestaurantTabImage(
+                    restaurantInfo = restaurantInfo
+                )
+            }
 
-            2 -> DetailRestaurantReview()
+            2 -> DetailRestaurantReview(
+                viewModel = viewModel,
+            )
         }
     }
 }
@@ -547,32 +560,36 @@ fun DetailRestaurantTabInfo(
 fun DetailRestaurantTabImage(
     restaurantInfo : RestaurantDataEntity
 ) {
-    Column {
-        restaurantInfo.images?.let { images ->
-            for (rowItems in images.chunked(3)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 3.dp),
-                    horizontalArrangement = Arrangement.spacedBy(3.dp)
-                ) {
-                    rowItems.forEach { item ->
-                        AsyncImage(
-                            model = item,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .weight(1f)
-                                .aspectRatio(1f),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    if (rowItems.size < 3) {
-                        repeat(3 - rowItems.size) {
-                            Box(
+    if(restaurantInfo.images.isNullOrEmpty()) {
+
+    } else {
+        Column {
+            restaurantInfo.images?.let { images ->
+                for (rowItems in images.chunked(3)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 3.dp),
+                        horizontalArrangement = Arrangement.spacedBy(3.dp)
+                    ) {
+                        rowItems.forEach { item ->
+                            AsyncImage(
+                                model = item,
+                                contentDescription = null,
                                 modifier = Modifier
                                     .weight(1f)
-                                    .aspectRatio(1f)
+                                    .aspectRatio(1f),
+                                contentScale = ContentScale.Crop
                             )
+                        }
+                        if (rowItems.size < 3) {
+                            repeat(3 - rowItems.size) {
+                                Box(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .aspectRatio(1f)
+                                )
+                            }
                         }
                     }
                 }
@@ -582,7 +599,9 @@ fun DetailRestaurantTabImage(
 }
 
 @Composable
-fun DetailRestaurantReview() {
+fun DetailRestaurantReview(
+    viewModel: DetailRestaurantViewModel
+) {
 
 }
 
