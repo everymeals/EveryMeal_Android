@@ -37,7 +37,7 @@ enum class SchoolAuthScreenType {
 @Composable
 fun SchoolAuthScreen(
     viewModel: SchoolAuthViewModel = hiltViewModel(),
-    onSuccessEmailVerification: () -> Unit,
+    onSuccessEmailVerification: (String, String) -> Unit,
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val context = LocalContext.current
@@ -53,7 +53,7 @@ fun SchoolAuthScreen(
                 }
 
                 is SchoolContract.Effect.SuccessEmailVerification -> {
-                    onSuccessEmailVerification()
+                    onSuccessEmailVerification(effect.emailAuthValue, effect.emailAuthToken)
                 }
             }
         }

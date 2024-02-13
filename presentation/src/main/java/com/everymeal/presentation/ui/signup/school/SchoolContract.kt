@@ -30,6 +30,9 @@ class SchoolContract {
             val message: String? = null
         ) : Effect()
 
-        object SuccessEmailVerification : Effect()
+        data class SuccessEmailVerification(
+            val emailAuthValue: String,
+            val emailAuthToken: String
+        ) : Effect()
     }
 }

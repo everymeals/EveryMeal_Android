@@ -15,7 +15,10 @@ import javax.inject.Inject
 data class ProfileGenerateState(
     val nickname: String = "",
     val isNicknameValid: Boolean = false,
-    val isShowProfileChangeBottomSheet: Boolean = false
+    val isShowProfileChangeBottomSheet: Boolean = false,
+    val profileImageKey: String = "",
+    val emailAuthToken: String = "",
+    val emailAuthValue: String = ""
 ) : ViewState
 
 sealed interface ProfileGenerateEvent : ViewEvent {
@@ -26,6 +29,11 @@ sealed interface ProfileGenerateEvent : ViewEvent {
     object OnCompleteButtonClicked : ProfileGenerateEvent
     object ShowProfileChangeBottomSheet : ProfileGenerateEvent
     object HideProfileChangeBottomSheet : ProfileGenerateEvent
+    data class SetProfileImageDefaultKey(val imageKey: String) : ProfileGenerateEvent
+    data class SetEmailAuth(
+        val emailAuthValue: String,
+        val emailAuthToken: String
+    ) : ProfileGenerateEvent
 }
 
 
@@ -68,6 +76,21 @@ class ProfileGenerateViewModel @Inject constructor(
                     copy(isShowProfileChangeBottomSheet = false)
                 }
             }
+
+            is ProfileGenerateEvent.SetProfileImageDefaultKey -> {
+                updateState {
+                    copy(profileImageKey = event.imageKey)
+                }
+            }
+
+            is ProfileGenerateEvent.SetEmailAuth -> {
+                updateState {
+                    copy(
+                        emailAuthToken = event.emailAuthToken,
+                        emailAuthValue = event.emailAuthValue
+                    )
+                }
+            }
         }
     }
 
@@ -76,10 +99,10 @@ class ProfileGenerateViewModel @Inject constructor(
         viewModelScope.launch {
             usersRepository.signUp(
                 UserSignUp(
-                    emailAuthToken = "",
-                    emailAuthValue = "",
+                    emailAuthToken = state.emailAuthToken,
+                    emailAuthValue = state.emailAuthValue,
                     nickname = state.nickname,
-                    profileImgKey = "",
+                    profileImgKey = state.profileImageKey,
                     universityIdx = 0
                 )
             ).onSuccess {

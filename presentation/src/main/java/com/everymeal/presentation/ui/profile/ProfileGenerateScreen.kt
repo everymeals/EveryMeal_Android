@@ -21,16 +21,19 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealMainButton
 import com.everymeal.presentation.components.EveryMealTextField
@@ -44,6 +47,14 @@ fun ProfileGenerateScreen(
     viewModel: ProfileGenerateViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        val argument = navController.currentBackStackEntry?.arguments
+        val emailAuthValue = argument?.getString("emailAuthValue").orEmpty()
+        val emailAuthToken = argument?.getString("emailAuthToken").orEmpty()
+        viewModel.setEvent(ProfileGenerateEvent.SetEmailAuth(emailAuthValue, emailAuthToken))
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -81,10 +92,19 @@ fun ProfileGenerateScreen(
             },
             onBottomSheetDismiss = {
                 viewModel.setEvent(ProfileGenerateEvent.HideProfileChangeBottomSheet)
+            },
+            onDefaultImageClicked = {
+                viewModel.setEvent(ProfileGenerateEvent.SetProfileImageDefaultKey(it))
             }
         )
     }
 }
+
+data class ProfileImageButton(
+    val profileImageUrl: String? = null,
+    val imageKey: String? = null,
+    val painter: Painter? = null
+)
 
 @Composable
 fun ProfileGenerateContent(
@@ -95,6 +115,9 @@ fun ProfileGenerateContent(
     onProfileImageChanged: () -> Unit = {},
     onBottomSheetDismiss: () -> Unit = {},
     onProfileChangeCompleteButtonClicked: () -> Unit = {},
+    onDefaultImageClicked: (String) -> Unit = {},
+    onCameraButtonClicked: () -> Unit = {},
+    onGalleryButtonClicked: () -> Unit = {},
 ) {
 
     if (viewState.isShowProfileChangeBottomSheet) {
@@ -117,14 +140,32 @@ fun ProfileGenerateContent(
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 val buttonList = listOf(
-                    painterResource(id = R.drawable.ic_btn_camera),
-                    painterResource(id = R.drawable.rice_90),
-                    painterResource(id = R.drawable.sushi_90),
-                    painterResource(id = R.drawable.puding_90),
-                    painterResource(id = R.drawable.ic_btn_picture),
-                    painterResource(id = R.drawable.apple_90),
-                    painterResource(id = R.drawable.egg_90),
-                    painterResource(id = R.drawable.ramen_90),
+                    ProfileImageButton(painter = painterResource(id = R.drawable.ic_btn_camera)),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/f5f257c7-1ff7-4959-b537-bb4035abcb59",
+                        imageKey = "user/f5f257c7-1ff7-4959-b537-bb4035abcb59"
+                    ),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/33f47510-ec9e-4bde-8aee-55b0de2664dd",
+                        imageKey = "user/33f47510-ec9e-4bde-8aee-55b0de2664dd"
+                    ),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/cb13f8cd-919a-4440-879f-52c13850cbac",
+                        imageKey = "user/cb13f8cd-919a-4440-879f-52c13850cbac"
+                    ),
+                    ProfileImageButton(painter = painterResource(id = R.drawable.ic_btn_picture)),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/c0d0d99c-972c-45ab-8d9d-6f80f0671353",
+                        imageKey = "user/c0d0d99c-972c-45ab-8d9d-6f80f0671353"
+                    ),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/44e18a05-225b-478c-b924-e4cc82ed9f41",
+                        imageKey = "user/44e18a05-225b-478c-b924-e4cc82ed9f41"
+                    ),
+                    ProfileImageButton(
+                        profileImageUrl = "https://everymeal-s3-buket.s3.ap-northeast-2.amazonaws.com/dev/user/de13a121-d495-465a-a3e8-930624f2b6f4",
+                        imageKey = "user/de13a121-d495-465a-a3e8-930624f2b6f4"
+                    )
                 )
                 LazyVerticalGrid(
                     modifier = Modifier.padding(horizontal = 38.dp),
@@ -133,12 +174,45 @@ fun ProfileGenerateContent(
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                     userScrollEnabled = false,
                 ) {
-                    itemsIndexed(buttonList) { index, painter ->
-                        Image(
-                            modifier = Modifier.size(50.dp),
-                            painter = painter,
-                            contentDescription = null
-                        )
+                    itemsIndexed(buttonList) { index, profileImageButton ->
+                        when (index) {
+                            0 -> {
+                                val painter = profileImageButton.painter ?: return@itemsIndexed
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .noRippleClickable(onClick = onCameraButtonClicked),
+                                    painter = painter,
+                                    contentDescription = null
+                                )
+                            }
+
+                            4 -> {
+                                val painter = profileImageButton.painter ?: return@itemsIndexed
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .noRippleClickable(onClick = onGalleryButtonClicked),
+                                    painter = painter,
+                                    contentDescription = null
+                                )
+                            }
+
+                            else -> {
+                                AsyncImage(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .noRippleClickable {
+                                            profileImageButton.imageKey?.let {
+                                                onDefaultImageClicked(it)
+                                            }
+                                        },
+                                    model = profileImageButton.profileImageUrl,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+
                     }
                 }
                 EveryMealMainButton(text = stringResource(id = R.string.complete)) {

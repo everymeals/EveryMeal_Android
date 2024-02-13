@@ -95,12 +95,19 @@ class SchoolAuthViewModel @Inject constructor(
     private fun verifyToken() {
         viewModelScope.launch {
             val state = viewState.value
+            val emailAuthToken = state.emailAuthToken
+            val emailAuthValue = state.emailAuthValue
             verifyTokenUseCase(
-                emailAuthToken = state.emailAuthToken,
-                emailAuthValue = state.emailAuthValue
+                emailAuthToken = emailAuthToken,
+                emailAuthValue = emailAuthValue
             ).onSuccess {
                 Log.d("SchoolAuthViewModel", "postEmail: $it")
-                sendEffect({ SchoolContract.Effect.SuccessEmailVerification })
+                sendEffect({
+                    SchoolContract.Effect.SuccessEmailVerification(
+                        emailAuthValue = emailAuthValue,
+                        emailAuthToken = emailAuthToken
+                    )
+                })
             }.onFailure {
                 Log.d("SchoolAuthViewModel", "postEmail: $it")
                 when (it) {

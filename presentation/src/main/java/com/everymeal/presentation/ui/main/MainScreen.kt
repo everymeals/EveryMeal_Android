@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.main
 
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -26,7 +27,6 @@ import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
 import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
 import com.everymeal.presentation.ui.search.SearchScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
-import com.everymeal.presentation.ui.signup.school.email.SchoolAuthEmailVerifyScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 import com.everymeal.presentation.ui.withdraw.WithDrawScreen
@@ -116,8 +116,12 @@ fun MainScreen(
             }
             composable(route = EveryMealRoute.SCHOOL_AUTH.route) {
                 SchoolAuthScreen(
-                    onSuccessEmailVerification = {
-                        navController.navigate(EveryMealRoute.PROFILE_GENERATE.route) {
+                    onSuccessEmailVerification = { emailAuthValue, emailAuthToken ->
+                        val route =
+                            "profile_generate?emailAuthValue=${Uri.encode(emailAuthValue)}&emailAuthToken=${
+                                Uri.encode(emailAuthToken)
+                            }"
+                        navController.navigate(route) {
                             popUpTo(EveryMealRoute.SCHOOL_AUTH.route) {
                                 inclusive = true
                             }
