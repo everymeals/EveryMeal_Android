@@ -60,9 +60,6 @@ fun EveryMealMainBottomSheetDialog(
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
-        modifier = Modifier.padding(
-            rememberInsetsPaddingValues(insets = LocalWindowInsets.current.systemBars)
-        ),
         onDismissRequest = { onDismiss() },
         containerColor = Color.White,
     ) {
@@ -96,7 +93,7 @@ fun EveryMealMainBottomSheetDialog(
                 text = stringResource(R.string.univ_admin_button),
                 onClick = onClick,
             )
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(24.dp))
         }
     }
 }

@@ -45,11 +45,11 @@ class DefaultNetworkPreference @Inject constructor(
                 putBoolean("auto_login", value)
             }
         }
-    override var profileImgKey: String
-        get() = preferences.getString("profileImgKey", "").orEmpty()
+    override var profileImgUrl: String
+        get() = preferences.getString("profileImgUrl", "").orEmpty()
         set(value) {
             preferences.edit(commit = true) {
-                putString("profileImgKey", value)
+                putString("profileImgUrl", value)
             }
         }
 

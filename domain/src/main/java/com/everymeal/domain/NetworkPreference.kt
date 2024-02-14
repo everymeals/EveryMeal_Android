@@ -6,6 +6,6 @@ interface NetworkPreference {
     var nickname: String
     var universityIdx: Int
     var autoLoginConfigured: Boolean
-    var profileImgKey: String
+    var profileImgUrl: String
     fun clear()
 }

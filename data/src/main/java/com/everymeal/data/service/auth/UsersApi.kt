@@ -5,6 +5,7 @@ import com.everymeal.data.model.auth.EmailRequest
 import com.everymeal.data.model.auth.EmailResponse
 import com.everymeal.data.model.auth.SignUpRequest
 import com.everymeal.data.model.auth.SignUpResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -23,7 +24,9 @@ interface UsersApi {
     suspend fun postWithdrawal(): BaseResponse<Any>
 
     @POST("/api/v1/users/signup")
-    suspend fun postSignup(signUpRequest: SignUpRequest): BaseResponse<SignUpResponse>
+    suspend fun postSignup(
+        @Body signUpRequest: SignUpRequest
+    ): Response<BaseResponse<SignUpResponse>>
 
     @POST("/api/v1/users/login")
     suspend fun postLogin(): BaseResponse<Any>

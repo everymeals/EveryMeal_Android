@@ -13,9 +13,7 @@ class DefaultUsersRepository @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,
 ) : UsersRepository {
     override suspend fun signUp(signUp: UserSignUp): Result<User> {
-        return userRemoteDataSource.signUp(signUp.toSignUpRequest()).map {
-            it.toUser()
-        }
+        return userRemoteDataSource.signUp(signUp.toSignUpRequest())
     }
 
     override suspend fun postEmail(email: Email): Result<EmailAuthToken> {

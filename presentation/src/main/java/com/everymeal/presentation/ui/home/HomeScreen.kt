@@ -35,11 +35,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
+import com.everymeal.domain.NetworkPreference
 import com.everymeal.presentation.R
 import com.everymeal.presentation.base.LoadState
 import com.everymeal.presentation.components.EveryMealLineButton
@@ -47,9 +46,7 @@ import com.everymeal.presentation.components.EveryMealLoadingDialog
 import com.everymeal.presentation.components.EveryMealMainBottomSheetDialog
 import com.everymeal.presentation.components.EveryMealRestaurantItem
 import com.everymeal.presentation.components.EveryMealReviewItem
-import com.everymeal.presentation.ui.bottom.EveryMealRoute
 import com.everymeal.presentation.ui.theme.EveryMealTypo
-import com.everymeal.presentation.ui.theme.EveryMeal_AndroidTheme
 import com.everymeal.presentation.ui.theme.Gray100
 import com.everymeal.presentation.ui.theme.Gray300
 import com.everymeal.presentation.ui.theme.Gray500
@@ -59,9 +56,11 @@ import com.everymeal.presentation.ui.theme.Paddings
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
+    networkPreference: NetworkPreference,
     onDetailScreenClickType: (String) -> Unit,
     onDetailRestaurantClick: (String) -> Unit,
     onReviewBottomSheetClick: () -> Unit,
+    moveToReviewScreen: () -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -115,13 +114,17 @@ fun HomeScreen(
                         .fillMaxWidth(),
                 ) {
                     item {
-                        HomeMainTopLayout {
-                            homeViewModel.setEvent(
-                                HomeContract.HomeEvent.BottomSheetStateChange(
-                                    true
-                                )
-                            )
-                        }
+                        HomeMainTopLayout(
+                            onReviewBannerClicked = {
+                                when {
+                                    networkPreference.accessToken.isEmpty() -> homeViewModel.setEvent(
+                                        HomeContract.HomeEvent.BottomSheetStateChange(true)
+                                    )
+
+                                    else -> moveToReviewScreen()
+                                }
+                            }
+                        )
                         HomeCategoryList {
                             homeViewModel.setEvent(HomeContract.HomeEvent.OnClickDetailList(it.DetailListScreenType()))
                         }
@@ -251,7 +254,7 @@ fun HomeTopAppBar() {
 
 @Composable
 fun HomeMainTopLayout(
-    onClick: () -> Unit,
+    onReviewBannerClicked: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -262,7 +265,7 @@ fun HomeMainTopLayout(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
             ) {
-                onClick()
+                onReviewBannerClicked()
             }
             .padding(horizontal = Paddings.extra, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -401,17 +404,5 @@ fun CategoryItem(
                 color = Color.Black,
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    EveryMeal_AndroidTheme {
-        HomeScreen(
-            onDetailScreenClickType = {},
-            onDetailRestaurantClick = {},
-            onReviewBottomSheetClick = {},
-        )
     }
 }

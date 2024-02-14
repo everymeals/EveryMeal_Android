@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -65,6 +64,7 @@ fun MainScreen(
         ) {
             composable(route = EveryMealRoute.HOME.route) {
                 HomeScreen(
+                    networkPreference = networkPreference,
                     onDetailScreenClickType = { detailScreenType ->
                         navController.navigate(EveryMealRoute.DETAIL_LIST.route.plus("/$detailScreenType"))
                     },
@@ -72,15 +72,11 @@ fun MainScreen(
                         navController.navigate(EveryMealRoute.DETAIL_RESTAURANT.route.plus("/$detailRestaurantIdx"))
                     },
                     onReviewBottomSheetClick = {
-                        navController.navigate(EveryMealRoute.PROFILE_GENERATE.route)
-//                        when {
-//                            networkPreference.accessToken.isEmpty() -> navController.navigate(
-//                                EveryMealRoute.SCHOOL_AUTH.route
-//                            )
-//
-//                            else -> navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
-//                        }
+                        navController.navigate(EveryMealRoute.SCHOOL_AUTH.route)
                     },
+                    moveToReviewScreen = {
+                        navController.navigate(EveryMealRoute.REVIEW_SEARCH.route)
+                    }
                 )
             }
             composable(route = EveryMealRoute.UNIV_FOOD.route) {
@@ -157,33 +153,4 @@ fun MainScreen(
         EveryMealRoute.MY_PAGE.route -> true
         else -> false
     }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    MainScreen(networkPreference = TestNetworkPreference())
-}
-
-class TestNetworkPreference : NetworkPreference {
-    override var accessToken: String
-        get() = ""
-        set(value) {}
-    override var refreshToken: String
-        get() = ""
-        set(value) {}
-    override var nickname: String
-        get() = ""
-        set(value) {}
-    override var universityIdx: Int
-        get() = 0
-        set(value) {}
-    override var autoLoginConfigured: Boolean
-        get() = false
-        set(value) {}
-    override var profileImgKey: String
-        get() = ""
-        set(value) {}
-
-    override fun clear() {}
 }
