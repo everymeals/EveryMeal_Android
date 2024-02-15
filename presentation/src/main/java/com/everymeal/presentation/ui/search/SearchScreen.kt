@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.everymeal.domain.model.restaurant.RestaurantDataEntity
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealRestaurantItem
@@ -75,7 +76,7 @@ fun SearchScreen(
         } else {
             SearchDetail(
                 modifier = Modifier.padding(innerPadding),
-                searchResultList = viewState.value.searchResultList,
+                searchResultList = viewState.value.searchResultList.collectAsLazyPagingItems(),
             )
         }
     }
@@ -84,14 +85,19 @@ fun SearchScreen(
 @Composable
 fun SearchDetail(
     modifier: Modifier = Modifier,
-    searchResultList: List<RestaurantDataEntity>,
+    searchResultList: LazyPagingItems<RestaurantDataEntity>,
 ) {
     LazyColumn(modifier = modifier) {
-        itemsIndexed(searchResultList) { index, restaurant ->
+        items(searchResultList.itemCount) { indexd ->
+            val restaurant = searchResultList[indexd] ?: return@items
             EveryMealRestaurantItem(
                 restaurant = restaurant,
-                onLoveClick = { },
-                onDetailClick = { },
+                onLoveClick = {
+
+                },
+                onDetailClick = {
+
+                },
             )
         }
     }

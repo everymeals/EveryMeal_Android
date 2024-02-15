@@ -10,6 +10,8 @@ import com.everymeal.data.datasource.restaurant.RestaurantDataSource
 import com.everymeal.data.datasource.restaurant.RestaurantDataSourceImpl
 import com.everymeal.data.datasource.review.ReviewDataSource
 import com.everymeal.data.datasource.review.ReviewDataSourceImpl
+import com.everymeal.data.datasource.search.SearchDataSource
+import com.everymeal.data.datasource.search.SearchDataSourceImpl
 import com.everymeal.data.repository.auth.DefaultUsersRepository
 import com.everymeal.data.repository.local.LocalRepositoryImpl
 import com.everymeal.data.repository.onboarding.OnboardingRepositoryImpl
@@ -91,6 +93,12 @@ abstract class RepositoryModule {
     abstract fun bindReviewRepository(
         defaultReviewRepository: DefaultReviewRepository,
     ): ReviewRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindSearchDataSource(
+        searchDataSourceImpl: SearchDataSourceImpl,
+    ): SearchDataSource
 
     @Singleton
     @Binds

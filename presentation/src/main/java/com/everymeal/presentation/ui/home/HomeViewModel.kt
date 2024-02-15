@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.everymeal.domain.usecase.local.GetUniversityIndexUseCase
 import com.everymeal.domain.usecase.restaurant.GetHomeRestaurantUseCase
-import com.everymeal.domain.usecase.restaurant.GetUnivRestaurantUseCase
 import com.everymeal.domain.usecase.review.GetHomeReviewUseCase
 import com.everymeal.presentation.base.BaseViewModel
 import com.everymeal.presentation.base.LoadState
