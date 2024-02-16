@@ -7,7 +7,6 @@ import javax.inject.Inject
 class PostReviewUseCase @Inject constructor(
     private val reviewRepository: ReviewRepository
 ) {
-    suspend operator fun invoke(userReview: UserReview) {
-        reviewRepository.postReview(userReview)
-    }
+    suspend operator fun invoke(userReview: UserReview) = reviewRepository.postReview(userReview)
+
 }

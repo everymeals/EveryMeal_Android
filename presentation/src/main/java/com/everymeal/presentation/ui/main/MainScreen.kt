@@ -6,9 +6,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,12 +26,16 @@ import com.everymeal.presentation.ui.home.HomeScreen
 import com.everymeal.presentation.ui.mypage.MyPageScreen
 import com.everymeal.presentation.ui.profile.ProfileGenerateScreen
 import com.everymeal.presentation.ui.restaurant.DetailRestaurantScreen
+import com.everymeal.presentation.ui.review.ReviewScreen
+import com.everymeal.presentation.ui.review.ReviewViewModel
 import com.everymeal.presentation.ui.review.search.ReviewSearchScreen
+import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
 import com.everymeal.presentation.ui.search.SearchScreen
 import com.everymeal.presentation.ui.signup.school.SchoolAuthScreen
 import com.everymeal.presentation.ui.univfood.UnivFoodScreen
 import com.everymeal.presentation.ui.whatfood.WhatFoodScreen
 import com.everymeal.presentation.ui.withdraw.WithDrawScreen
+import com.everymeal.presentation.util.sharedViewModel
 
 const val DETAIL_SCREEN_TYPE = "detailScreenType"
 const val DETAIL_RESTAURANT_IDX = "detailRestaurantIdx"
@@ -133,6 +140,21 @@ fun MainScreen(
             composable(route = EveryMealRoute.REVIEW_SEARCH.route) {
                 ReviewSearchScreen(navController = navController)
             }
+            composable(route = EveryMealRoute.REVIEW.route.plus("/{$DETAIL_RESTAURANT_IDX}")) { navBackStackEntry ->
+                val argument = navBackStackEntry.arguments
+                val restaurantIdx = argument?.getString(DETAIL_RESTAURANT_IDX).orEmpty()
+                val viewModel = navBackStackEntry.sharedViewModel<ReviewViewModel>(
+                    navController = navController,
+                    navGraphRoute = EveryMealRoute.HOME.route
+                )
+                ReviewScreen(
+                    viewModel = viewModel,
+                    restaurantIdx = restaurantIdx,
+                    moveReviewWriteScreen = {
+                        navController.navigate(EveryMealRoute.REVIEW_WRITE.route)
+                    }
+                )
+            }
             composable(route = EveryMealRoute.WITH_DRAW.route) {
                 WithDrawScreen(
                     onBackClick = {
@@ -141,7 +163,17 @@ fun MainScreen(
                 )
             }
             composable(route = EveryMealRoute.SEARCH.route) {
-                SearchScreen(navController = navController)
+                SearchScreen(
+                    moveReviewScreen = { restaurantIdx ->
+                        navController.navigate(EveryMealRoute.REVIEW.route.plus("/$restaurantIdx"))
+                    })
+            }
+            composable(route = EveryMealRoute.REVIEW_WRITE.route) { navBackStackEntry ->
+                val viewModel = navBackStackEntry.sharedViewModel<ReviewViewModel>(
+                    navController = navController,
+                    navGraphRoute = EveryMealRoute.HOME.route
+                )
+                ReviewWriteScreen(viewModel = viewModel)
             }
         }
     }

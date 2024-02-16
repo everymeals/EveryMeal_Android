@@ -41,7 +41,8 @@ enum class EveryMealRoute(val route: String) {
     DETAIL_RESTAURANT("detail-restaurant"),
     SCHOOL_AUTH("school-auth"),
     PROFILE_GENERATE("profile_generate?emailAuthValue={emailAuthValue}&emailAuthToken={emailAuthToken}"),
-    SIGN_UP_SUCCESS("sign-up-success"),
     WITH_DRAW("with-draw"),
     REVIEW_SEARCH("review-search"),
+    REVIEW("review"),
+    REVIEW_WRITE("review-write"),
 }

@@ -1,16 +1,15 @@
 package com.everymeal.presentation.ui.review
 
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,24 +40,22 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealDialog
-import com.everymeal.presentation.ui.review.write.ReviewWriteScreen
+import com.everymeal.presentation.ui.review.search.ReviewGuideHeader
 import com.everymeal.presentation.ui.theme.Gray600
 import com.everymeal.presentation.ui.theme.Grey2
 import com.everymeal.presentation.ui.theme.Grey9
 import com.everymeal.presentation.ui.theme.Typography
+import com.everymeal.presentation.util.noRippleClickable
 
 @Composable
 fun ReviewScreen(
-    viewModel: ReviewScreenViewModel = hiltViewModel(),
+    viewModel: ReviewViewModel,
+    restaurantIdx: String,
+    moveReviewWriteScreen: () -> Unit = {},
 ) {
-    val pickMultipleMedia = rememberLauncherForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia(10),
-    ) {
-        viewModel.setEvent(ReviewEvent.OnImageSelected(it))
-        Log.d("ReviewScreen", "ReviewScreen: $it")
-    }
+    viewModel.setEvent(ReviewEvent.SetRestaurantIdx(restaurantIdx.toIntOrNull() ?: 0))
+
     val viewState by viewModel.viewState.collectAsState()
-    val context = LocalContext.current
     Scaffold(
         topBar = {
             ReviewTopBar(
@@ -69,81 +65,64 @@ fun ReviewScreen(
         },
         containerColor = Color.White,
     ) { innerPadding ->
+        ReviewStarRateContract(
+            modifier = Modifier.padding(innerPadding),
+            viewState = viewState,
+            onStarClicked = { index ->
+                viewModel.setEvent(ReviewEvent.OnStarClicked(index))
+            },
+            moveReviewWriteScreen = moveReviewWriteScreen,
+        )
         Box(modifier = Modifier.padding(innerPadding)) {
-            Column {
-//                ReviewGuideHeader()
-//                ReviewSearchBar(
-//                    modifier = Modifier
-//                        .padding(top = 28.dp)
-//                        .padding(horizontal = 20.dp),
-//                    searchBarClicked = {
-//                        //TODO 화면 이동
-//                    }
-//                )
-//                StarDetail(
-//                    viewState = viewState,
-//                    startRatingClicked = { index ->
-//                        viewModel.setEvent(ReviewEvent.OnStarClicked(index))
-//                    },
-//                )
-                ReviewWriteScreen(
-                    viewState = viewState,
-                    starRatingClicked = { index ->
-                        viewModel.setEvent(ReviewEvent.OnStarClicked(index))
-                    },
-                    reviewTextChanged = {
-                        viewModel.setEvent(ReviewEvent.OnReviewTextChanged(it))
-                    },
-                    onReviewRegisterClicked = {
-                        viewModel.setEvent(
-                            ReviewEvent.PostReview(
-                                mealIdx = viewState.idx,
-                                reviewValue = viewState.reviewValue,
-                                imageUri = viewState.imageUri,
-                                restaurantType = viewState.restaurantType,
-                                restaurantName = viewState.restaurantName,
-                                starRatingCount = viewState.starRatingStateList.count { it.value },
-                            ),
-                        )
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.register_review),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                    onAddPhotoClicked = {
-                        pickMultipleMedia.launch(
-                            PickVisualMediaRequest(
-                                ActivityResultContracts.PickVisualMedia.ImageOnly,
-                            ),
-                        )
-                    },
-                )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
             }
         }
     }
 }
 
 @Composable
-fun ColumnScope.StarDetail(
+private fun ReviewStarRateContract(
     modifier: Modifier = Modifier,
+    viewState: ReviewState,
+    onStarClicked: (Int) -> Unit = {},
+    moveReviewWriteScreen: () -> Unit = {},
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        ReviewGuideHeader(modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.height(133.dp))
+        StarDetail(
+            modifier = Modifier,
+            viewState = viewState,
+            startRatingClicked = { index ->
+                onStarClicked(index)
+                moveReviewWriteScreen()
+            },
+        )
+    }
+
+}
+
+@Composable
+fun StarDetail(
+    modifier: Modifier,
     viewState: ReviewState,
     startRatingClicked: (Int) -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 133.dp),
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        RestaurantType(
-            viewState = viewState,
-        )
-        RestaurantName(
-            viewState = viewState,
-        )
+        RestaurantType(viewState = viewState)
+        RestaurantName(viewState = viewState)
+        Spacer(modifier = Modifier.height(50.dp))
         StarRating(
-            modifier = Modifier
-                .padding(top = 50.dp),
+            modifier = Modifier,
             ratingStateList = viewState.starRatingStateList,
             starRatingClicked = startRatingClicked,
         )
@@ -194,7 +173,7 @@ fun RestaurantName(
 fun StarRating(
     modifier: Modifier = Modifier,
     ratingStateList: List<State<Boolean>>,
-    starRatingClicked: ((Int) -> Unit)? = null,
+    starRatingClicked: (Int) -> Unit = {},
     starSize: Dp = 40.dp,
 ) {
     LazyRow(
@@ -206,8 +185,8 @@ fun StarRating(
                 modifier = Modifier
                     .size(starSize)
                     .padding(horizontal = 1.dp)
-                    .clickable {
-                        starRatingClicked?.invoke(index)
+                    .noRippleClickable {
+                        starRatingClicked(index)
                     },
                 painter = if (active.value) {
                     painterResource(
@@ -279,5 +258,14 @@ fun ReviewSaveDialog(
 @Composable
 @Preview
 fun ReviewScreenPreview() {
+    ReviewScreen(
+        viewModel = hiltViewModel(),
+        restaurantIdx = "1"
+    )
+}
+
+@Composable
+@Preview
+fun ReviewSaveDialogPreview() {
     ReviewSaveDialog()
 }

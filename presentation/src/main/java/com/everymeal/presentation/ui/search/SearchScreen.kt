@@ -39,8 +39,8 @@ import com.everymeal.presentation.ui.theme.Gray800
 
 @Composable
 fun SearchScreen(
-    navController: NavController,
     viewModel: SearchViewModel = hiltViewModel(),
+    moveReviewScreen: (Int) -> Unit = {},
 ) {
     val viewState = viewModel.viewState.collectAsState()
 
@@ -77,6 +77,7 @@ fun SearchScreen(
             SearchDetail(
                 modifier = Modifier.padding(innerPadding),
                 searchResultList = viewState.value.searchResultList.collectAsLazyPagingItems(),
+                onRestaurantDetailClick = moveReviewScreen
             )
         }
     }
@@ -86,6 +87,7 @@ fun SearchScreen(
 fun SearchDetail(
     modifier: Modifier = Modifier,
     searchResultList: LazyPagingItems<RestaurantDataEntity>,
+    onRestaurantDetailClick: (Int) -> Unit = {},
 ) {
     LazyColumn(modifier = modifier) {
         items(searchResultList.itemCount) { indexd ->
@@ -95,9 +97,7 @@ fun SearchDetail(
                 onLoveClick = {
 
                 },
-                onDetailClick = {
-
-                },
+                onDetailClick = onRestaurantDetailClick,
             )
         }
     }
@@ -145,7 +145,5 @@ private fun removeHistoryItem(
 @Preview
 @Composable
 fun PreviewSearchScreen() {
-    SearchScreen(
-        navController = NavController(LocalContext.current),
-    )
+    SearchScreen()
 }

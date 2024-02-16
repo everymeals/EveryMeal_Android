@@ -113,7 +113,8 @@
     <string name="restaurant_share">공유하기</string>
     <string name="restaurant_only_picture">사진만 올리기</string>
     <string name="restaurant_review">리뷰 작성하기</string>
-    <string name="register_review">리뷰가 등록되었어요</string>
+    <string name="register_review_success">리뷰가 등록되었어요</string>
+    <string name="register_review_fail">리뷰 등록에 실패했어요</string>
 
     <!--  마이페이지 화면  -->
     <string name="my_page_univ_correct">인증하기</string>
