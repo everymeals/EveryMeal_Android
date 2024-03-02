@@ -49,7 +49,7 @@ fun ReviewDetailScreen() {
         topBar = {
             ReviewTopBar(
                 title = stringResource(R.string.review_title),
-                onBackClicked = {
+                onBackPressed = {
                 },
             )
         },

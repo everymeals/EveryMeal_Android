@@ -1,5 +1,6 @@
 package com.everymeal.presentation.ui.review.write
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -9,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,7 +43,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.everymeal.presentation.R
 import com.everymeal.presentation.components.EveryMealTextField
@@ -55,16 +56,16 @@ import com.everymeal.presentation.ui.review.ReviewViewModel
 import com.everymeal.presentation.ui.review.StarRating
 import com.everymeal.presentation.ui.theme.Gray200
 import com.everymeal.presentation.ui.theme.Main100
+import com.everymeal.presentation.util.noRippleClickable
 
 @Composable
 fun ReviewWriteScreen(
     viewModel: ReviewViewModel,
+    onBackPressed: () -> Unit = {},
 ) {
     val pickMultipleMedia = rememberLauncherForActivityResult(
         ActivityResultContracts.PickMultipleVisualMedia(10),
-    ) {
-        viewModel.setEvent(ReviewEvent.OnImageSelected(it))
-    }
+    ) { viewModel.setEvent(ReviewEvent.OnImageSelected(it)) }
     val viewState by viewModel.viewState.collectAsState()
     val context = LocalContext.current
 
@@ -72,7 +73,7 @@ fun ReviewWriteScreen(
         topBar = {
             ReviewTopBar(
                 title = stringResource(R.string.review_write),
-                onBackClicked = {},
+                onBackPressed = onBackPressed,
             )
         },
         containerColor = Color.White,
@@ -92,7 +93,10 @@ fun ReviewWriteScreen(
             },
             onReviewRegisterClicked = {
                 viewModel.setEvent(ReviewEvent.OnReviewSave)
-            }
+            },
+            removePhoto = {
+                viewModel.setEvent(ReviewEvent.RemovePhotoUri(it))
+            },
         )
     }
     LaunchedEffect(Unit) {
@@ -126,6 +130,7 @@ private fun ReviewWriteContract(
     reviewTextChanged: (String) -> Unit = {},
     onAddPhotoClicked: () -> Unit = {},
     onReviewRegisterClicked: () -> Unit = {},
+    removePhoto: (Uri) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -133,16 +138,15 @@ private fun ReviewWriteContract(
             .background(color = Color.White)
             .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-
-        ) {
+    ) {
+        Spacer(modifier = Modifier.height(40.dp))
         RestaurantType(viewState = viewState)
         RestaurantName(
-            modifier = Modifier
-                .padding(top = 12.dp),
+            modifier = Modifier.padding(top = 12.dp),
             viewState = viewState,
         )
+        Spacer(modifier = Modifier.height(16.dp))
         StarRating(
-            modifier = modifier.padding(top = 16.dp),
             ratingStateList = viewState.starRatingStateList,
             starSize = 20.dp,
         )
@@ -160,21 +164,33 @@ private fun ReviewWriteContract(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
         ) {
-            AddReviewPhoto(
+            AddPhotoButton(
                 viewState = viewState,
                 addPhotoClicked = onAddPhotoClicked,
             )
             LazyRow {
-                items(viewState.imageUri) {
+                items(viewState.imageUri) { uri ->
                     Spacer(modifier = Modifier.width(8.dp))
-                    AsyncImage(
-                        modifier = Modifier
-                            .size(91.dp)
-                            .clip(RoundedCornerShape(10.dp)),
-                        model = it,
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null,
-                    )
+                    Box {
+                        AsyncImage(
+                            modifier = Modifier
+                                .size(91.dp)
+                                .clip(RoundedCornerShape(10.dp)),
+                            model = uri,
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null,
+                        )
+                        Image(
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.TopEnd)
+                                .noRippleClickable {
+                                    removePhoto(uri)
+                                },
+                            painter = painterResource(id = R.drawable.ic_close_round),
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }
@@ -190,7 +206,7 @@ private fun ReviewWriteContract(
 }
 
 @Composable
-private fun AddReviewPhoto(
+private fun AddPhotoButton(
     modifier: Modifier = Modifier,
     viewState: ReviewState,
     addPhotoClicked: () -> Unit,

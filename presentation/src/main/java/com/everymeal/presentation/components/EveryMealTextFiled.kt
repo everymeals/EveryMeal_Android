@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.everymeal.presentation.ui.theme.EveryMealTypography
 import com.everymeal.presentation.ui.theme.Gray300
+import com.everymeal.presentation.ui.theme.Grey5
 
 @Composable
 fun EveryMealTextField(
@@ -43,7 +44,8 @@ fun EveryMealTextField(
                 modifier = Modifier.wrapContentHeight(Alignment.CenterVertically),
                 text = placeholderText,
                 style = EveryMealTypography.Body1,
-                textAlign = TextAlign.Right
+                color = Grey5,
+                textAlign = TextAlign.Start
             )
         },
         maxLines = maxLines,

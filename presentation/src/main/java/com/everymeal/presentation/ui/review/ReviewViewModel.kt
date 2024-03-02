@@ -48,6 +48,9 @@ sealed class ReviewEvent : ViewEvent {
     ) : ReviewEvent()
 
     object OnReviewSave : ReviewEvent()
+    data class RemovePhotoUri(
+        val imageUri: Uri,
+    ) : ReviewEvent()
 }
 
 sealed class ReviewEffect : ViewSideEffect {
@@ -97,6 +100,14 @@ class ReviewViewModel @Inject constructor(
 
             is ReviewEvent.OnReviewSave -> {
                 reviewSave()
+            }
+
+            is ReviewEvent.RemovePhotoUri -> {
+                updateState {
+                    copy(
+                        imageUri = imageUri.filter { it != event.imageUri }
+                    )
+                }
             }
 
         }

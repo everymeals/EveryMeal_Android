@@ -2,7 +2,6 @@ package com.everymeal.presentation.ui.review
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -60,7 +59,7 @@ fun ReviewScreen(
         topBar = {
             ReviewTopBar(
                 title = stringResource(R.string.review_write),
-                onBackClicked = {},
+                onBackPressed = {},
             )
         },
         containerColor = Color.White,
@@ -208,7 +207,7 @@ fun StarRating(
 fun ReviewTopBar(
     modifier: Modifier = Modifier,
     title: String,
-    onBackClicked: () -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -224,7 +223,7 @@ fun ReviewTopBar(
                     .size(48.dp)
                     .padding(12.dp)
                     .padding(end = 4.dp)
-                    .clickable(onClick = onBackClicked),
+                    .noRippleClickable(onClick = onBackPressed),
                 painter = painterResource(id = R.drawable.icon_x_mono),
                 contentDescription = null,
             )

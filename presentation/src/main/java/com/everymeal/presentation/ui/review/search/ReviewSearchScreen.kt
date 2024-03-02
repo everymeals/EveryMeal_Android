@@ -27,7 +27,7 @@ fun ReviewSearchScreen(
         topBar = {
             ReviewTopBar(
                 title = stringResource(R.string.review_write),
-                onBackClicked = {
+                onBackPressed = {
                     navController.popBackStack()
                 },
             )

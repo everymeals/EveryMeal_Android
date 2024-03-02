@@ -173,7 +173,12 @@ fun MainScreen(
                     navController = navController,
                     navGraphRoute = EveryMealRoute.HOME.route
                 )
-                ReviewWriteScreen(viewModel = viewModel)
+                ReviewWriteScreen(
+                    viewModel = viewModel,
+                    onBackPressed = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }
